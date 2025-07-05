@@ -1,482 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finn Tang - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.35/build/spline-viewer.js"></script>
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@splinetool/viewer@1.0.35/build/spline-viewer.js"
+    ></script>
+  </head>
+  <body>
     <!-- 测试用的简单红色方块 -->
-    <div id="testBox" style="position: fixed; top: 50px; left: 50%; transform: translateX(-50%); width: 300px; height: 100px; background: red; z-index: 99999; display: none;">
-        TEST BOX - 如果你看到这个，说明元素可以显示
+    <div
+      id="testBox"
+      style="
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 300px;
+        height: 100px;
+        background: red;
+        z-index: 99999;
+        display: none;
+      "
+    >
+      TEST BOX - 如果你看到这个，说明元素可以显示
     </div>
 
     <!-- Project Detail Spline Text Effect -->
-    <div class="project-spline-text" id="projectSplineText" style="display: none;">
-        <spline-viewer url="https://prod.spline.design/6ON5CzVUt5GlMWXd/scene.splinecode" loading-anim-type="spinner-big-dark"></spline-viewer>
+    <div
+      class="project-spline-text"
+      id="projectSplineText"
+      style="display: none"
+    >
+      <spline-viewer
+        url="https://prod.spline.design/6ON5CzVUt5GlMWXd/scene.splinecode"
+        loading-anim-type="spinner-big-dark"
+      ></spline-viewer>
     </div>
 
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-text">FINN TANG</div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
+      <div class="loading-content">
+        <div class="loading-text">FINN TANG</div>
+        <div class="loading-bar">
+          <div class="loading-progress"></div>
         </div>
+      </div>
     </div>
 
     <!-- Home Page -->
     <div id="home-page" class="home-page">
-        <!-- 3D Background (保持原有的粒子球特效) -->
-        <div class="spline-container">
-            <spline-viewer 
-                url="https://prod.spline.design/1BhDIHVJf6Zwm1az/scene.splinecode"
-                events-target="global"
-                background-color="transparent"
-                logo="false"
-                controls="false"
-                showLoading="false"
-                showControls="false"
-                showLogo="false">
-            </spline-viewer>
-        </div>
-        
-        <!-- Home Content -->
-        <div class="home-content">
-            <div class="home-left">
-                <div class="home-logo">
-                    <h1 class="main-title" id="main-title">FINN TANG</h1>
-                    <div class="title-description">
-                        <p>is a multidisciplinary designer bridging digital innovation, physical fabrication, and interactive experiences through computational design and hands-on craftsmanship.</p>
-                    </div>
-                </div>
-                
-                <div class="home-info">
-                    <div class="info-section">
-                        <span class="info-label">currently...</span>
-                        <div class="info-content">
-                            <p>pursuing undergraduate studies in design and technology</p>
-                            <p>exploring AI integration, game mechanics, and speculative design</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-section">
-                        <span class="info-label">expertise...</span>
-                        <div class="info-content">
-                            <p>digital product design, 3D modeling & fabrication</p>
-                            <p>interactive media, woodworking, and brand strategy</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-section">
-                        <span class="info-label">connect +</span>
-                        <div class="info-content">
-                            <a href="mailto:tangzining3@gmail.com" class="info-link">email</a>
-                            <a href="https://www.linkedin.com/in/zining-tang" class="info-link">linkedin</a>
-                            <a href="#" class="info-link">resume</a>
-                        </div>
-                    </div>
-                </div>
+      <!-- 3D Background (保持原有的粒子球特效) -->
+      <div class="spline-container">
+        <spline-viewer
+          url="https://prod.spline.design/1BhDIHVJf6Zwm1az/scene.splinecode"
+          events-target="global"
+          background-color="transparent"
+          logo="false"
+          controls="false"
+          showLoading="false"
+          showControls="false"
+          showLogo="false"
+        >
+        </spline-viewer>
+      </div>
+
+      <!-- Home Content -->
+      <div class="home-content">
+        <div class="home-left">
+          <div class="home-logo">
+            <h1 class="main-title" id="main-title">FINN TANG</h1>
+            <div class="title-description">
+              <p>
+                is a multidisciplinary designer bridging digital innovation,
+                physical fabrication, and interactive experiences through
+                computational design and hands-on craftsmanship.
+              </p>
             </div>
-        </div>
-        
-        <!-- Navigation Hint -->
-        <div class="nav-hint">
-            <span>click name to explore work</span>
-            <div class="scroll-indicator">
-                <div class="scroll-line"></div>
+          </div>
+
+          <div class="home-info">
+            <div class="info-section">
+              <span class="info-label">currently...</span>
+              <div class="info-content">
+                <p>pursuing undergraduate studies in design and technology</p>
+                <p>
+                  exploring AI integration, game mechanics, and speculative
+                  design
+                </p>
+              </div>
             </div>
+
+            <div class="info-section">
+              <span class="info-label">expertise...</span>
+              <div class="info-content">
+                <p>digital product design, 3D modeling & fabrication</p>
+                <p>interactive media, woodworking, and brand strategy</p>
+              </div>
+            </div>
+
+            <div class="info-section">
+              <span class="info-label">connect +</span>
+              <div class="info-content">
+                <a href="mailto:tangzining3@gmail.com" class="info-link"
+                  >email</a
+                >
+                <a
+                  href="https://www.linkedin.com/in/zining-tang"
+                  class="info-link"
+                  >linkedin</a
+                >
+                <a href="#" class="info-link">resume</a>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Navigation Hint -->
+      <div class="nav-hint">
+        <span>click name to explore work</span>
+        <div class="scroll-indicator">
+          <div class="scroll-line"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Portfolio Page -->
-    <div id="portfolio-page" class="portfolio-page" style="display: none;">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <h1 id="back-to-home">FINN TANG</h1>
-                <span class="subtitle">PORTFOLIO</span>
+    <div id="portfolio-page" class="portfolio-page" style="display: none">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <h1 id="back-to-home">FINN TANG</h1>
+          <span class="subtitle">PORTFOLIO</span>
+        </div>
+
+        <nav class="nav">
+          <div class="nav-filters">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="work">WORK</button>
+            <button class="filter-btn" data-filter="about">ABOUT</button>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="#work" class="nav-link">work</a>
+          <a href="#archive" class="nav-link">archive</a>
+          <a href="#contact" class="nav-link">contact</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Work Grid -->
+        <section id="work" class="work-grid">
+          <!-- Project 1 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <video class="project-video" autoplay muted loop playsinline>
+                <source src="digital pet.mp4" type="video/mp4" />
+                <div class="placeholder-image">
+                  <span>REALITYEATER Interface</span>
+                </div>
+              </video>
             </div>
-            
-            <nav class="nav">
-                <div class="nav-filters">
-                    <button class="filter-btn active" data-filter="all">ALL</button>
-                    <button class="filter-btn" data-filter="work">WORK</button>
-                    <button class="filter-btn" data-filter="about">ABOUT</button>
-                </div>
-            </nav>
-        </header>
+            <div class="project-info">
+              <h3 class="project-title">REALITYEATER</h3>
+              <div class="project-meta">
+                <span class="project-category">[ AI / INTERACTIVE ]</span>
+                <span class="project-year">2024</span>
+              </div>
+            </div>
+          </div>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <a href="#work" class="nav-link">work</a>
-                <a href="#archive" class="nav-link">archive</a>
-                <a href="#contact" class="nav-link">contact</a>
-            </nav>
-        </aside>
+          <!-- Project 2 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <video class="project-card-video" autoplay muted loop playsinline>
+                <source src="tidebound.mp4" type="video/mp4" />
+                <span>Tide Bound Game</span>
+              </video>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">Tide Bound</h3>
+              <div class="project-meta">
+                <span class="project-category"
+                  >[ GAME DESIGN / EDUCATION ]</span
+                >
+                <span class="project-year">2025</span>
+              </div>
+            </div>
+          </div>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Work Grid -->
-            <section id="work" class="work-grid">
-                <!-- Project 1 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <video class="project-video" autoplay muted loop playsinline>
-                            <source src="digital pet.mp4" type="video/mp4">
-                            <div class="placeholder-image">
-                                <span>REALITYEATER Interface</span>
-                            </div>
-                        </video>
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">REALITYEATER</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ AI / INTERACTIVE ]</span>
-                            <span class="project-year">2024</span>
-                        </div>
-                    </div>
+          <!-- Project 3 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <video class="project-card-video" autoplay muted loop playsinline>
+                <source src="CSP.mp4" type="video/mp4" />
+                <span>Shmupformer Game</span>
+              </video>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">Shmupformer</h3>
+              <div class="project-meta">
+                <span class="project-category"
+                  >[ GAME DEVELOPMENT / COLLABORATION ]</span
+                >
+                <span class="project-year">2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <img
+                src="float/float.png"
+                alt="Float Sculpture"
+                class="project-card-image"
+              />
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">Float</h3>
+              <div class="project-meta">
+                <span class="project-category"
+                  >[ WOODWORKING / SCULPTURE ]</span
+                >
+                <span class="project-year">2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <img
+                src="bird/bird-overview.png"
+                alt="Dice Birdhouse"
+                class="project-card-image"
+              />
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">Dice Birdhouse</h3>
+              <div class="project-meta">
+                <span class="project-category"
+                  >[ ENVIRONMENTAL / SPECULATIVE ]</span
+                >
+                <span class="project-year">2024</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <img
+                src="fate/faterisd.jpg"
+                alt="FateRISD: Final Bubble"
+                class="project-card-image"
+              />
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">FateRISD: Final Bubble</h3>
+              <div class="project-meta">
+                <span class="project-category"
+                  >[ GAME JAM / VISUAL NOVEL ]</span
+                >
+                <span class="project-year">2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 7 -->
+          <div class="project-card" data-category="work">
+            <div class="project-image">
+              <img
+                src="familyboard/familyboard-cover.png"
+                alt="FamilyBoard Dashboard"
+                class="project-card-image"
+              />
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">FamilyBoard</h3>
+              <div class="project-meta">
+                <span class="project-category">[ WEB DESIGN / PERSONAL ]</span>
+                <span class="project-year">2024</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section" style="display: none">
+          <div class="about-content">
+            <h2>About Finn Tang</h2>
+
+            <div class="about-intro">
+              <div class="intro-text">
+                <p>
+                  I'm a multidisciplinary designer who believes in the power of
+                  hands-on creation and digital innovation. My work spans from
+                  AI-powered interactive experiences to handcrafted wooden
+                  sculptures, always seeking to bridge the gap between
+                  computational thinking and physical making.
+                </p>
+
+                <p>
+                  Whether I'm coding game mechanics, turning wood on a lathe, or
+                  designing user interfaces, my approach centers on thoughtful
+                  problem-solving and meaningful interaction.
+                </p>
+              </div>
+
+              <div class="intro-highlight">
+                <h3>Current Focus</h3>
+                <p class="highlight-text">
+                  Currently pursuing undergraduate studies at RISD, I explore
+                  how emerging technologies can enhance human connection rather
+                  than replace it. My work investigates the intersection of
+                  speculative design, interactive media, and traditional
+                  craftsmanship.
+                </p>
+              </div>
+            </div>
+
+            <div class="skills">
+              <h3>Expertise & Skills</h3>
+              <div class="skills-container">
+                <div class="skill-category">
+                  <h4>Digital Design & Development</h4>
+                  <ul>
+                    <li>3D Modeling & CAD (SolidWorks, Rhino, Maya)</li>
+                    <li>Digital Sculpting (ZBrush, Blender)</li>
+                    <li>UI/UX Design (Figma, Adobe Creative Suite)</li>
+                    <li>Game Development (GameMaker Studio, Ren'Py)</li>
+                    <li>Web Development (HTML/CSS/JS, React)</li>
+                    <li>3D Printing & Digital Fabrication</li>
+                  </ul>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <video class="project-card-video" autoplay muted loop playsinline>
-                            <source src="tidebound.mp4" type="video/mp4">
-                            <span>Tide Bound Game</span>
-                        </video>
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Tide Bound</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ GAME DESIGN / EDUCATION ]</span>
-                            <span class="project-year">2025</span>
-                        </div>
-                    </div>
+                <div class="skill-category">
+                  <h4>Physical Making & Craftsmanship</h4>
+                  <ul>
+                    <li>Physical Prototyping & Model Making</li>
+                    <li>Woodworking & Metalworking</li>
+                    <li>Traditional Joinery & Fabrication</li>
+                    <li>Material Exploration & Testing</li>
+                    <li>Hand Tool Proficiency</li>
+                    <li>Sculptural Form Development</li>
+                  </ul>
                 </div>
 
-                <!-- Project 3 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <video class="project-card-video" autoplay muted loop playsinline>
-                            <source src="CSP.mp4" type="video/mp4">
-                            <span>Shmupformer Game</span>
-                        </video>
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Shmupformer</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ GAME DEVELOPMENT / COLLABORATION ]</span>
-                            <span class="project-year">2025</span>
-                        </div>
-                    </div>
+                <div class="skill-category">
+                  <h4>Design Strategy & Research</h4>
+                  <ul>
+                    <li>Brand Strategy & Visual Identity</li>
+                    <li>Interactive Media & Experience Design</li>
+                    <li>Speculative Design & Research</li>
+                    <li>Collaborative Design Process</li>
+                    <li>User-Centered Design Thinking</li>
+                    <li>Environmental & Social Impact Design</li>
+                  </ul>
                 </div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Project 4 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <img src="float/float.png" alt="Float Sculpture" class="project-card-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Float</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ WOODWORKING / SCULPTURE ]</span>
-                            <span class="project-year">2025</span>
-                        </div>
-                    </div>
-                </div>
+          <!-- Contact info in About section -->
+          <div class="about-contact">
+            <h3>Let's Create Together</h3>
+            <div class="about-contact-grid">
+              <div class="about-contact-card">
+                <div class="contact-icon email"></div>
+                <div class="about-contact-label">Email</div>
+                <a
+                  href="mailto:tangzining3@gmail.com"
+                  class="about-contact-value"
+                  >tangzining3@gmail.com</a
+                >
+              </div>
 
-                <!-- Project 5 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <img src="bird/bird-overview.png" alt="Dice Birdhouse" class="project-card-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Dice Birdhouse</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ ENVIRONMENTAL / SPECULATIVE ]</span>
-                            <span class="project-year">2024</span>
-                        </div>
-                    </div>
-                </div>
+              <div class="about-contact-card">
+                <div class="contact-icon linkedin"></div>
+                <div class="about-contact-label">LinkedIn</div>
+                <a
+                  href="https://www.linkedin.com/in/zining-tang"
+                  class="about-contact-value"
+                  target="_blank"
+                  >linkedin.com/in/zining-tang</a
+                >
+              </div>
 
-                <!-- Project 6 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <img src="fate/faterisd.jpg" alt="FateRISD: Final Bubble" class="project-card-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">FateRISD: Final Bubble</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ GAME JAM / VISUAL NOVEL ]</span>
-                            <span class="project-year">2025</span>
-                        </div>
-                    </div>
+              <div class="about-contact-card">
+                <div class="contact-icon status"></div>
+                <div class="about-contact-label">Current Status</div>
+                <div class="about-contact-value">
+                  Undergraduate Studies in Design & Technology<br />Open to
+                  Collaborative Projects
                 </div>
-
-                <!-- Project 7 -->
-                <div class="project-card" data-category="work">
-                    <div class="project-image">
-                        <img src="familyboard/familyboard-cover.png" alt="FamilyBoard Dashboard" class="project-card-image">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">FamilyBoard</h3>
-                        <div class="project-meta">
-                            <span class="project-category">[ WEB DESIGN / PERSONAL ]</span>
-                            <span class="project-year">2024</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About Section -->
-            <section id="about" class="about-section" style="display: none;">
-                <div class="about-content">
-                    <h2>About Finn Tang</h2>
-                    
-                    <div class="about-intro">
-                        <div class="intro-text">
-                            <p>I'm a multidisciplinary designer who believes in the power of hands-on creation and digital innovation. My work spans from AI-powered interactive experiences to handcrafted wooden sculptures, always seeking to bridge the gap between computational thinking and physical making.</p>
-                            
-                            <p>Whether I'm coding game mechanics, turning wood on a lathe, or designing user interfaces, my approach centers on thoughtful problem-solving and meaningful interaction.</p>
-                        </div>
-                        
-                        <div class="intro-highlight">
-                            <h3>Current Focus</h3>
-                            <p class="highlight-text">Currently pursuing undergraduate studies at RISD, I explore how emerging technologies can enhance human connection rather than replace it. My work investigates the intersection of speculative design, interactive media, and traditional craftsmanship.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="skills">
-                        <h3>Expertise & Skills</h3>
-                        <div class="skills-container">
-                            <div class="skill-category">
-                                <h4>Digital Design & Development</h4>
-                                <ul>
-                                    <li>3D Modeling & CAD (SolidWorks, Rhino, Maya)</li>
-                                    <li>Digital Sculpting (ZBrush, Blender)</li>
-                                    <li>UI/UX Design (Figma, Adobe Creative Suite)</li>
-                                    <li>Game Development (GameMaker Studio, Ren'Py)</li>
-                                    <li>Web Development (HTML/CSS/JS, React)</li>
-                                    <li>3D Printing & Digital Fabrication</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="skill-category">
-                                <h4>Physical Making & Craftsmanship</h4>
-                                <ul>
-                                    <li>Physical Prototyping & Model Making</li>
-                                    <li>Woodworking & Metalworking</li>
-                                    <li>Traditional Joinery & Fabrication</li>
-                                    <li>Material Exploration & Testing</li>
-                                    <li>Hand Tool Proficiency</li>
-                                    <li>Sculptural Form Development</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="skill-category">
-                                <h4>Design Strategy & Research</h4>
-                                <ul>
-                                    <li>Brand Strategy & Visual Identity</li>
-                                    <li>Interactive Media & Experience Design</li>
-                                    <li>Speculative Design & Research</li>
-                                    <li>Collaborative Design Process</li>
-                                    <li>User-Centered Design Thinking</li>
-                                    <li>Environmental & Social Impact Design</li>
-                        </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Contact info in About section -->
-                <div class="about-contact">
-                    <h3>Let's Create Together</h3>
-                    <div class="about-contact-grid">
-                        <div class="about-contact-card">
-                            <div class="contact-icon email"></div>
-                            <div class="about-contact-label">Email</div>
-                            <a href="mailto:tangzining3@gmail.com" class="about-contact-value">tangzining3@gmail.com</a>
-                        </div>
-                        
-                        <div class="about-contact-card">
-                            <div class="contact-icon linkedin"></div>
-                            <div class="about-contact-label">LinkedIn</div>
-                            <a href="https://www.linkedin.com/in/zining-tang" class="about-contact-value" target="_blank">linkedin.com/in/zining-tang</a>
-                        </div>
-                        
-                        <div class="about-contact-card">
-                            <div class="contact-icon status"></div>
-                            <div class="about-contact-label">Current Status</div>
-                            <div class="about-contact-value">Undergraduate Studies in Design & Technology<br>Open to Collaborative Projects</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
     <!-- Contact Section (Overlay) -->
     <section id="contact" class="contact-section">
-        <button class="contact-close" id="contact-close">×</button>
-        <div class="contact-content">
-            <div class="contact-left">
-                <h2>Let's Collaborate</h2>
-                <p class="contact-description">
-                    I'm passionate about projects that blend digital innovation with thoughtful design. 
-                    Whether you're exploring new technologies, creating interactive experiences, or 
-                    developing meaningful products, I'd love to discuss how we can work together.
-                </p>
-            </div>
-            <div class="contact-right">
-                <div class="contact-item">
-                    <div class="contact-label">Email</div>
-                    <a href="mailto:tangzining3@gmail.com" class="contact-value">tangzining3@gmail.com</a>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-label">LinkedIn</div>
-                    <a href="https://www.linkedin.com/in/zining-tang" class="contact-value" target="_blank">linkedin.com/in/zining-tang</a>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-label">Resume</div>
-                    <a href="#" class="contact-value" target="_blank">Download Portfolio CV</a>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-label">Current Focus</div>
-                    <div class="contact-value">Undergraduate studies • Design research • Collaborative projects</div>
-                </div>
-            </div>
+      <button class="contact-close" id="contact-close">×</button>
+      <div class="contact-content">
+        <div class="contact-left">
+          <h2>Let's Collaborate</h2>
+          <p class="contact-description">
+            I'm passionate about projects that blend digital innovation with
+            thoughtful design. Whether you're exploring new technologies,
+            creating interactive experiences, or developing meaningful products,
+            I'd love to discuss how we can work together.
+          </p>
         </div>
+        <div class="contact-right">
+          <div class="contact-item">
+            <div class="contact-label">Email</div>
+            <a href="mailto:tangzining3@gmail.com" class="contact-value"
+              >tangzining3@gmail.com</a
+            >
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">LinkedIn</div>
+            <a
+              href="https://www.linkedin.com/in/zining-tang"
+              class="contact-value"
+              target="_blank"
+              >linkedin.com/in/zining-tang</a
+            >
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Resume</div>
+            <a href="#" class="contact-value" target="_blank"
+              >Download Portfolio CV</a
+            >
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Current Focus</div>
+            <div class="contact-value">
+              Undergraduate studies • Design research • Collaborative projects
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Project Detail Page -->
     <div id="project-detail-page" class="project-detail-page">
-        <header class="project-detail-header">
-            <button class="project-back-btn" id="project-back-btn">←</button>
-            <nav class="project-detail-nav">
-                <button class="project-nav-btn">Overview</button>
-                <button class="project-nav-btn">Process</button>
-                <button class="project-nav-btn">Results</button>
-            </nav>
-        </header>
-        
-        <div class="project-detail-content">
-            <section class="project-hero">
-                <h1 class="project-hero-title" id="project-hero-title">Project Title</h1>
-                <div class="project-hero-meta">
-                    <div class="project-hero-info">
-                        <div class="project-hero-category" id="project-hero-category">[ CATEGORY ]</div>
-                        <p class="project-hero-description" id="project-hero-description">
-                            This is a detailed description of the project, explaining the goals, challenges, and approach taken to solve the problem.
-                        </p>
-                        <div class="project-hero-details">
-                            <div class="project-detail-item">
-                                <div class="project-detail-label">Role</div>
-                                <div class="project-detail-value" id="project-role">UI/UX Designer, Developer</div>
-                            </div>
-                            <div class="project-detail-item">
-                                <div class="project-detail-label">Duration</div>
-                                <div class="project-detail-value" id="project-duration">3 months</div>
-                            </div>
-                            <div class="project-detail-item">
-                                <div class="project-detail-label">Tools</div>
-                                <div class="project-detail-value" id="project-tools">Figma, React, Node.js</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-hero-year" id="project-hero-year">2024</div>
+      <header class="project-detail-header">
+        <button class="project-back-btn" id="project-back-btn">←</button>
+        <nav class="project-detail-nav">
+          <button class="project-nav-btn">Overview</button>
+          <button class="project-nav-btn">Process</button>
+          <button class="project-nav-btn">Results</button>
+        </nav>
+      </header>
+
+      <div class="project-detail-content">
+        <section class="project-hero">
+          <h1 class="project-hero-title" id="project-hero-title">
+            Project Title
+          </h1>
+          <div class="project-hero-meta">
+            <div class="project-hero-info">
+              <div class="project-hero-category" id="project-hero-category">
+                [ CATEGORY ]
+              </div>
+              <p class="project-hero-description" id="project-hero-description">
+                This is a detailed description of the project, explaining the
+                goals, challenges, and approach taken to solve the problem.
+              </p>
+              <div class="project-hero-details">
+                <div class="project-detail-item">
+                  <div class="project-detail-label">Role</div>
+                  <div class="project-detail-value" id="project-role">
+                    UI/UX Designer, Developer
+                  </div>
                 </div>
-            </section>
-            
-            <section class="project-content-section" data-section="overview">
-                <h2 class="project-section-title">Overview</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="digital pet.mp4" type="video/mp4">
-                                <span>REALITYEATER Game Interface</span>
-                            </video>
-                        </div>
-                    </div>
+                <div class="project-detail-item">
+                  <div class="project-detail-label">Duration</div>
+                  <div class="project-detail-value" id="project-duration">
+                    3 months
+                  </div>
                 </div>
-                <div class="project-text-content">
-                    <p>REALITYEATER is a virtual pet browser game where players use real-world items to feed a glitchy, sentient digital pet. It blends AI-powered interactivity with narrative design.</p>
-                    <p>The project explores the intersection of physical and digital reality through webcam-based object recognition, creating an immersive cyberpunk experience.</p>
+                <div class="project-detail-item">
+                  <div class="project-detail-label">Tools</div>
+                  <div class="project-detail-value" id="project-tools">
+                    Figma, React, Node.js
+                  </div>
                 </div>
-            </section>
-            
-            <section class="project-content-section" data-section="process">
-                <h2 class="project-section-title">Development Process</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-medium">
-                            <img src="realityeater/realityeater-process-1.png" alt="REALITYEATER Development Process" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <h3>AI Integration & Object Recognition</h3>
-                    <p>Built an interactive pet with camera-based object recognition using the OpenAI API, enabling real-world object interaction through the webcam.</p>
-                    <h3>Cyberpunk Visual Design</h3>
-                    <p>Designed glitch-style UI inspired by The Matrix, using pixel art aesthetics and terminal-like interfaces to create an authentic cyberpunk atmosphere.</p>
-                    <h3>Behavioral Logic System</h3>
-                    <p>Created JSON-based interaction logic and emotional states for the pet, balancing gameplay through hunger timers and user feedback loops.</p>
-                </div>
-            </section>
-            
-            <section class="project-content-section" data-section="results">
-                <h2 class="project-section-title">Final Outcome</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-1.png" alt="REALITYEATER Final Outcome 1" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-2.png" alt="REALITYEATER Final Outcome 2" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-3.png" alt="REALITYEATER Final Outcome 3" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-4.png" alt="REALITYEATER Final Outcome 4" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <p>Live prototype available at <a href="https://digital-pet-code-world.vercel.app/" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">digital-pet-code-world.vercel.app</a></p>
-                    <p>Players can interact with the pet through typed messages and feed it real objects via webcam input, creating a unique blend of AI-powered gaming and reality interaction.</p>
-                    <h3>Key Learnings</h3>
-                    <p>• How to integrate AI APIs into interactive web experiences</p>
-                    <p>• Importance of user feedback in balancing novelty with usability</p>
-                    <p>• Crafting a unique digital personality through minimalist UI and behavior design</p>
-                </div>
-            </section>
-            
-            <nav class="project-navigation">
-                <a href="#" class="project-nav-link" id="prev-project">
-                    <span class="project-nav-arrow">←</span>
-                    <span>Previous Project</span>
-                </a>
-                <a href="#" class="project-nav-link" id="next-project">
-                    <span>Next Project</span>
-                    <span class="project-nav-arrow">→</span>
-                </a>
-            </nav>
-        </div>
+              </div>
+            </div>
+            <div class="project-hero-year" id="project-hero-year">2024</div>
+          </div>
+        </section>
+
+        <section class="project-content-section" data-section="overview">
+          <h2 class="project-section-title">Overview</h2>
+          <div class="project-image-gallery">
+            <div class="project-image-item">
+              <div class="project-image-large">
+                <video
+                  class="project-detail-video"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                >
+                  <source src="digital pet.mp4" type="video/mp4" />
+                  <span>REALITYEATER Game Interface</span>
+                </video>
+              </div>
+            </div>
+          </div>
+          <div class="project-text-content">
+            <p>
+              REALITYEATER is a virtual pet browser game where players use
+              real-world items to feed a glitchy, sentient digital pet. It
+              blends AI-powered interactivity with narrative design.
+            </p>
+            <p>
+              The project explores the intersection of physical and digital
+              reality through webcam-based object recognition, creating an
+              immersive cyberpunk experience.
+            </p>
+          </div>
+        </section>
+
+        <section class="project-content-section" data-section="process">
+          <h2 class="project-section-title">Development Process</h2>
+          <div class="project-image-gallery">
+            <div class="project-image-item">
+              <div class="project-image-medium">
+                <img
+                  src="realityeater/realityeater-process-1.png"
+                  alt="REALITYEATER Development Process"
+                  class="project-detail-image"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="project-text-content">
+            <h3>AI Integration & Object Recognition</h3>
+            <p>
+              Built an interactive pet with camera-based object recognition
+              using the OpenAI API, enabling real-world object interaction
+              through the webcam.
+            </p>
+            <h3>Cyberpunk Visual Design</h3>
+            <p>
+              Designed glitch-style UI inspired by The Matrix, using pixel art
+              aesthetics and terminal-like interfaces to create an authentic
+              cyberpunk atmosphere.
+            </p>
+            <h3>Behavioral Logic System</h3>
+            <p>
+              Created JSON-based interaction logic and emotional states for the
+              pet, balancing gameplay through hunger timers and user feedback
+              loops.
+            </p>
+          </div>
+        </section>
+
+        <section class="project-content-section" data-section="results">
+          <h2 class="project-section-title">Final Outcome</h2>
+          <div class="project-image-gallery">
+            <div class="project-image-item">
+              <div class="project-image-large">
+                <img
+                  src="realityeater/realityeater-final-1.png"
+                  alt="REALITYEATER Final Outcome 1"
+                  class="project-detail-image"
+                />
+              </div>
+            </div>
+            <div class="project-image-item">
+              <div class="project-image-large">
+                <img
+                  src="realityeater/realityeater-final-2.png"
+                  alt="REALITYEATER Final Outcome 2"
+                  class="project-detail-image"
+                />
+              </div>
+            </div>
+            <div class="project-image-item">
+              <div class="project-image-large">
+                <img
+                  src="realityeater/realityeater-final-3.png"
+                  alt="REALITYEATER Final Outcome 3"
+                  class="project-detail-image"
+                />
+              </div>
+            </div>
+            <div class="project-image-item">
+              <div class="project-image-large">
+                <img
+                  src="realityeater/realityeater-final-4.png"
+                  alt="REALITYEATER Final Outcome 4"
+                  class="project-detail-image"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="project-text-content">
+            <p>
+              Live prototype available at
+              <a
+                href="https://digital-pet-code-world.vercel.app/"
+                target="_blank"
+                style="color: #fff; text-decoration: underline; opacity: 0.8"
+                >digital-pet-code-world.vercel.app</a
+              >
+            </p>
+            <p>
+              Players can interact with the pet through typed messages and feed
+              it real objects via webcam input, creating a unique blend of
+              AI-powered gaming and reality interaction.
+            </p>
+            <h3>Key Learnings</h3>
+            <p>• How to integrate AI APIs into interactive web experiences</p>
+            <p>
+              • Importance of user feedback in balancing novelty with usability
+            </p>
+            <p>
+              • Crafting a unique digital personality through minimalist UI and
+              behavior design
+            </p>
+          </div>
+        </section>
+
+        <nav class="project-navigation">
+          <a href="#" class="project-nav-link" id="prev-project">
+            <span class="project-nav-arrow">←</span>
+            <span>Previous Project</span>
+          </a>
+          <a href="#" class="project-nav-link" id="next-project">
+            <span>Next Project</span>
+            <span class="project-nav-arrow">→</span>
+          </a>
+        </nav>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
-</html> 
+  </body>
+</html>
