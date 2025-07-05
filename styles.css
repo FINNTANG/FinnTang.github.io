@@ -798,10 +798,34 @@ body:has(.project-detail-page.active) {
     width: 100%;
 }
 
+/* 桌面端 */
 .project-detail-content {
-    padding: 120px 60px 60px;
+    padding: 32px 60px 60px;
     max-width: 1200px;
     margin: 0 auto;
+}
+.project-hero-title {
+    margin-bottom: 12px;
+}
+
+/* 移动端 */
+@media (max-width: 768px) {
+    .project-detail-content {
+        padding: 20px 20px 40px;
+        max-width: 100%;
+    }
+    .project-hero-title {
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-detail-content {
+        padding: 12px 8px 32px;
+    }
+    .project-hero-title {
+        margin-bottom: 4px;
+    }
 }
 
 .project-hero {
@@ -814,13 +838,14 @@ body:has(.project-detail-page.active) {
 .project-hero-title {
     font-size: clamp(48px, 8vw, 80px);
     font-weight: 700;
-    line-height: 0.9;
-    margin-bottom: 40px;
+    line-height: 1.1;
+    margin-bottom: 24px;
     letter-spacing: -2px;
     background: linear-gradient(135deg, #fff, #ccc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    padding-bottom: 8px;
 }
 
 .project-hero-meta {
@@ -1197,8 +1222,11 @@ body:has(.project-detail-page.active) {
     /* 主内容区域优化 */
     .main-content {
         margin-left: 0;
-        margin-top: 64px;
-        padding: 32px 20px 48px;
+        margin-top: 70px; /* 恢复原设计 */
+        padding: 32px 24px 60px;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
     
     /* 导航过滤器优化 */
@@ -1225,7 +1253,7 @@ body:has(.project-detail-page.active) {
     .work-grid {
         grid-template-columns: 1fr;
         gap: 32px;
-        padding-top: 16px;
+        padding-top: 24px; /* 新增，让项目卡片整体下移 */
         max-width: 400px;
         margin: 0 auto;
     }
@@ -1353,13 +1381,13 @@ body:has(.project-detail-page.active) {
     
     /* ========== 项目详情页优化 ========== */
     .project-detail-content {
-        padding: 80px 20px 40px;
+        padding: 40px 20px 40px;
         max-width: 100%;
     }
     
     .project-hero-title {
         font-size: clamp(32px, 8vw, 48px);
-        margin-bottom: 24px;
+        margin-bottom: 16px;
         text-align: center;
     }
     
@@ -1566,13 +1594,14 @@ body:has(.project-detail-page.active) {
     }
     
     .main-content {
-        margin-top: 60px;
-        padding: 24px 16px 40px;
+        margin-top: 64px; /* 恢复原设计 */
+        padding: 32px 16px 48px;
     }
     
     .work-grid {
         max-width: 100%;
         gap: 24px;
+        padding-top: 24px; /* 新增，让项目卡片整体下移 */
     }
     
     .project-image {
@@ -1588,7 +1617,7 @@ body:has(.project-detail-page.active) {
     }
     
     .project-detail-content {
-        padding: 70px 16px 32px;
+        padding: 32px 12px 32px;
     }
     
     .project-hero-title {
@@ -2805,7 +2834,7 @@ a.about-contact-value:hover::after {
     /* ========== 主内容区域精简 ========== */
     .main-content {
         margin-left: 0;
-        margin-top: 70px;
+        margin-top: 70px; /* 恢复原设计 */
         padding: 32px 24px 60px;
         width: 100%;
         max-width: 100vw;
@@ -3364,14 +3393,14 @@ a.about-contact-value:hover::after {
     }
     
     .main-content {
-        margin-top: 64px;
+        margin-top: 64px; /* 恢复原设计 */
         padding: 32px 16px 48px;
     }
     
     .work-grid {
         max-width: 100%;
         gap: 32px;
-        margin-top: 24px;
+        margin-top: 24px; /* 新增，让项目卡片整体下移 */
     }
     
     .project-image {
@@ -3471,3 +3500,92 @@ html {
         border-radius: 2px;
     }
 }
+
+.project-hero {
+    overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .work-grid {
+    padding-top: 24px;
+  }
+  .about-section {
+    padding-top: 48px;
+  }
+  .project-image-large,
+  .project-image-medium {
+    height: auto !important;
+    aspect-ratio: 16/9;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    margin-bottom: 0 !important;
+  }
+  .project-detail-video,
+  .project-detail-iframe {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100vw;
+    max-height: 40vw;
+    aspect-ratio: 16/9;
+    object-fit: contain !important;
+    display: block;
+    margin: 0 auto;
+    background: #000;
+    border-radius: 6px;
+  }
+  .project-section-title {
+    margin-bottom: 4px !important;
+  }
+  .project-image-gallery {
+    gap: 4px !important;
+    margin-bottom: 4px !important;
+  }
+  .project-image-item {
+    margin-bottom: 0 !important;
+  }
+}
+@media (max-width: 480px) {
+  .work-grid {
+    padding-top: 24px;
+  }
+  .about-section {
+    padding-top: 48px;
+  }
+  .project-image-large,
+  .project-image-medium {
+    aspect-ratio: 16/9;
+    height: auto !important;
+    min-height: 160px;
+    max-height: 220px;
+    margin-bottom: 0 !important;
+  }
+  .project-detail-video,
+  .project-detail-iframe {
+    aspect-ratio: 16/9;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100vw;
+    max-height: 220px;
+    object-fit: contain !important;
+    display: block;
+    margin: 0 auto;
+    background: #000;
+    border-radius: 6px;
+  }
+  .project-section-title {
+    margin-bottom: 2px !important;
+  }
+  .project-image-gallery {
+    gap: 2px !important;
+    margin-bottom: 2px !important;
+  }
+  .project-image-item {
+    margin-bottom: 0 !important;
+  }
+}
+
+

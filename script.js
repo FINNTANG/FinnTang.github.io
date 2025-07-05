@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
             duration: '2 months',
             tools: 'JavaScript, HTML/CSS, OpenAI API, Vercel, Pixel Art'
         },
+        'FamilyBoard': {
+            title: 'FamilyBoard',
+            category: '[ WEB DESIGN / PERSONAL ]',
+            year: '2024',
+            description: 'A personal communication dashboard designed to bridge the emotional distance between family members living in different countries.',
+            role: 'Concept Design, Frontend Development, UI/UX, User Research',
+            duration: '4 weeks',
+            tools: 'Figma, HTML/CSS/JS, GitHub Pages, Vercel'
+        },
         'Tide Bound': {
             title: 'Tide Bound',
             category: '[ GAME DESIGN / EDUCATION ]',
@@ -326,6 +335,74 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>• How to integrate AI APIs into interactive web experiences</p>
                     <p>• Importance of user feedback in balancing novelty with usability</p>
                     <p>• Crafting a unique digital personality through minimalist UI and behavior design</p>
+                </div>
+            `;
+        } else if (projectTitle === 'FamilyBoard') {
+            // FamilyBoard content
+            overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="familyboard/familyboard-overview.png" alt="FamilyBoard Dashboard Overview" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>FamilyBoard is a personal communication dashboard designed as a gift for my mom. Born from a moment of helplessness when I lost my phone at Six Flags and couldn't contact her, this platform bridges the emotional distance between family members living in different countries.</p>
+                    <p>The project combines practical features with emotional connection, creating a space where daily interactions feel natural despite the physical distance.</p>
+                </div>
+            `;
+            
+            processSection.innerHTML = `
+                <h2 class="project-section-title">Development Process</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="familyboard/familyboard-process.png" alt="FamilyBoard Development Process" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <h3>User Research & Empathy</h3>
+                    <p>Conducted in-depth interviews with my mom to understand her emotional and practical needs, focusing on making technology accessible for non-tech-savvy users.</p>
+                    <h3>Iterative Development</h3>
+                    <p>Built the platform through 4-week iterations, developing modules for daily logs, media sharing, reading tracker, and wish list features.</p>
+                    <h3>Real-time Connection</h3>
+                    <p>Designed dual-time clock and weather displays to create a sense of shared space and real-time connection despite the distance.</p>
+                </div>
+            `;
+            
+            resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="familyboard/familyboard-final-1.png" alt="FamilyBoard Final Outcome 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="familyboard/familyboard-final-2.png" alt="FamilyBoard Final Outcome 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="familyboard/familyboard-final-3.png" alt="FamilyBoard Final Outcome 3" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>Live site available at <a href="https://finntang.github.io/FamilyBorad-Finn-Mom/" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">finntang.github.io/FamilyBorad-Finn-Mom</a></p>
+                    <h3>Key Features</h3>
+                    <p>• Daily reminders for health and wellness</p>
+                    <p>• Interactive media sharing with emoji reactions</p>
+                    <p>• Reading progress tracker and book reviews</p>
+                    <p>• Real-time U.S./China time and weather integration</p>
+                    <h3>Key Learnings</h3>
+                    <p>• Designing for family requires deep empathy and understanding</p>
+                    <p>• Simple interfaces can hold significant emotional weight</p>
+                    <p>• User feedback from non-designers shapes more meaningful outcomes</p>
                 </div>
             `;
         } else if (projectTitle === 'Tide Bound') {
