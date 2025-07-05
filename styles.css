@@ -1504,8 +1504,12 @@ a.about-contact-value:hover::after {
   margin-top: 120px !important;
 }
 
+.spline-container {
+  margin-left: 150px;
+}
+
 /* 最后手段：用覆盖层遮挡右下角的任何残留水印 */
-.spline-container::after {
+/* .spline-container::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1515,7 +1519,7 @@ a.about-contact-value:hover::after {
   background: #000;
   z-index: 99999;
   pointer-events: none;
-}
+} */
 
 /* 添加滚动触发动画 */
 @keyframes fadeInUp {

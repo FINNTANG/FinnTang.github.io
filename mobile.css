@@ -1077,3 +1077,79 @@
     border-radius: 12px;
   }
 }
+
+@media (max-width: 768px) {
+  .home-content {
+    padding: 0 18px;
+    padding-top: 60px;
+    align-items: flex-start;
+  }
+
+  .home-info {
+    gap: 18px;
+  }
+
+  .main-title {
+    width: 4em;
+    line-height: 1;
+    margin-bottom: 15px;
+  }
+
+  .title-description {
+    max-width: 90%;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .home-logo {
+    margin-bottom: 40px;
+  }
+
+  .info-section {
+    border-left: none;
+    padding-left: 15px;
+  }
+
+  .info-label {
+    margin-bottom: 8px;
+  }
+
+  .nav-hint {
+    left: 15px;
+    transform: translateX(0%);
+    bottom: 30px;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+
+  .info-link {
+    margin-right: 12px;
+  }
+
+  .spline-container {
+    width: 250px;
+    height: 250px;
+    bottom: 50px;
+    right: 15px;
+    top: initial;
+    left: auto;
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .spline-container spline-viewer {
+    width: 380px;
+    height: 380px;
+  }
+
+  .spline-container::after {
+    display: none;
+  }
+}

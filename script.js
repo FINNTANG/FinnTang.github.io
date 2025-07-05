@@ -958,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function () {
       '.project-hero, .project-content-section',
     );
     animateElements.forEach((el) => {
-      el.style.opacity = '0';
+      //   el.style.opacity = '0';
       el.style.transform = 'translateY(40px)';
     });
 
