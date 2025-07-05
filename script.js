@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const projectDetailPage = document.getElementById('project-detail-page');
   const mainTitle = document.getElementById('main-title');
   const backToHome = document.getElementById('back-to-home');
+  const homeContent = document.getElementById('home-content');
   const splineContainer = document.querySelector('.spline-container');
   const projectBackBtn = document.getElementById('project-back-btn');
 
@@ -118,33 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
       existingBlocker.remove();
     }
 
-    // 显示Spline文字特效在作品集页面
-    const splineText = document.getElementById('projectSplineText');
-    if (splineText) {
-      console.log('Showing Spline text effect on portfolio page');
-      splineText.style.display = 'block';
-      splineText.style.position = 'absolute';
-      splineText.style.top = '90px';
-      splineText.style.left = '60%';
-      splineText.style.transform = 'translateX(-50%)';
-      splineText.style.width = '650px';
-      splineText.style.height = '300px';
-      splineText.style.zIndex = '1';
-      splineText.style.opacity = '1';
-      splineText.style.visibility = 'visible';
-      splineText.style.pointerEvents = 'none';
-      splineText.style.background = 'transparent';
-      splineText.classList.add('visible');
-
-      // 确保Spline viewer可以交互并放大
-      const splineViewer = splineText.querySelector('spline-viewer');
-      if (splineViewer) {
-        splineViewer.style.pointerEvents = 'auto';
-        splineViewer.style.transform = 'scale(1.3)';
-        splineViewer.style.transformOrigin = 'center center';
-      }
-    }
-
     // Reset and restart all videos when entering portfolio page
     setTimeout(() => {
       const allVideos = document.querySelectorAll(
@@ -175,17 +149,6 @@ document.addEventListener('DOMContentLoaded', function () {
     portfolioPage.style.display = 'none';
     projectDetailPage.classList.remove('active');
     homePage.style.display = 'block';
-
-    // 隐藏Spline文字特效
-    const splineText = document.getElementById('projectSplineText');
-    if (splineText) {
-      splineText.style.opacity = '0';
-      splineText.style.visibility = 'hidden';
-      splineText.classList.remove('visible');
-      setTimeout(() => {
-        splineText.style.display = 'none';
-      }, 600);
-    }
 
     // Reset project cards
     const projectCards = document.querySelectorAll('.project-card');
@@ -241,17 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log('=== Starting showProjectDetail ===');
 
-    // 隐藏Spline文字特效（因为现在进入详情页面）
-    const splineText = document.getElementById('projectSplineText');
-    if (splineText) {
-      splineText.style.opacity = '0';
-      splineText.style.visibility = 'hidden';
-      splineText.classList.remove('visible');
-      setTimeout(() => {
-        splineText.style.display = 'none';
-      }, 300);
-    }
-
     // 预先更新内容，避免在显示时才更新导致的卡顿
     updateProjectSections(projectTitle);
 
@@ -274,20 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 立即显示页面，避免延迟
     projectDetailPage.classList.add('active');
-
-    // 优化动画时序，减少卡顿感
-    requestAnimationFrame(() => {
-      const animateElements = projectDetailPage.querySelectorAll(
-        '.project-hero, .project-content-section',
-      );
-      animateElements.forEach((el, index) => {
-        // 使用适中的延迟，保持流畅感
-        setTimeout(() => {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, index * 150); // 调整为150ms
-      });
-    });
   }
 
   function updateProjectSections(projectTitle) {
@@ -1026,23 +964,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setTimeout(() => {
       projectDetailPage.classList.remove('active');
-      // 返回作品集页面时重新显示Spline文字特效
-      const splineText = document.getElementById('projectSplineText');
-      if (splineText) {
-        setTimeout(() => {
-          splineText.style.display = 'block';
-          splineText.style.opacity = '1';
-          splineText.style.visibility = 'visible';
-          splineText.classList.add('visible');
-        }, 100);
-      }
     }, 200);
   }
 
   // Event listeners for navigation
   mainTitle.addEventListener('click', showPortfolio);
   backToHome.addEventListener('click', showHome);
-  splineContainer.addEventListener('click', showPortfolio);
+  homeContent.addEventListener('click', showPortfolio);
   projectBackBtn.addEventListener('click', hideProjectDetail);
 
   // 修复FINN TANG标题点击事件 - 使用正确的选择器
@@ -1262,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Parallax effect for home page
+  // Parallax effect for home page - 支持点击穿透
   let mouseX = 0;
   let mouseY = 0;
 
@@ -1514,4 +1442,4 @@ function observeElements() {
 }
 
 // Call observe function when needed
-setTimeout(observeElements, 1000);
+// setTimeout(observeElements, 1000);

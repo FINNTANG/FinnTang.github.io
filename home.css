@@ -1,0 +1,219 @@
+/* Home Page */
+.home-page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 9;
+}
+
+.spline-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.spline-container spline-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide Spline watermark and UI elements - 彻底隐藏版本 */
+.spline-container spline-viewer,
+spline-viewer {
+  --spline-watermark-display: none !important;
+  --logo-display: none !important;
+  --controls-display: none !important;
+  --watermark-display: none !important;
+  --ui-display: none !important;
+}
+
+/* 隐藏所有可能的UI元素 */
+spline-viewer::part(default-ui),
+spline-viewer::part(logo),
+spline-viewer::part(controls),
+spline-viewer::part(watermark),
+spline-viewer::part(ui),
+spline-viewer .spline-watermark,
+spline-viewer .logo,
+spline-viewer .controls,
+spline-viewer .watermark {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  cursor: pointer;
+  transition: transform 0.1s ease-out;
+}
+
+/* CSS悬停视差效果 - 将鼠标区域分为9个区域 */
+/* .home-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  z-index: -1;
+} */
+
+.home-left {
+  flex: 1;
+  max-width: 600px;
+}
+
+.home-logo {
+  margin-bottom: 60px;
+}
+
+.main-title {
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 0.9;
+  margin-bottom: 30px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main-title:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(45deg, #fff, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title-description {
+  max-width: 500px;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.8;
+  font-weight: 300;
+}
+
+.home-info {
+  display: grid;
+  gap: 40px;
+}
+
+.info-section {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 20px;
+}
+
+.info-label {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.6;
+  text-transform: lowercase;
+  font-style: italic;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.info-content {
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.info-content p {
+  margin-bottom: 8px;
+}
+
+.info-link {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+.info-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.home-right {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  padding-bottom: 60px;
+}
+
+.year-indicator {
+  display: none;
+}
+
+.nav-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  opacity: 0.6;
+}
+
+.nav-hint span {
+  font-size: 12px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.scroll-indicator {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line {
+  width: 100%;
+  height: 20px;
+  background: #fff;
+  animation: scroll 2s ease-in-out infinite;
+}
+
+@keyframes scroll {
+  0%,
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+.spline-container {
+  cursor: pointer;
+  pointer-events: auto;
+}

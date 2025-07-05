@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finn Tang - Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./home.css" />
+    <link rel="stylesheet" href="./profile.css" />
+    <link rel="stylesheet" href="./mobile.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -15,26 +18,8 @@
     ></script>
   </head>
   <body>
-    <!-- 测试用的简单红色方块 -->
-    <div
-      id="testBox"
-      style="
-        position: fixed;
-        top: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 300px;
-        height: 100px;
-        background: red;
-        z-index: 99999;
-        display: none;
-      "
-    >
-      TEST BOX - 如果你看到这个，说明元素可以显示
-    </div>
-
     <!-- Project Detail Spline Text Effect -->
-    <div
+    <!-- <div
       class="project-spline-text"
       id="projectSplineText"
       style="display: none"
@@ -43,7 +28,7 @@
         url="https://prod.spline.design/6ON5CzVUt5GlMWXd/scene.splinecode"
         loading-anim-type="spinner-big-dark"
       ></spline-viewer>
-    </div>
+    </div> -->
 
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
@@ -73,7 +58,7 @@
       </div>
 
       <!-- Home Content -->
-      <div class="home-content">
+      <div class="home-content" id="home-content">
         <div class="home-left">
           <div class="home-logo">
             <h1 class="main-title" id="main-title">FINN TANG</h1>
