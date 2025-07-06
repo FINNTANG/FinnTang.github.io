@@ -119,6 +119,33 @@ document.addEventListener('DOMContentLoaded', function () {
       existingBlocker.remove();
     }
 
+    // 显示Spline文字特效在作品集页面
+    const splineText = document.getElementById('projectSplineText');
+    if (splineText) {
+      console.log('Showing Spline text effect on portfolio page');
+      splineText.style.display = 'block';
+      splineText.style.position = 'absolute';
+      splineText.style.top = '90px';
+      splineText.style.left = '60%';
+      splineText.style.transform = 'translateX(-50%)';
+      splineText.style.width = '650px';
+      splineText.style.height = '300px';
+      splineText.style.zIndex = '1';
+      splineText.style.opacity = '1';
+      splineText.style.visibility = 'visible';
+      splineText.style.pointerEvents = 'none';
+      splineText.style.background = 'transparent';
+      splineText.classList.add('visible');
+
+      // 确保Spline viewer可以交互并放大
+      const splineViewer = splineText.querySelector('spline-viewer');
+      if (splineViewer) {
+        splineViewer.style.pointerEvents = 'auto';
+        splineViewer.style.transform = 'scale(1.3)';
+        splineViewer.style.transformOrigin = 'center center';
+      }
+    }
+
     // Reset and restart all videos when entering portfolio page
     setTimeout(() => {
       const allVideos = document.querySelectorAll(
