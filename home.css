@@ -16,13 +16,12 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-<<<<<<< HEAD
   display: flex;
   align-items: center;
   justify-content: center;
-=======
   overflow: hidden;
->>>>>>> 3b226cb6a3ef460716552f0e6bcdbcc87c8e50c9
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .spline-container spline-viewer {
@@ -222,7 +221,4 @@ spline-viewer .watermark {
   }
 }
 
-.spline-container {
-  cursor: pointer;
-  pointer-events: auto;
-}
+
