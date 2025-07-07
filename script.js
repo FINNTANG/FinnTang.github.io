@@ -108,80 +108,145 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Page navigation functions
   function showPortfolio() {
+    // 立即隐藏主页，避免重叠渲染
     homePage.style.display = 'none';
+    
+    // 预先设置页面状态，减少重排
     portfolioPage.style.display = 'block';
+    portfolioPage.style.opacity = '0';
+    portfolioPage.style.transform = 'translateY(20px)';
+    
+    // 移除其他页面状态
     projectDetailPage.classList.remove('active');
-    portfolioPage.classList.add('page-transition', 'active');
-
-    // 移除主页的水印遮挡层
-    const existingBlocker = document.getElementById('spline-watermark-blocker');
-    if (existingBlocker) {
-      existingBlocker.remove();
-    }
-
-    // 显示Spline文字特效在作品集页面
-    const splineText = document.getElementById('projectSplineText');
-    if (splineText) {
-      console.log('Showing Spline text effect on portfolio page');
-      splineText.style.display = 'block';
-      splineText.style.position = 'absolute';
-      splineText.style.top = '90px';
-      splineText.style.left = '60%';
-      splineText.style.transform = 'translateX(-50%)';
-      splineText.style.width = '650px';
-      splineText.style.height = '300px';
-      splineText.style.zIndex = '1';
-      splineText.style.opacity = '1';
-      splineText.style.visibility = 'visible';
-      splineText.style.pointerEvents = 'none';
-      splineText.style.background = 'transparent';
-      splineText.classList.add('visible');
-
-      // 确保Spline viewer可以交互并放大
-      const splineViewer = splineText.querySelector('spline-viewer');
-      if (splineViewer) {
-        splineViewer.style.pointerEvents = 'auto';
-        splineViewer.style.transform = 'scale(1.3)';
-        splineViewer.style.transformOrigin = 'center center';
+    
+    // 使用requestAnimationFrame确保DOM更新完成后再开始动画
+    requestAnimationFrame(() => {
+      // 添加页面转换类并开始动画
+      portfolioPage.classList.add('page-transition', 'active');
+      portfolioPage.style.opacity = '1';
+      portfolioPage.style.transform = 'translateY(0)';
+      portfolioPage.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      
+      // 清理主页的水印遮挡层
+      const existingBlocker = document.getElementById('spline-watermark-blocker');
+      if (existingBlocker) {
+        existingBlocker.remove();
       }
-    }
 
-    // Reset and restart all videos when entering portfolio page
-    setTimeout(() => {
-      const allVideos = document.querySelectorAll(
-        '.project-card-video, .project-video',
-      );
-      allVideos.forEach((video) => {
-        if (video.tagName === 'VIDEO') {
-          video.currentTime = 0;
-          video
-            .play()
-            .catch((e) => console.log('Video autoplay prevented:', e));
+      // 延迟显示Spline文字特效，避免阻塞主动画
+      setTimeout(() => {
+        const splineText = document.getElementById('projectSplineText');
+        if (splineText) {
+          splineText.style.display = 'block';
+          splineText.style.position = 'absolute';
+          splineText.style.top = '90px';
+          splineText.style.left = '60%';
+          splineText.style.transform = 'translateX(-50%)';
+          splineText.style.width = '650px';
+          splineText.style.height = '300px';
+          splineText.style.zIndex = '1';
+          splineText.style.opacity = '0';
+          splineText.style.visibility = 'visible';
+          splineText.style.pointerEvents = 'none';
+          splineText.style.background = 'transparent';
+          splineText.style.transition = 'opacity 0.8s ease';
+          
+          // 渐显Spline效果
+          setTimeout(() => {
+            splineText.style.opacity = '1';
+            splineText.classList.add('visible');
+          }, 100);
+
+          const splineViewer = splineText.querySelector('spline-viewer');
+          if (splineViewer) {
+            splineViewer.style.pointerEvents = 'auto';
+            splineViewer.style.transform = 'scale(1.3)';
+            splineViewer.style.transformOrigin = 'center center';
+          }
         }
-      });
-    }, 100);
+      }, 300);
 
-    // Animate project cards
-    setTimeout(() => {
-      const projectCards = document.querySelectorAll('.project-card');
-      projectCards.forEach((card, index) => {
-        setTimeout(() => {
-          card.classList.add('visible');
-        }, index * 100);
-      });
-    }, 300);
+      // 优化视频处理 - 分批处理避免卡顿
+      setTimeout(() => {
+        const allVideos = document.querySelectorAll('.project-card-video, .project-video');
+        let videoIndex = 0;
+        
+        const processVideo = () => {
+          if (videoIndex < allVideos.length) {
+            const video = allVideos[videoIndex];
+            if (video.tagName === 'VIDEO') {
+              video.currentTime = 0;
+              video.play().catch((e) => console.log('Video autoplay prevented:', e));
+            }
+            videoIndex++;
+            // 使用 requestAnimationFrame 分帧处理
+            requestAnimationFrame(processVideo);
+          }
+        };
+        
+        processVideo();
+      }, 400);
+
+      // 优化项目卡片动画 - 使用更流畅的时序
+      setTimeout(() => {
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        // 预先设置所有卡片的初始状态
+        projectCards.forEach((card, index) => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(40px)';
+          card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        });
+        
+        // 分批显示卡片，创建波浪效果
+        projectCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+            card.classList.add('visible');
+          }, index * 80); // 减少延迟间隔，让动画更连贯
+        });
+      }, 200);
+    });
   }
 
   function showHome() {
-    portfolioPage.style.display = 'none';
-    projectDetailPage.classList.remove('active');
-    homePage.style.display = 'block';
+    // 添加离开动画
+    portfolioPage.style.opacity = '0';
+    portfolioPage.style.transform = 'translateY(-20px)';
+    portfolioPage.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    
+    // 隐藏Spline文字特效
+    const splineText = document.getElementById('projectSplineText');
+    if (splineText) {
+      splineText.style.opacity = '0';
+      setTimeout(() => {
+        splineText.style.display = 'none';
+        splineText.classList.remove('visible');
+      }, 400);
+    }
+    
+    // 延迟切换页面直到动画完成
+    setTimeout(() => {
+      portfolioPage.style.display = 'none';
+      projectDetailPage.classList.remove('active');
+      homePage.style.display = 'block';
+      
+      // 重置作品集页面状态
+      portfolioPage.classList.remove('page-transition', 'active');
+      portfolioPage.style.opacity = '';
+      portfolioPage.style.transform = '';
+      portfolioPage.style.transition = '';
 
-    // Reset project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card) => {
-      card.classList.remove('visible');
-    });
+      // 重置项目卡片状态
+      const projectCards = document.querySelectorAll('.project-card');
+      projectCards.forEach((card) => {
+        card.classList.remove('visible');
+        card.style.opacity = '';
+        card.style.transform = '';
+        card.style.transition = '';
+      });
+    }, 400);
   }
 
   // Project navigation functionality
@@ -1147,34 +1212,37 @@ document.addEventListener('DOMContentLoaded', function () {
   const projectCards = document.querySelectorAll('.project-card');
 
   projectCards.forEach((card, index) => {
-    // 简化动画延迟
-    card.style.animationDelay = `${index * 0.05}s`;
+    // 预设动画延迟，但使用更快的时序
+    card.style.animationDelay = `${index * 0.03}s`;
 
     let hoverTimeout;
+    let isHovering = false;
 
     card.addEventListener('mouseenter', function () {
+      if (isHovering) return;
+      isHovering = true;
+      
       clearTimeout(hoverTimeout);
       if (this.classList.contains('visible')) {
-        // 简化悬停效果
-        this.style.transform = 'translateY(-8px) scale(1.01)';
+        // 使用transform而不是多个属性，提升性能
+        this.style.transform = 'translateY(-6px) scale(1.008)';
         this.style.filter = 'brightness(1.02)';
-        this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.3)';
+        this.style.boxShadow = '0 12px 24px rgba(0,0,0,0.25)';
       }
     });
 
     card.addEventListener('mouseleave', function () {
-      // 添加延迟防止快速进出导致的闪烁
-      hoverTimeout = setTimeout(() => {
-        this.style.transform = 'translateY(0) scale(1)';
-        this.style.filter = 'brightness(1)';
-        this.style.boxShadow = 'none';
-      }, 50);
+      isHovering = false;
+      
+      // 移除长延迟，立即响应
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.filter = 'brightness(1)';
+      this.style.boxShadow = 'none';
     });
 
     // 点击事件 - 修复项目标题匹配
     card.addEventListener('click', function () {
       const projectTitle = this.querySelector('.project-title').textContent;
-      console.log('Clicked project:', projectTitle); // 调试用
       showProjectDetail(projectTitle);
     });
   });
@@ -1417,14 +1485,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 50);
     });
 
-    // 添加点击效果
-    item.addEventListener('click', function () {
-      // 轻微的点击反馈
-      this.style.transform = 'translateY(-4px) scale(0.98)';
-      setTimeout(() => {
-        this.style.transform = 'translateY(-8px) scale(1)';
-      }, 150);
-    });
+    // 移除原有的点击效果，因为现在点击会打开大图浏览器
+    // 原有的点击效果已被MediaLightbox接管
   });
 
   // 初始化Spline文字特效
@@ -1470,3 +1532,275 @@ function observeElements() {
 
 // Call observe function when needed
 // setTimeout(observeElements, 1000);
+
+// Media Lightbox 功能
+class MediaLightbox {
+  constructor() {
+    this.lightbox = document.getElementById('media-lightbox');
+    this.lightboxImage = document.getElementById('lightbox-image');
+    this.lightboxVideo = document.getElementById('lightbox-video');
+    this.lightboxIframe = document.getElementById('lightbox-iframe');
+    this.lightboxClose = document.getElementById('lightbox-close');
+    this.lightboxPrev = document.getElementById('lightbox-prev');
+    this.lightboxNext = document.getElementById('lightbox-next');
+    this.lightboxCurrent = document.getElementById('lightbox-current');
+    this.lightboxTotal = document.getElementById('lightbox-total');
+    this.lightboxTitle = document.getElementById('lightbox-title');
+    this.lightboxMediaContainer = document.querySelector('.lightbox-media-container');
+    
+    this.currentIndex = 0;
+    this.mediaItems = [];
+    this.isOpen = false;
+    
+    this.init();
+  }
+  
+  init() {
+    // 关闭按钮事件
+    this.lightboxClose.addEventListener('click', () => this.close());
+    
+    // 导航按钮事件
+    this.lightboxPrev.addEventListener('click', () => this.previous());
+    this.lightboxNext.addEventListener('click', () => this.next());
+    
+    // 点击遮罩关闭
+    this.lightbox.addEventListener('click', (e) => {
+      if (e.target === this.lightbox || e.target.classList.contains('lightbox-overlay')) {
+        this.close();
+      }
+    });
+    
+    // 键盘事件
+    document.addEventListener('keydown', (e) => {
+      if (!this.isOpen) return;
+      
+      switch(e.key) {
+        case 'Escape':
+          this.close();
+          break;
+        case 'ArrowLeft':
+          this.previous();
+          break;
+        case 'ArrowRight':
+          this.next();
+          break;
+      }
+    });
+    
+    // 初始化媒体项目点击事件
+    this.initializeMediaItems();
+  }
+  
+  initializeMediaItems() {
+    // 为所有项目详情页面的媒体元素添加点击事件
+    document.addEventListener('click', (e) => {
+      const mediaElement = e.target.closest('.project-image-item');
+      if (!mediaElement) return;
+      
+      // 检查是否在项目详情页面中
+      const projectDetailPage = document.getElementById('project-detail-page');
+      if (!projectDetailPage.classList.contains('active')) return;
+      
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // 收集当前页面的所有媒体项目
+      this.collectMediaItems();
+      
+      // 找到当前点击的媒体在列表中的索引
+      const allMediaItems = document.querySelectorAll('.project-content-section .project-image-item');
+      this.currentIndex = Array.from(allMediaItems).indexOf(mediaElement);
+      
+      // 打开灯箱
+      this.open();
+    });
+  }
+  
+  collectMediaItems() {
+    this.mediaItems = [];
+    const mediaItems = document.querySelectorAll('.project-content-section .project-image-item');
+    
+    mediaItems.forEach((item, index) => {
+      const img = item.querySelector('.project-detail-image');
+      const video = item.querySelector('.project-detail-video');
+      const iframe = item.querySelector('.project-detail-iframe');
+      
+      if (img) {
+        this.mediaItems.push({
+          type: 'image',
+          src: img.src,
+          alt: img.alt || `Image ${index + 1}`,
+          title: img.alt || `Project Image ${index + 1}`
+        });
+      } else if (video) {
+        const source = video.querySelector('source');
+        this.mediaItems.push({
+          type: 'video',
+          src: source ? source.src : video.src,
+          alt: `Video ${index + 1}`,
+          title: `Project Video ${index + 1}`
+        });
+      } else if (iframe) {
+        this.mediaItems.push({
+          type: 'iframe',
+          src: iframe.src,
+          alt: `Interactive Content ${index + 1}`,
+          title: `Interactive Content ${index + 1}`
+        });
+      }
+    });
+  }
+  
+  open() {
+    if (this.mediaItems.length === 0) return;
+    
+    this.isOpen = true;
+    document.body.classList.add('lightbox-open');
+    this.lightbox.classList.add('active');
+    
+    this.updateCounter();
+    this.showMedia();
+    this.updateNavigation();
+  }
+  
+  close() {
+    this.isOpen = false;
+    document.body.classList.remove('lightbox-open');
+    this.lightbox.classList.remove('active');
+    
+    // 清理媒体内容
+    this.hideAllMedia();
+    
+    // 暂停视频
+    if (this.lightboxVideo.src) {
+      this.lightboxVideo.pause();
+      this.lightboxVideo.currentTime = 0;
+    }
+  }
+  
+  previous() {
+    if (this.mediaItems.length <= 1) return;
+    
+    this.currentIndex = (this.currentIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
+    this.showMedia();
+    this.updateCounter();
+  }
+  
+  next() {
+    if (this.mediaItems.length <= 1) return;
+    
+    this.currentIndex = (this.currentIndex + 1) % this.mediaItems.length;
+    this.showMedia();
+    this.updateCounter();
+  }
+  
+  showMedia() {
+    const mediaItem = this.mediaItems[this.currentIndex];
+    if (!mediaItem) return;
+    
+    // 显示加载状态
+    this.lightboxMediaContainer.classList.add('loading');
+    
+    // 隐藏所有媒体
+    this.hideAllMedia();
+    
+    // 更新标题
+    this.lightboxTitle.textContent = mediaItem.title;
+    
+    // 根据媒体类型显示对应元素
+    switch(mediaItem.type) {
+      case 'image':
+        this.showImage(mediaItem);
+        break;
+      case 'video':
+        this.showVideo(mediaItem);
+        break;
+      case 'iframe':
+        this.showIframe(mediaItem);
+        break;
+    }
+  }
+  
+  showImage(mediaItem) {
+    this.lightboxImage.src = mediaItem.src;
+    this.lightboxImage.alt = mediaItem.alt;
+    this.lightboxImage.classList.add('active');
+    
+    // 图片加载完成后移除加载状态
+    this.lightboxImage.onload = () => {
+      this.lightboxMediaContainer.classList.remove('loading');
+    };
+    
+    this.lightboxImage.onerror = () => {
+      this.lightboxMediaContainer.classList.remove('loading');
+      console.error('Failed to load image:', mediaItem.src);
+    };
+  }
+  
+  showVideo(mediaItem) {
+    const source = this.lightboxVideo.querySelector('source');
+    source.src = mediaItem.src;
+    this.lightboxVideo.load();
+    this.lightboxVideo.classList.add('active');
+    
+    // 视频加载完成后移除加载状态
+    this.lightboxVideo.onloadeddata = () => {
+      this.lightboxMediaContainer.classList.remove('loading');
+    };
+    
+    this.lightboxVideo.onerror = () => {
+      this.lightboxMediaContainer.classList.remove('loading');
+      console.error('Failed to load video:', mediaItem.src);
+    };
+  }
+  
+  showIframe(mediaItem) {
+    this.lightboxIframe.src = mediaItem.src;
+    this.lightboxIframe.classList.add('active');
+    
+    // iframe加载完成后移除加载状态
+    this.lightboxIframe.onload = () => {
+      this.lightboxMediaContainer.classList.remove('loading');
+    };
+    
+    this.lightboxIframe.onerror = () => {
+      this.lightboxMediaContainer.classList.remove('loading');
+      console.error('Failed to load iframe:', mediaItem.src);
+    };
+  }
+  
+  hideAllMedia() {
+    this.lightboxImage.classList.remove('active');
+    this.lightboxVideo.classList.remove('active');
+    this.lightboxIframe.classList.remove('active');
+    
+    // 重置src
+    this.lightboxImage.src = '';
+    this.lightboxIframe.src = '';
+    
+    // 暂停和重置视频
+    if (this.lightboxVideo.src) {
+      this.lightboxVideo.pause();
+      this.lightboxVideo.currentTime = 0;
+    }
+  }
+  
+  updateCounter() {
+    this.lightboxCurrent.textContent = this.currentIndex + 1;
+    this.lightboxTotal.textContent = this.mediaItems.length;
+  }
+  
+  updateNavigation() {
+    // 如果只有一个媒体项目，隐藏导航按钮
+    if (this.mediaItems.length <= 1) {
+      this.lightboxPrev.classList.add('hidden');
+      this.lightboxNext.classList.add('hidden');
+    } else {
+      this.lightboxPrev.classList.remove('hidden');
+      this.lightboxNext.classList.remove('hidden');
+    }
+  }
+}
+
+// 初始化媒体灯箱
+const mediaLightbox = new MediaLightbox();
