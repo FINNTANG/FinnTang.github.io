@@ -1,92 +1,92 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 a#logo {
   display: none !important;
 }
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #000;
-  color: #fff;
-  overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
 }
 
 /* Loading Screen */
 .loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .loading-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .loading-content {
-  text-align: center;
+    text-align: center;
 }
 
 .loading-text {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  margin-bottom: 30px;
-  opacity: 0.8;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    opacity: 0.8;
 }
 
 .loading-bar {
-  width: 200px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 0 auto;
-  overflow: hidden;
+    width: 200px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .loading-progress {
-  width: 0%;
-  height: 100%;
-  background: #fff;
-  animation: loading 2s ease-in-out forwards;
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    animation: loading 2s ease-in-out forwards;
 }
 
 @keyframes loading {
-  to {
-    width: 100%;
-  }
+    to {
+        width: 100%;
+    }
 }
 
 /* Project Detail Page */
 .project-detail-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #000;
-  z-index: 2000;
-  overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 2000;
+    overflow-y: auto;
   overflow-x: hidden;
-  transform: translateX(100%);
-  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(100%);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   /* 确保滚动条统一 */
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
 .project-detail-page.active {
-  transform: translateX(0);
+    transform: translateX(0);
 }
 
 /* 当项目详情页面激活时，隐藏body的滚动条 */
@@ -96,146 +96,146 @@ body:has(.project-detail-page.active) {
 
 .project-detail-header {
   position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2001;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 60px;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 60px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .project-back-btn {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .project-back-btn:hover {
-  opacity: 1;
-  transform: translateX(-2px);
+    opacity: 1;
+    transform: translateX(-2px);
 }
 
 .project-detail-nav {
-  display: flex;
-  gap: 40px;
+    display: flex;
+    gap: 40px;
 }
 
 .project-nav-btn {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-  padding: 8px 0;
-  opacity: 0.6;
-  position: relative;
-  transition: all 0.3s ease;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 8px 0;
+    opacity: 0.6;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .project-nav-btn:hover,
 .project-nav-btn.active {
-  opacity: 1;
+    opacity: 1;
 }
 
 .project-nav-btn::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #fff;
-  transition: width 0.3s ease;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #fff;
+    transition: width 0.3s ease;
 }
 
 .project-nav-btn:hover::after,
 .project-nav-btn.active::after {
-  width: 100%;
+    width: 100%;
 }
 
 /* 桌面端 */
 .project-detail-content {
   padding: 32px 60px 60px;
-  max-width: 1200px;
-  margin: 0 auto;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .project-hero-title {
   margin-bottom: 12px;
 }
 
 .project-hero {
-  margin-bottom: 100px;
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeInUp 1s ease 0.3s forwards;
+    margin-bottom: 100px;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s ease 0.3s forwards;
 }
 
 .project-hero-title {
-  font-size: clamp(48px, 8vw, 80px);
-  font-weight: 700;
+    font-size: clamp(48px, 8vw, 80px);
+    font-weight: 700;
   line-height: 1.1;
   margin-bottom: 24px;
-  letter-spacing: -2px;
-  background: linear-gradient(135deg, #fff, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, #fff, #ccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   padding-bottom: 8px;
 }
 
 .project-hero-meta {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 80px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    align-items: start;
 }
 
 .project-hero-info {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 1s ease 0.5s forwards;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 0.5s forwards;
 }
 
 .project-hero-category {
-  font-size: 14px;
-  opacity: 0.7;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
 }
 
 .project-hero-description {
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 50px;
-  opacity: 0.8;
-  max-width: 600px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 50px;
+    opacity: 0.8;
+    max-width: 600px;
 }
 
 .project-hero-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
 }
 
 .project-detail-item {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
 .project-detail-item:nth-child(1) {
@@ -249,33 +249,33 @@ body:has(.project-detail-page.active) {
 }
 
 .project-detail-label {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.6;
-  margin-bottom: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-bottom: 8px;
 }
 
 .project-detail-value {
-  font-size: 14px;
-  font-weight: 500;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .project-hero-year {
-  font-size: 120px;
-  font-weight: 700;
-  opacity: 0.1;
-  line-height: 1;
-  text-align: right;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 1s ease 0.6s forwards;
+    font-size: 120px;
+    font-weight: 700;
+    opacity: 0.1;
+    line-height: 1;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 0.6s forwards;
 }
 
 .project-content-section {
-  max-width: 1400px;
-  margin: 0 auto 80px;
-  padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
 }
 
 .project-content-section:nth-child(2) {
@@ -289,188 +289,188 @@ body:has(.project-detail-page.active) {
 }
 
 .project-section-title {
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 60px;
-  letter-spacing: -1px;
-  opacity: 0.9;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 60px;
+    letter-spacing: -1px;
+    opacity: 0.9;
 }
 
 .project-image-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  margin-bottom: 50px;
-  width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+    width: 100%;
 }
 
 .project-image-item {
-  width: 100%;
-  margin-bottom: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: pointer;
+    width: 100%;
+    margin-bottom: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
 }
 
 .project-image-item:hover {
-  transform: translateY(-8px);
+    transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .project-image-item:hover .project-image-large,
 .project-image-item:hover .project-image-medium {
-  color: inherit;
-  background: inherit;
+    color: inherit;
+    background: inherit;
 }
 
 .project-image-large {
-  width: 100%;
-  height: 600px;
-  border-radius: 12px;
-  margin-bottom: 0;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.4s ease;
+    width: 100%;
+    height: 600px;
+    border-radius: 12px;
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
 }
 
 .project-image-medium {
-  width: 100%;
-  height: 450px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.4s ease;
+    width: 100%;
+    height: 450px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
 }
 
 .project-detail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 12px;
-  display: block;
-  background: #000;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .project-image-item:hover .project-detail-image {
-  transform: scale(1.02);
-  filter: brightness(1.05);
+    transform: scale(1.02);
+    filter: brightness(1.05);
 }
 
 /* 为medium尺寸图片优化显示 */
 .project-image-medium .project-detail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 12px;
-  display: block;
-  background: #000;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .project-detail-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 12px;
-  display: block;
-  background: #000;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .project-image-item:hover .project-detail-video {
-  transform: scale(1.02);
-  filter: brightness(1.05);
+    transform: scale(1.02);
+    filter: brightness(1.05);
 }
 
 .project-text-content {
-  max-width: 800px;
-  margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .project-text-content p {
-  font-size: 16px;
-  line-height: 1.8;
-  opacity: 0.8;
-  margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 1.8;
+    opacity: 0.8;
+    margin-bottom: 30px;
 }
 
 .project-text-content h3 {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 60px 0 30px;
-  opacity: 0.9;
-  letter-spacing: -0.5px;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 60px 0 30px;
+    opacity: 0.9;
+    letter-spacing: -0.5px;
 }
 
 .project-navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 60px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 100px;
 }
 
 /* 当只有下一个项目按钮时，将其对齐到右边 */
 .project-navigation:has(#prev-project[style*='display: none']) {
-  justify-content: flex-end;
+    justify-content: flex-end;
 }
 
 /* 当只有上一个项目按钮时，将其对齐到左边 */
 .project-navigation:has(#next-project[style*='display: none']) {
-  justify-content: flex-start;
+    justify-content: flex-start;
 }
 
 .project-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-  opacity: 0.7;
-  transition: all 0.4s ease;
-  padding: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.7;
+    transition: all 0.4s ease;
+    padding: 15px 0;
 }
 
 .project-nav-link:hover {
-  opacity: 1;
-  transform: translateY(-2px);
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
 .project-nav-arrow {
-  font-size: 18px;
-  transition: transform 0.3s ease;
+    font-size: 18px;
+    transition: transform 0.3s ease;
 }
 
 .project-nav-link:hover .project-nav-arrow {
-  transform: translateX(3px);
+    transform: translateX(3px);
 }
 
 .project-nav-link:first-child:hover .project-nav-arrow {
-  transform: translateX(-3px);
+    transform: translateX(-3px);
 }
 
 /* Animations */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes imageLoad {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive Design */
@@ -599,7 +599,7 @@ html {
 }
 
 .about-label {
-  font-size: 12px;
+        font-size: 12px;
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -664,7 +664,7 @@ html {
 /* About Photo Section */
 .about-hero-visual {
   display: flex;
-  flex-direction: column;
+        flex-direction: column;
   align-items: center;
   gap: 28px;
   opacity: 0;
@@ -733,7 +733,7 @@ html {
 }
 
 .stat-item {
-  text-align: center;
+        text-align: center;
   padding: 14px 18px;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -902,7 +902,7 @@ html {
 
 .tag {
   padding: 6px 12px;
-  font-size: 12px;
+        font-size: 12px;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1020,7 +1020,7 @@ html {
   width: 20px;
   height: 20px;
   border: 2px solid rgba(255, 255, 255, 0.7);
-  border-radius: 3px;
+    border-radius: 3px;
   background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.7) 50%, transparent 55%);
 }
 
@@ -1053,7 +1053,7 @@ html {
 
 .category-header h3 {
   font-size: 20px;
-  font-weight: 600;
+    font-weight: 600;
   color: #fff;
   letter-spacing: -0.5px;
   margin: 0;
@@ -1086,7 +1086,7 @@ html {
 
 .skill-name {
   font-size: 15px;
-  font-weight: 500;
+    font-weight: 500;
   color: #fff;
   transition: color 0.3s ease;
 }
@@ -1130,7 +1130,7 @@ html {
 .cta-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
+    display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 50px;
   align-items: center;
@@ -1169,7 +1169,7 @@ html {
 
 .cta-actions {
   display: flex;
-  gap: 20px;
+    gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -1286,7 +1286,7 @@ html {
 
 .about-contact h3 {
   font-size: 32px;
-  font-weight: 600;
+    font-weight: 600;
   margin-bottom: 60px;
   text-align: center;
   letter-spacing: -1px;
@@ -1302,7 +1302,7 @@ html {
 .about-contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+    gap: 30px;
 }
 
 .about-contact-card {
@@ -1337,7 +1337,7 @@ html {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  display: flex;
+    display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -1472,10 +1472,10 @@ html {
 }
 
 .about-contact-label {
-  font-size: 11px;
-  text-transform: uppercase;
+    font-size: 11px;
+    text-transform: uppercase;
   letter-spacing: 2px;
-  opacity: 0.5;
+    opacity: 0.5;
   font-weight: 600;
   margin-bottom: 16px;
   position: relative;
@@ -1489,10 +1489,10 @@ html {
 }
 
 .about-contact-value {
-  font-size: 16px;
+    font-size: 16px;
   font-weight: 500;
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: block;
   line-height: 1.4;
@@ -1670,235 +1670,235 @@ a.about-contact-value:hover::after {
 
 /* Contact Section (Overlay) */
 .contact-section {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
   background: linear-gradient(
     180deg,
     transparent 0%,
     rgba(0, 0, 0, 0.95) 20%,
     #000 100%
   );
-  backdrop-filter: blur(20px);
-  transform: translateY(100%);
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1500;
-  padding: 60px 0 40px;
+    backdrop-filter: blur(20px);
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1500;
+    padding: 60px 0 40px;
 }
 
 .contact-section.active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .contact-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 60px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
 }
 
 .contact-left h2 {
-  font-size: clamp(32px, 5vw, 48px);
-  font-weight: 700;
-  margin-bottom: 30px;
-  background: linear-gradient(45deg, #fff, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #fff, #ccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .contact-description {
-  font-size: 16px;
-  line-height: 1.6;
-  opacity: 0.7;
-  margin-bottom: 40px;
-  max-width: 400px;
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.7;
+    margin-bottom: 40px;
+    max-width: 400px;
 }
 
 .contact-right {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .contact-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 .contact-item:hover {
-  border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
 }
 
 .contact-label {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.6;
-  font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    font-weight: 500;
 }
 
 .contact-value {
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: none;
-  transition: opacity 0.3s ease;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
 }
 
 .contact-value:hover {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .contact-close {
-  position: absolute;
-  top: 30px;
-  right: 60px;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 30px;
+    right: 60px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .contact-close:hover {
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Page Transitions */
 .page-transition {
-  opacity: 0;
-  transform: translateY(20px);
+    opacity: 0;
+    transform: translateY(20px);
   transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
 
 .page-transition.active {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* 只有在需要显示占位符时才添加背景 */
 .project-image-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  font-size: 16px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    border-radius: 12px;
 }
 
 .project-image-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  margin-bottom: 50px;
-  width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+    width: 100%;
 }
 
 .project-image-item:hover .project-image-large,
 .project-image-item:hover .project-image-medium {
-  color: inherit;
-  background: inherit;
+    color: inherit;
+    background: inherit;
 }
 
 /* 响应式调整 */
 @media (max-width: 1024px) {
-  .project-image-large {
-    height: 500px;
-  }
-
-  .project-image-gallery {
-    gap: 30px;
-  }
+    .project-image-large {
+        height: 500px;
+    }
+    
+    .project-image-gallery {
+        gap: 30px;
+    }
 }
 
 .project-card-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border: none;
-  background: #000;
-  /* 优化iframe渲染性能 */
-  will-change: transform, filter;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: none;
+    background: #000;
+    /* 优化iframe渲染性能 */
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .project-image-item:hover .project-card-video {
-  transform: scale(1.02);
-  filter: brightness(1.05);
+    transform: scale(1.02);
+    filter: brightness(1.05);
 }
 
 .project-detail-iframe {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  border: none;
-  background: #000;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  /* 优化iframe渲染性能 */
-  will-change: transform, filter;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: none;
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* 优化iframe渲染性能 */
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .project-image-item:hover .project-detail-iframe {
-  transform: scale(1.02);
-  filter: brightness(1.05);
+    transform: scale(1.02);
+    filter: brightness(1.05);
 }
 
 /* 为长图片（如tidebound-process-1）特殊处理容器高度 */
 [data-section='process']
   .project-image-item:has(.project-detail-image[src*='tidebound-process-1'])
   .project-image-medium {
-  height: 1200px;
+    height: 1200px;
 }
 
 /* 确保所有项目图片都使用统一的显示方式 */
 .project-detail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 12px;
-  display: block;
-  background: #000;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* 确保REALITYEATER图片保持原有尺寸 */
 [data-section='process'] .project-detail-image[src*='realityeater'],
 [data-section='results'] .project-detail-image[src*='realityeater'] {
-  width: 100% !important;
-  height: 100% !important;
-  transform: none !important;
-  object-fit: contain !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    object-fit: contain !important;
 }
 
 /* 使用更具体的选择器强制Dice Birdhouse图片尺寸 */
@@ -1907,19 +1907,19 @@ a.about-contact-value:hover::after {
 [data-section='results'] .project-detail-image[src*='bird-final-3'],
 [data-section='results'] .project-detail-image[src*='bird-final-4'],
 [data-section='results'] .project-detail-image[src*='bird-final-5'] {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
 }
 
 /* 确保Dice Birdhouse的Final图片容器高度与其他项目一致 */
 [data-section='results'] .project-image-item .project-image-large {
   /* height: 600px !important; */
-  overflow: hidden !important;
+    overflow: hidden !important;
 }
 
 /* 确保FateRISD的Final图片与REALITYEATER保持一致的尺寸 */
@@ -1927,49 +1927,49 @@ a.about-contact-value:hover::after {
 [data-section='results'] .project-detail-image[src*='fate-final-2'],
 [data-section='results'] .project-detail-image[src*='fate-final-3'],
 [data-section='results'] .project-detail-image[src*='fate-final-4'] {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
 }
 
 /* Project Detail Spline Text Effect - 作品集页面版本 */
 .project-spline-text {
-  position: absolute !important;
+    position: absolute !important;
   top: 70px !important;
-  left: 60% !important;
-  transform: translateX(-50%) !important;
-  width: 650px !important;
-  height: 300px !important;
-  z-index: 1 !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transition: all 0.6s ease !important;
-  pointer-events: none !important;
-  background: transparent !important;
-  border-radius: 12px !important;
+    left: 60% !important;
+    transform: translateX(-50%) !important;
+    width: 650px !important;
+    height: 300px !important;
+    z-index: 1 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.6s ease !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    border-radius: 12px !important;
 }
 
 .project-spline-text.visible {
-  opacity: 1 !important;
-  visibility: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .project-spline-text spline-viewer {
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 10px !important;
-  pointer-events: auto !important;
-  transform: scale(1.3) !important;
-  transform-origin: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 10px !important;
+    pointer-events: auto !important;
+    transform: scale(1.3) !important;
+    transform-origin: center center !important;
 }
 
 /* 确保作品集页面的内容有足够的上边距，但不移动FINN TANG */
 .portfolio-page.active .portfolio-grid {
-  margin-top: 120px !important;
+    margin-top: 120px !important;
 }
 
 .spline-container {
@@ -2137,7 +2137,7 @@ html {
 }
 
 .lightbox-overlay {
-  position: absolute;
+    position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -2179,7 +2179,7 @@ html {
   justify-content: center;
   border-radius: 12px;
   overflow: hidden;
-  background: #000;
+    background: #000;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
 }
 
@@ -2357,7 +2357,7 @@ html {
   letter-spacing: 0.5px;
   opacity: 0;
   transition: opacity 0.3s ease;
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .media-lightbox.active .lightbox-container::before {

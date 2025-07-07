@@ -16,14 +16,20 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+<<<<<<< HEAD
   display: flex;
   align-items: center;
   justify-content: center;
+=======
+  overflow: hidden;
+>>>>>>> 3b226cb6a3ef460716552f0e6bcdbcc87c8e50c9
 }
 
 .spline-container spline-viewer {
   width: 100%;
   height: 100%;
+  transform: scale(1.1);
+  transform-origin: center center;
 }
 
 /* Hide Spline watermark and UI elements - 彻底隐藏版本 */
