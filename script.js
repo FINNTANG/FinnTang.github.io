@@ -85,17 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: '48 hours',
       tools: "Ren'Py, Clip Studio Paint, Photoshop, Git, Google Docs",
     },
-    'New Project Title': {
-      title: 'New Project Title',
-      category: '[ CATEGORY / TYPE ]',
-      year: '2025',
-      description:
-        'Project description: Please fill in your new project detailed description and objectives here.',
-      role: 'Role and responsibilities: Please specify your role and work responsibilities in this project',
-      duration: 'Project duration: e.g., 3 months / 2 weeks etc.',
-      tools:
-        'Tools used: Please list the software, tools and technologies used in the project',
-    },
   };
 
   // Loading animation
@@ -258,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'Float',
       'Dice Birdhouse',
       'FateRISD: Final Bubble',
-      'New Project Title',
+      'FamilyBoard',
     ];
     const currentIndex = projectTitles.indexOf(currentProjectTitle);
 
@@ -404,7 +393,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/familyboard-overview.png" alt="FamilyBoard Dashboard Overview" class="project-detail-image">
+                            <video class="project-detail-video" autoplay muted loop playsinline>
+                                <source src="Finnmom.mp4" type="video/mp4">
+                                <span>FamilyBoard Dashboard Overview</span>
+                            </video>
                         </div>
                     </div>
                 </div>
@@ -419,7 +411,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/familyboard-process.png" alt="FamilyBoard Development Process" class="project-detail-image">
+                            <img src="familyboard/FM-process-1.png" alt="FamilyBoard Development Process 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="familyboard/FM-process-2.png" alt="FamilyBoard Development Process 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="familyboard/FM-process-3.png" alt="FamilyBoard Development Process 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="familyboard/FM-process-4.png" alt="FamilyBoard Development Process 4" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -438,17 +445,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/familyboard-final-1.png" alt="FamilyBoard Final Outcome 1" class="project-detail-image">
+                            <video class="project-detail-video" autoplay muted loop playsinline>
+                                <source src="familyboard/FM-final-1.mp4" type="video/mp4">
+                                <span>FamilyBoard Final Outcome Video</span>
+                            </video>
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/familyboard-final-2.png" alt="FamilyBoard Final Outcome 2" class="project-detail-image">
+                            <img src="familyboard/FM-final-2.png" alt="FamilyBoard Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/familyboard-final-3.png" alt="FamilyBoard Final Outcome 3" class="project-detail-image">
+                            <img src="familyboard/FM-final-3.png" alt="FamilyBoard Final Outcome 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="familyboard/FM-final-4.png" alt="FamilyBoard Final Outcome 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="familyboard/FM-final-5.png" alt="FamilyBoard Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -860,75 +880,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p>• How to manage rapid creative decisions under intense time constraints</p>
                     <p>• The power of collaboration and humor in building memorable experiences</p>
                     <p>• That game jams are not only about polish—but about joy, bonding, and finishing</p>
-                </div>
-            `;
-    } else if (projectTitle === 'New Project Title') {
-      // New Project Title content
-      overviewSection.innerHTML = `
-                <h2 class="project-section-title">Overview</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="project7/project7-overview.png" alt="New Project Overview" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <p>This is the overview description of your new project. Please replace this with your project introduction, explaining the goals, concept, and main features.</p>
-                    <p>You can add a second paragraph here to further elaborate on the project background and significance.</p>
-                </div>
-            `;
-
-      processSection.innerHTML = `
-                <h2 class="project-section-title">Development Process</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-medium">
-                            <img src="project7/project7-process-1.png" alt="New Project Development Process 1" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-medium">
-                            <img src="project7/project7-process-2.png" alt="New Project Development Process 2" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <h3>Design Phase</h3>
-                    <p>Describe your design process, including initial conceptualization, sketching, and prototyping.</p>
-                    <h3>Development Phase</h3>
-                    <p>Describe the technical implementation process, challenges encountered, and solutions developed.</p>
-                    <h3>Testing & Iteration</h3>
-                    <p>Describe the testing process, user feedback collection, and product optimization iterations.</p>
-                </div>
-            `;
-
-      resultsSection.innerHTML = `
-                <h2 class="project-section-title">Final Outcome</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="project7/project7-final-1.png" alt="New Project Final Outcome 1" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="project7/project7-final-2.png" alt="New Project Final Outcome 2" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="project7/project7-final-3.png" alt="New Project Final Outcome 3" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <p>If you have an online link, you can add it here: <a href="https://your-project-link.com" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">Project Link</a></p>
-                    <p>Describe the characteristics, functionality, and user response of the final outcome.</p>
-                    <h3>Key Learnings</h3>
-                    <p>• First important experience learned from this project</p>
-                    <p>• Second important experience or skill acquired</p>
-                    <p>• Inspiration and impact for future projects</p>
                 </div>
             `;
     } else {
