@@ -358,7 +358,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-1.png" alt="REALITYEATER Final Outcome 1" class="project-detail-image">
+                            <video class="project-detail-video" autoplay muted loop playsinline>
+                                <source src="realityeater/realityeater-final-1.mp4" type="video/mp4">
+                                <span>REALITYEATER Final Outcome Video</span>
+                            </video>
                         </div>
                     </div>
                     <div class="project-image-item">
@@ -374,6 +377,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="project-image-item">
                         <div class="project-image-large">
                             <img src="realityeater/realityeater-final-4.png" alt="REALITYEATER Final Outcome 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="realityeater/realityeater-final-5.png" alt="REALITYEATER Final Outcome 5" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="realityeater/realityeater-final-6.png" alt="REALITYEATER Final Outcome 6" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="realityeater/realityeater-final-7.png" alt="REALITYEATER Final Outcome 7" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1619,18 +1637,43 @@ class MediaLightbox {
     document.body.classList.remove('lightbox-open');
     this.lightbox.classList.remove('active');
     
+    // 强制停止lightbox视频的音频
+    this.forceStopLightboxVideo();
+    
     // 清理媒体内容
     this.hideAllMedia();
+  }
+  
+  forceStopLightboxVideo() {
+    // 立即静音
+    this.lightboxVideo.muted = true;
     
-    // 暂停视频
-    if (this.lightboxVideo.src) {
-      this.lightboxVideo.pause();
-      this.lightboxVideo.currentTime = 0;
-    }
+    // 暂停播放
+    this.lightboxVideo.pause();
+    
+    // 重置时间
+    this.lightboxVideo.currentTime = 0;
+    
+    // 重置音量
+    this.lightboxVideo.volume = 0;
+    
+    // 不清空src，而是通过移除事件监听器来停止音频
+    // 移除所有事件监听器
+    this.lightboxVideo.onloadeddata = null;
+    this.lightboxVideo.onerror = null;
+    this.lightboxVideo.onended = null;
+    this.lightboxVideo.ontimeupdate = null;
   }
   
   previous() {
     if (this.mediaItems.length <= 1) return;
+    
+    // 停止当前视频音频
+    if (this.lightboxVideo.classList.contains('active')) {
+      this.lightboxVideo.pause();
+      this.lightboxVideo.muted = true;
+      this.lightboxVideo.volume = 0;
+    }
     
     this.currentIndex = (this.currentIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
     this.showMedia();
@@ -1639,6 +1682,13 @@ class MediaLightbox {
   
   next() {
     if (this.mediaItems.length <= 1) return;
+    
+    // 停止当前视频音频
+    if (this.lightboxVideo.classList.contains('active')) {
+      this.lightboxVideo.pause();
+      this.lightboxVideo.muted = true;
+      this.lightboxVideo.volume = 0;
+    }
     
     this.currentIndex = (this.currentIndex + 1) % this.mediaItems.length;
     this.showMedia();
@@ -1689,14 +1739,29 @@ class MediaLightbox {
   }
   
   showVideo(mediaItem) {
+    // 先重置视频状态
+    this.lightboxVideo.pause();
+    this.lightboxVideo.currentTime = 0;
+    
+    // 设置新的视频源
     const source = this.lightboxVideo.querySelector('source');
     source.src = mediaItem.src;
+    
+    // 重新加载视频
     this.lightboxVideo.load();
     this.lightboxVideo.classList.add('active');
     
-    // 视频加载完成后移除加载状态
+    // 确保lightbox视频不是静音状态，允许播放音频
+    this.lightboxVideo.muted = false;
+    this.lightboxVideo.volume = 1; // 确保音量正常
+    
+    // 视频加载完成后移除加载状态并自动播放
     this.lightboxVideo.onloadeddata = () => {
       this.lightboxMediaContainer.classList.remove('loading');
+      // 自动播放视频（有音频）
+      this.lightboxVideo.play().catch(e => {
+        console.log('Video autoplay failed:', e);
+      });
     };
     
     this.lightboxVideo.onerror = () => {
@@ -1725,15 +1790,15 @@ class MediaLightbox {
     this.lightboxVideo.classList.remove('active');
     this.lightboxIframe.classList.remove('active');
     
-    // 重置src
+    // 重置图片和iframe的src
     this.lightboxImage.src = '';
     this.lightboxIframe.src = '';
     
-    // 暂停和重置视频
-    if (this.lightboxVideo.src) {
-      this.lightboxVideo.pause();
-      this.lightboxVideo.currentTime = 0;
-    }
+    // 停止视频但保留src以避免重新加载问题
+    this.lightboxVideo.pause();
+    this.lightboxVideo.muted = true;
+    this.lightboxVideo.currentTime = 0;
+    this.lightboxVideo.volume = 0;
   }
   
   updateCounter() {
