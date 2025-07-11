@@ -1106,12 +1106,15 @@ document.addEventListener('DOMContentLoaded', function () {
       if (filter === 'all') {
         workSection.style.display = 'grid';
         aboutSection.style.display = 'none';
+        aboutSection.classList.remove('about-active');
       } else if (filter === 'work') {
         workSection.style.display = 'grid';
         aboutSection.style.display = 'none';
+        aboutSection.classList.remove('about-active');
       } else if (filter === 'about') {
         workSection.style.display = 'none';
         aboutSection.style.display = 'block';
+        aboutSection.classList.add('about-active');
       }
     });
   });
@@ -1137,6 +1140,7 @@ document.addEventListener('DOMContentLoaded', function () {
           // Show work section, hide about
           workSection.style.display = 'grid';
           aboutSection.style.display = 'none';
+          aboutSection.classList.remove('about-active');
 
           // Update filter buttons
           filterBtns.forEach((btn) => btn.classList.remove('active'));

@@ -1,0 +1,553 @@
+/* About Section - Modern Minimalist Design */
+.about-section {
+  position: absolute !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  background: #000 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  padding: 0 !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+
+.about-container {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  padding: 0;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
+
+.about-content {
+  display: none;
+  grid-template-columns: 45% 55%;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 60px 60px;
+  min-height: 100vh;
+  align-content: center;
+}
+
+.about-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-photo-wrapper {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1s ease 0.3s forwards;
+}
+
+.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: all 0.6s ease;
+  filter: grayscale(20%);
+}
+
+.about-photo:hover {
+  filter: grayscale(0%);
+  transform: scale(1.02);
+}
+
+.about-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1s ease 0.5s forwards;
+}
+
+.about-name {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.about-intro {
+  margin-bottom: 48px;
+}
+
+.about-role {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.about-details {
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.5px;
+}
+
+.about-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.about-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.about-link:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.about-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Show new about content when section is displayed */
+.about-section[style*="display: block"] .about-container,
+.about-section[style*="display:block"] .about-container,
+.about-section[style="display: block;"] .about-container {
+  display: flex !important;
+}
+
+.about-section[style*="display: block"] .about-content,
+.about-section[style*="display:block"] .about-content,
+.about-section[style="display: block;"] .about-content {
+  display: grid !important;
+}
+
+/* Force show when about section is active */
+#about.about-section[style*="block"] {
+  display: block !important;
+}
+
+#about.about-section[style*="block"] .about-container {
+  display: flex !important;
+}
+
+#about.about-section[style*="block"] .about-content {
+  display: grid !important;
+}
+
+/* Show content when about-active class is present */
+.about-section.about-active .about-container {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.about-section.about-active .about-content {
+  display: grid !important;
+}
+
+.about-section.about-active .about-additional {
+  display: block !important;
+}
+
+/* Reset any conflicting styles */
+.about-section .about-photo-container,
+.about-section .about-hero,
+.about-section .about-hero-content,
+.about-section .about-hero-text,
+.about-section .about-hero-visual,
+.about-section .about-title,
+.about-section .about-tagline,
+.about-section .about-description,
+.about-section .about-label,
+.about-section .about-stats,
+.about-section .stat-item,
+.about-section .stat-number,
+.about-section .stat-label,
+.about-section .photo-overlay {
+  display: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    text-align: center;
+    padding: 80px 40px 60px;
+  }
+  
+  .about-photo-wrapper {
+    width: 300px;
+    height: 375px;
+    margin: 0 auto;
+  }
+  
+  .about-right {
+    align-items: center;
+  }
+  
+  .about-details,
+  .about-intro {
+    text-align: left;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    gap: 40px;
+    padding: 80px 40px 40px;
+  }
+  
+  .about-photo-wrapper {
+    width: 250px;
+    height: 312px;
+  }
+  
+  .about-name {
+    font-size: 36px;
+    margin-bottom: 24px;
+  }
+  
+  .about-intro {
+    margin-bottom: 32px;
+  }
+  
+  .about-details {
+    margin-bottom: 32px;
+  }
+}
+
+/* Additional Content Sections */
+.about-additional {
+  width: 100%;
+  display: none;
+  opacity: 0;
+  transform: translateY(60px);
+  animation: fadeInUp 1s ease 0.7s forwards;
+}
+
+/* Philosophy Section */
+.about-philosophy {
+  padding: 120px 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.philosophy-container {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: 15%;
+  margin-right: auto;
+}
+
+.philosophy-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  color: #fff;
+  text-align: center;
+}
+
+.philosophy-text .section-title {
+  text-align: left;
+}
+
+.philosophy-description {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.philosophy-focus {
+  padding: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.3s ease;
+}
+
+.philosophy-focus:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-4px);
+}
+
+.focus-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.focus-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+}
+
+.focus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.focus-tag {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.focus-tag:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Expertise Section */
+.about-expertise-section {
+  padding: 120px 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.expertise-container {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: 15%;
+  margin-right: auto;
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.expertise-column {
+  padding: 40px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.4s ease;
+  text-align: center;
+}
+
+.expertise-column:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-8px);
+}
+
+.expertise-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.expertise-column:hover .expertise-icon {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.expertise-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+.expertise-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.skill-item:last-child {
+  border-bottom: none;
+}
+
+.skill-item:hover {
+  padding-left: 8px;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.skill-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
+}
+
+.skill-tools {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.skill-item:hover .skill-name {
+  color: #fff;
+}
+
+.skill-item:hover .skill-tools {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Design for Additional Content */
+@media (max-width: 1024px) {
+  .about-philosophy,
+  .about-expertise-section {
+    padding: 80px 40px;
+    justify-content: center;
+  }
+  
+  .philosophy-container,
+  .expertise-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .philosophy-content {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  
+  .philosophy-focus {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .expertise-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 500px;
+    margin: 60px auto 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-philosophy,
+  .about-expertise-section {
+    padding: 60px 40px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 32px;
+  }
+  
+  .philosophy-content {
+    gap: 40px;
+  }
+  
+  .philosophy-focus {
+    padding: 32px 24px;
+  }
+  
+  .expertise-column {
+    padding: 32px 20px;
+  }
+  
+  .expertise-grid {
+    margin-top: 40px;
+  }
+}
+
+/* Animation for fade in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
