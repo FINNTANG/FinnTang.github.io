@@ -205,6 +205,9 @@ document.addEventListener('DOMContentLoaded', function () {
     portfolioPage.style.transform = 'translateY(-20px)';
     portfolioPage.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     
+    // Clean up about scroll listener
+    cleanupAboutScrollListener();
+    
     // 隐藏Spline文字特效
     const splineText = document.getElementById('projectSplineText');
     if (splineText) {
@@ -329,8 +332,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>REALITYEATER is a virtual pet browser game where players use real-world items to feed a glitchy, sentient digital pet. It blends AI-powered interactivity with narrative design.</p>
-                    <p>The project explores the intersection of physical and digital reality through webcam-based object recognition, creating an immersive cyberpunk experience.</p>
+                    <p>REALITYEATER is a virtual pet browser game where players use real-world items to feed a glitchy, sentient digital pet through webcam-based object recognition.</p>
                 </div>
             `;
 
@@ -344,12 +346,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <h3>AI Integration & Object Recognition</h3>
-                    <p>Built an interactive pet with camera-based object recognition using the OpenAI API, enabling real-world object interaction through the webcam.</p>
-                    <h3>Cyberpunk Visual Design</h3>
-                    <p>Designed glitch-style UI inspired by The Matrix, using pixel art aesthetics and terminal-like interfaces to create an authentic cyberpunk atmosphere.</p>
-                    <h3>Behavioral Logic System</h3>
-                    <p>Created JSON-based interaction logic and emotional states for the pet, balancing gameplay through hunger timers and user feedback loops.</p>
+                    <h3>AI Integration</h3>
+                    <p>Built interactive pet with camera-based object recognition using OpenAI API.</p>
+                    <h3>Visual Design</h3>
+                    <p>Designed glitch-style UI with pixel art aesthetics and terminal-like interfaces.</p>
+                    <h3>Behavioral Logic</h3>
+                    <p>Created JSON-based interaction logic and emotional states for the pet.</p>
                 </div>
             `;
 
@@ -397,11 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <p>Live prototype available at <a href="https://digital-pet-code-world.vercel.app/" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">digital-pet-code-world.vercel.app</a></p>
-                    <p>Players can interact with the pet through typed messages and feed it real objects via webcam input, creating a unique blend of AI-powered gaming and reality interaction.</p>
-                    <h3>Key Learnings</h3>
-                    <p>• How to integrate AI APIs into interactive web experiences</p>
-                    <p>• Importance of user feedback in balancing novelty with usability</p>
-                    <p>• Crafting a unique digital personality through minimalist UI and behavior design</p>
+                    <p>Players can interact with the pet through typed messages and feed it real objects via webcam input.</p>
                 </div>
             `;
     } else if (projectTitle === 'FamilyBoard') {
@@ -419,8 +417,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>FamilyBoard is a personal communication dashboard designed as a gift for my mom. Born from a moment of helplessness when I lost my phone at Six Flags and couldn't contact her, this platform bridges the emotional distance between family members living in different countries.</p>
-                    <p>The project combines practical features with emotional connection, creating a space where daily interactions feel natural despite the physical distance.</p>
+                    <p>FamilyBoard is a personal communication dashboard designed as a gift for my mom, bridging emotional distance between family members living in different countries.</p>
                 </div>
             `;
 
@@ -449,12 +446,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <h3>User Research & Empathy</h3>
-                    <p>Conducted in-depth interviews with my mom to understand her emotional and practical needs, focusing on making technology accessible for non-tech-savvy users.</p>
-                    <h3>Iterative Development</h3>
-                    <p>Built the platform through 4-week iterations, developing modules for daily logs, media sharing, reading tracker, and wish list features.</p>
+                    <h3>User Research</h3>
+                    <p>Conducted interviews with my mom to understand her emotional and practical needs.</p>
+                    <h3>Development</h3>
+                    <p>Built modules for daily logs, media sharing, reading tracker, and wish list features.</p>
                     <h3>Real-time Connection</h3>
-                    <p>Designed dual-time clock and weather displays to create a sense of shared space and real-time connection despite the distance.</p>
+                    <p>Designed dual-time clock and weather displays to create shared space.</p>
                 </div>
             `;
 
@@ -497,10 +494,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p>• Interactive media sharing with emoji reactions</p>
                     <p>• Reading progress tracker and book reviews</p>
                     <p>• Real-time U.S./China time and weather integration</p>
-                    <h3>Key Learnings</h3>
-                    <p>• Designing for family requires deep empathy and understanding</p>
-                    <p>• Simple interfaces can hold significant emotional weight</p>
-                    <p>• User feedback from non-designers shapes more meaningful outcomes</p>
                 </div>
             `;
     } else if (projectTitle === 'Tide Bound') {
@@ -524,8 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Tide Bound is a tabletop card game designed for beach play that encourages both children and adults to engage with marine ecology and environmental decision-making through interactive gameplay.</p>
-                    <p>The game combines science communication with dynamic player interaction, creating an educational experience that balances entertainment with environmental awareness.</p>
+                    <p>Tide Bound is a tabletop card game designed for beach play that encourages engagement with marine ecology and environmental decision-making.</p>
                 </div>
             `;
 
@@ -544,12 +536,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <h3>Role-Based System Design</h3>
-                    <p>Designed a role-based system where players act as different human specialists (scientist, fisher, policy maker, activist, etc.), each with unique abilities and event decks.</p>
-                    <h3>Dual-Sided Event Cards</h3>
-                    <p>Introduced dual-sided event cards, including humorous "soft satire" decks to reflect real-world dilemmas and environmental challenges.</p>
+                    <h3>Role-Based System</h3>
+                    <p>Designed system where players act as different specialists (scientist, fisher, policy maker, activist).</p>
+                    <h3>Event Cards</h3>
+                    <p>Created dual-sided event cards reflecting real-world environmental challenges.</p>
                     <h3>Physical Prototyping</h3>
-                    <p>Created waterproof, wind-resistant card prototypes to enhance playability in natural settings like beaches, integrating mechanics where player choices influence both short-term human benefit and long-term ocean health.</p>
+                    <p>Built waterproof, wind-resistant card prototypes for beach play.</p>
                 </div>
             `;
 
@@ -590,10 +582,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-text-content">
                     <p>Live website: <a href="https://ocean-board-game.vercel.app/" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">ocean-board-game.vercel.app</a></p>
                     <p>The game is fully playable in both physical and digital formats, with downloadable rules, cards, and interactive UI support.</p>
-                    <h3>What I Learned</h3>
-                    <p>• Balancing education and entertainment in serious game design</p>
-                    <p>• How role asymmetry can increase empathy and player engagement with complex systems</p>
-                    <p>• The value of physical prototyping and testing environments when designing for outdoor play</p>
                 </div>
             `;
     } else if (projectTitle === 'Shmupformer') {
@@ -611,10 +599,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Shmupformer is a team-developed 2D action game that fuses platformer mechanics with bullet hell intensity. It explores the theme of emotional repression through gameplay, where mastery and expression emerge from precise control and strategic flight.</p>
-                    <p>This collaborative project demonstrates how genre-bending mechanics can create unique emotional experiences in gaming.</p>
+                    <p>Shmupformer is a team-developed 2D action game that fuses platformer mechanics with bullet hell intensity.</p>
                     <h3>Collaborative Team</h3>
-                    <p>Developed in collaboration with Yingjie Yu and Zhiwei Huang, combining diverse design perspectives and technical expertise.</p>
+                    <p>Developed in collaboration with Yingjie Yu and Zhiwei Huang.</p>
                 </div>
             `;
 
@@ -628,14 +615,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <h3>Hybrid Genre System Design</h3>
-                    <p>Collaboratively brainstormed a hybrid genre system: grounded platforming transforms into flight mode with stamina and shooting mechanics.</p>
-                    <h3>360° Manual Aiming System</h3>
-                    <p>Built a 360° manual aiming system and resource-based mechanics like Overload and Stamina for layered decision-making and strategic gameplay.</p>
-                    <h3>Iterative Testing & Refinement</h3>
-                    <p>Prioritized iterative testing—removing features like "stomp" and "dropkick" that conflicted with bullet-dodging flow. Focused on readable feedback: flashing hitboxes, smaller reticle, and simplified tutorials after playtests.</p>
-                    <h3>Player-Centric Design</h3>
-                    <p>All design choices aimed to respect player instincts while pushing skill development and emotional engagement.</p>
+                    <h3>Hybrid Genre System</h3>
+                    <p>Designed system where grounded platforming transforms into flight mode with stamina and shooting mechanics.</p>
+                    <h3>360° Aiming System</h3>
+                    <p>Built 360° manual aiming system and resource-based mechanics like Overload and Stamina.</p>
+                    <h3>Iterative Testing</h3>
+                    <p>Prioritized iterative testing with readable feedback: flashing hitboxes and simplified tutorials.</p>
                 </div>
             `;
 
@@ -676,10 +661,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-text-content">
                     <p>A working vertical slice with multiple stages, boss design, and emotionally charged combat systems.</p>
                     <p>Shmupformer invites players to face overwhelming odds without shortcuts—no invincibility frames, just skill.</p>
-                    <h3>What I Learned</h3>
-                    <p>• How to manage collaborative workflows and scope across design, code, and playtesting</p>
-                    <p>• Why cutting features can be as important as adding them—refining the core idea is key</p>
-                    <p>• The art of balancing challenge, clarity, and emotional theme in gameplay mechanics</p>
                 </div>
             `;
     } else if (projectTitle === 'Float') {
@@ -694,8 +675,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Float is a woodworking project that explores the tension between solidity and lightness. A solid cherry bowl appears to "float" above ground, supported by three gracefully curved polywood legs—achieved through bent lamination and thoughtful joinery.</p>
-                    <p>This sculptural piece combines traditional woodworking techniques with modern design principles to create an illusion of weightlessness.</p>
+                    <p>Float is a sculptural wooden bowl that appears to "float" above ground, supported by three gracefully curved polywood legs achieved through bent lamination.</p>
                 </div>
             `;
 
@@ -712,11 +692,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <h3>Material Preparation</h3>
                     <p>Started with a 10-foot block of cherry and thin sheets of polywood for the curved legs.</p>
                     <h3>Bowl Turning</h3>
-                    <p>Turned the bowl on a lathe—learned to stabilize large wood masses and repaired piercing accidents using sawdust and glue.</p>
+                    <p>Turned the bowl on a lathe, stabilizing large wood masses and repairing piercing accidents.</p>
                     <h3>Bent Lamination</h3>
-                    <p>Used bent lamination for the legs, requiring pre-planning, form design, and layering techniques to achieve the graceful curves.</p>
+                    <p>Used bent lamination for the legs to achieve graceful curves.</p>
                     <h3>Joinery Design</h3>
-                    <p>Designed joints that could invisibly support the weight while enhancing the illusion of floating.</p>
+                    <p>Designed joints that invisibly support the weight while enhancing the illusion of floating.</p>
                 </div>
             `;
 
@@ -742,10 +722,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-text-content">
                     <p>A visually balanced wood sculpture combining solid mass with visual lightness.</p>
                     <p>Float reflects a harmony between organic form and engineered control.</p>
-                    <h3>What I Learned</h3>
-                    <p>• Anticipation is key—especially when joining mixed woods with different properties</p>
-                    <p>• How to adapt when plans go off-course and find creative repair solutions</p>
-                    <p>• Sculptural woodworking is both precise and forgiving—if you listen to the material</p>
                 </div>
             `;
     } else if (projectTitle === 'Dice Birdhouse') {
@@ -760,8 +736,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Dice Birdhouse is a conceptual bird habitat that explores the intersection of environmental design and animal autonomy. Inspired by the form and randomness of a dice, each face offers a different access point or shelter configuration—giving birds the ability to choose how and where they enter, nest, and rest.</p>
-                    <p>This speculative design project challenges traditional birdhouse concepts by incorporating variability and choice into the structure itself.</p>
+                    <p>Dice Birdhouse is a conceptual bird habitat inspired by the form and randomness of a dice, where each face offers a different access point or shelter configuration.</p>
                 </div>
             `;
 
@@ -776,13 +751,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <h3>Behavioral Research</h3>
-                    <p>Studied bird behavior, especially their preferences for shelter, visibility, and escape routes to inform design decisions.</p>
+                    <p>Studied bird behavior preferences for shelter, visibility, and escape routes.</p>
                     <h3>Geometric Exploration</h3>
-                    <p>Explored how geometric constraints could still offer flexibility: each dice face represents a different environmental function (ventilation, shadow, concealment, access).</p>
+                    <p>Each dice face represents a different environmental function (ventilation, shadow, concealment, access).</p>
                     <h3>Physical Prototyping</h3>
-                    <p>Created multiple prototypes to test spatial usability and interaction for small birds, iterating on form and function.</p>
+                    <p>Created multiple prototypes to test spatial usability and interaction for small birds.</p>
                     <h3>Modular Design</h3>
-                    <p>Final design offers a modular, rotatable birdhouse that adapts depending on placement and user preferences.</p>
+                    <p>Final design offers a modular, rotatable birdhouse that adapts depending on placement.</p>
                 </div>
             `;
 
@@ -817,11 +792,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <p>A six-faced birdhouse with variable access points and shaded cavities—an architectural "dice" rolled by birds themselves.</p>
-                    <p>The playful form masks a serious purpose: allowing birds to adapt to changing urban microclimates and threats.</p>
-                    <h3>What I Learned</h3>
-                    <p>• How modularity and randomness can foster both engagement and protection in animal-centered design</p>
-                    <p>• That environmental empathy can be embedded into form, not just function</p>
-                    <p>• Prototyping for non-human users requires both imagination and behavioral realism</p>
+                    <p>The playful form allows birds to adapt to changing urban microclimates and threats.</p>
                 </div>
             `;
     } else if (projectTitle === 'FateRISD: Final Bubble') {
@@ -836,8 +807,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>FateRISD: Final Bubble is a humorous, fast-paced visual novel and battle parody made during the 2025 Global Game Jam. Centered around the theme "bubble", the game pays tribute to the Fate franchise while featuring original characters inspired by RISD students.</p>
-                    <p>It celebrates friendship, absurdity, and anime tropes—all wrapped in a burst of chaotic creativity developed in just 48 hours.</p>
+                    <p>FateRISD: Final Bubble is a humorous visual novel and battle parody made during the 2025 Global Game Jam, featuring original characters inspired by RISD students.</p>
                 </div>
             `;
 
@@ -857,13 +827,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <h3>Theme Interpretation</h3>
-                    <p>Conceptualized the game in response to the Global Game Jam theme "bubble," interpreting it as emotional tension, protective illusions, and narrative bubbles.</p>
+                    <p>Conceptualized the game in response to the Global Game Jam theme "bubble."</p>
                     <h3>Collaborative Character Creation</h3>
                     <p>Collaborated with friends who voiced, drew, or inspired each character—turning real RISD personalities into Servants and Masters.</p>
                     <h3>Rapid Development</h3>
-                    <p>Created branching dialogue, basic battle logic, and comedic event scenes within the 48-hour time constraint.</p>
+                    <p>Created branching dialogue, basic battle logic, and comedic event scenes within 48 hours.</p>
                     <h3>Visual Design</h3>
-                    <p>Designed all character sprites, visual UI, and interface in under 48 hours using Clip Studio Paint and Photoshop.</p>
+                    <p>Designed all character sprites, visual UI, and interface in under 48 hours.</p>
                 </div>
             `;
 
@@ -893,11 +863,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <p>Play now on itch.io: <a href="https://finntang2004.itch.io/faterisdfinal" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">finntang2004.itch.io/faterisdfinal</a></p>
-                    <p>The game includes multiple endings, satirical attacks, and anime-style dialogue—all done with limited sleep and unlimited laughter.</p>
-                    <h3>What I Learned</h3>
-                    <p>• How to manage rapid creative decisions under intense time constraints</p>
-                    <p>• The power of collaboration and humor in building memorable experiences</p>
-                    <p>• That game jams are not only about polish—but about joy, bonding, and finishing</p>
+                    <p>The game includes multiple endings, satirical attacks, and anime-style dialogue.</p>
                 </div>
             `;
     } else {
@@ -1107,14 +1073,21 @@ document.addEventListener('DOMContentLoaded', function () {
         workSection.style.display = 'grid';
         aboutSection.style.display = 'none';
         aboutSection.classList.remove('about-active');
+        // Clean up about scroll listener
+        cleanupAboutScrollListener();
       } else if (filter === 'work') {
         workSection.style.display = 'grid';
         aboutSection.style.display = 'none';
         aboutSection.classList.remove('about-active');
+        // Clean up about scroll listener
+        cleanupAboutScrollListener();
       } else if (filter === 'about') {
         workSection.style.display = 'none';
         aboutSection.style.display = 'block';
         aboutSection.classList.add('about-active');
+        
+        // Add scroll listener for about page
+        initAboutScrollListener();
       }
     });
   });
@@ -1141,6 +1114,8 @@ document.addEventListener('DOMContentLoaded', function () {
           workSection.style.display = 'grid';
           aboutSection.style.display = 'none';
           aboutSection.classList.remove('about-active');
+          // Clean up about scroll listener
+          cleanupAboutScrollListener();
 
           // Update filter buttons
           filterBtns.forEach((btn) => btn.classList.remove('active'));
@@ -1824,3 +1799,71 @@ class MediaLightbox {
 
 // 初始化媒体灯箱
 const mediaLightbox = new MediaLightbox();
+
+// About page scroll listener for contact section
+let aboutScrollListener = null;
+let lastScrollY = 0;
+let isContactVisible = false;
+
+function initAboutScrollListener() {
+  // Remove existing listener if any
+  if (aboutScrollListener) {
+    window.removeEventListener('scroll', aboutScrollListener);
+  }
+  
+  // Reset variables
+  lastScrollY = 0;
+  isContactVisible = false;
+  
+  // Create new scroll listener
+  aboutScrollListener = function() {
+    const aboutSection = document.getElementById('about');
+    const contactSection = document.getElementById('contact');
+    
+    // Only work when about section is visible
+    if (!aboutSection.classList.contains('about-active')) {
+      return;
+    }
+    
+    const currentScrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // Check if we're near the bottom (更严格的检测条件)
+    const isAtBottom = currentScrollY + windowHeight >= documentHeight - 300;
+    
+    // Check scroll direction
+    const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+    
+    if (isAtBottom && scrollDirection === 'down' && !isContactVisible) {
+      // Show contact when scrolling down to bottom
+      contactSection.classList.add('active');
+      isContactVisible = true;
+    } else if (scrollDirection === 'up' && isContactVisible && currentScrollY < documentHeight - windowHeight - 400) {
+      // Hide contact when scrolling up from bottom
+      contactSection.classList.remove('active');
+      isContactVisible = false;
+    }
+    
+    lastScrollY = currentScrollY;
+  };
+  
+  // Add scroll listener
+  window.addEventListener('scroll', aboutScrollListener);
+}
+
+// Clean up about scroll listener when leaving about page
+function cleanupAboutScrollListener() {
+  if (aboutScrollListener) {
+    window.removeEventListener('scroll', aboutScrollListener);
+    aboutScrollListener = null;
+  }
+  
+  // Hide contact if visible
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    contactSection.classList.remove('active');
+  }
+  
+  isContactVisible = false;
+}
