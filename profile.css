@@ -1,16 +1,18 @@
 /* Portfolio Page */
 .portfolio-page {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background: #000;
-  top: 0px;
-  bottom: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-/* Header - Fixed */
+/* Header - Sticky */
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -161,7 +163,7 @@ body:has(.about-section[style*='block']) .sidebar {
 /* Main Content - Scrollable */
 .main-content {
   margin-left: 120px;
-  margin-top: 80px;
+  margin-top: 0;
   padding: 80px 60px 100px;
   min-height: calc(100vh - 80px);
 }

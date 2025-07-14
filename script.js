@@ -1808,7 +1808,8 @@ let isContactVisible = false;
 function initAboutScrollListener() {
   // Remove existing listener if any
   if (aboutScrollListener) {
-    window.removeEventListener('scroll', aboutScrollListener);
+    const portfolioPage = document.getElementById('portfolio-page');
+    portfolioPage.removeEventListener('scroll', aboutScrollListener);
   }
   
   // Reset variables
@@ -1819,18 +1820,19 @@ function initAboutScrollListener() {
   aboutScrollListener = function() {
     const aboutSection = document.getElementById('about');
     const contactSection = document.getElementById('contact');
+    const portfolioPage = document.getElementById('portfolio-page');
     
     // Only work when about section is visible
     if (!aboutSection.classList.contains('about-active')) {
       return;
     }
     
-    const currentScrollY = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
+    const currentScrollY = portfolioPage.scrollTop;
+    const containerHeight = portfolioPage.clientHeight;
+    const contentHeight = portfolioPage.scrollHeight;
     
     // Check if we're near the bottom (更严格的检测条件)
-    const isAtBottom = currentScrollY + windowHeight >= documentHeight - 300;
+    const isAtBottom = currentScrollY + containerHeight >= contentHeight - 300;
     
     // Check scroll direction
     const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
@@ -1839,7 +1841,7 @@ function initAboutScrollListener() {
       // Show contact when scrolling down to bottom
       contactSection.classList.add('active');
       isContactVisible = true;
-    } else if (scrollDirection === 'up' && isContactVisible && currentScrollY < documentHeight - windowHeight - 400) {
+    } else if (scrollDirection === 'up' && isContactVisible && currentScrollY < contentHeight - containerHeight - 400) {
       // Hide contact when scrolling up from bottom
       contactSection.classList.remove('active');
       isContactVisible = false;
@@ -1848,14 +1850,16 @@ function initAboutScrollListener() {
     lastScrollY = currentScrollY;
   };
   
-  // Add scroll listener
-  window.addEventListener('scroll', aboutScrollListener);
+  // Add scroll listener to portfolio page container
+  const portfolioPage = document.getElementById('portfolio-page');
+  portfolioPage.addEventListener('scroll', aboutScrollListener);
 }
 
 // Clean up about scroll listener when leaving about page
 function cleanupAboutScrollListener() {
   if (aboutScrollListener) {
-    window.removeEventListener('scroll', aboutScrollListener);
+    const portfolioPage = document.getElementById('portfolio-page');
+    portfolioPage.removeEventListener('scroll', aboutScrollListener);
     aboutScrollListener = null;
   }
   

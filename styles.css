@@ -7,6 +7,7 @@
 a#logo {
   display: none !important;
 }
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #000;
@@ -91,6 +92,11 @@ body {
 
 /* 当项目详情页面激活时，隐藏body的滚动条 */
 body:has(.project-detail-page.active) {
+  overflow: hidden;
+}
+
+/* 当portfolio页面激活时，隐藏body的滚动条 */
+body:has(.portfolio-page[style*="block"]) {
   overflow: hidden;
 }
 
