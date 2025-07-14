@@ -100,6 +100,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // 立即隐藏主页，避免重叠渲染
     homePage.style.display = 'none';
     
+    // 显示sidebar
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+      sidebar.classList.add('show');
+    }
+    
     // 预先设置页面状态，减少重排
     portfolioPage.style.display = 'block';
     portfolioPage.style.opacity = '0';
@@ -200,6 +206,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function showHome() {
+    // 隐藏sidebar
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+      sidebar.classList.remove('show');
+    }
+    
     // 添加离开动画
     portfolioPage.style.opacity = '0';
     portfolioPage.style.transform = 'translateY(-20px)';

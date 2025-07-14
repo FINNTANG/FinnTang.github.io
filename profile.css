@@ -97,7 +97,7 @@
   width: 100%;
 }
 
-/* Sidebar - Fixed - 强制固定位置 - 最终版本 */
+/* Sidebar - Fixed positioning relative to viewport */
 .sidebar {
   position: fixed !important;
   left: 40px !important;
@@ -108,34 +108,16 @@
   padding: 0 !important;
   width: auto !important;
   height: auto !important;
-  display: flex !important;
+  display: none !important; /* 默认隐藏 */
   flex-direction: column !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
-.portfolio-page .sidebar,
-#portfolio-page .sidebar,
-body .sidebar {
-  position: fixed !important;
-  left: 40px !important;
-  top: 50vh !important;
-  transform: translateY(-50%) !important;
-  z-index: 1001 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  width: auto !important;
-  height: auto !important;
+/* 显示sidebar的条件 */
+.sidebar.show {
   display: flex !important;
-  flex-direction: column !important;
-}
-
-/* 特别针对about页面 */
-.about-section + * .sidebar,
-body:has(.about-section[style*='block']) .sidebar {
-  position: fixed !important;
-  left: 40px !important;
-  top: 50vh !important;
-  transform: translateY(-50%) !important;
-  z-index: 1001 !important;
 }
 
 .sidebar-nav {

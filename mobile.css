@@ -1,4 +1,4 @@
-/* 确保在所有桌面尺寸下sidebar都固定 */
+/* 确保在所有桌面尺寸下sidebar使用fixed定位 */
 @media (min-width: 769px) {
   .sidebar {
     position: fixed !important;
@@ -6,22 +6,18 @@
     top: 50vh !important;
     transform: translateY(-50%) !important;
     z-index: 1001 !important;
-    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
     margin: 0 !important;
     padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    flex-direction: column !important;
   }
-
-  .portfolio-page .sidebar,
-  #portfolio-page .sidebar,
-  body .sidebar {
-    position: fixed !important;
-    left: 40px !important;
-    top: 50vh !important;
-    transform: translateY(-50%) !important;
-    z-index: 1001 !important;
+  
+  .sidebar.show {
     display: flex !important;
-    margin: 0 !important;
-    padding: 0 !important;
   }
 }
 
@@ -692,44 +688,55 @@
   }
 
   /* ========== 联系覆盖层精简 ========== */
+  .contact-section {
+    padding: 30px 0 20px;
+    height: auto;
+    max-height: 65vh;
+  }
+
   .contact-content {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
     padding: 0 20px;
     text-align: center;
   }
 
   .contact-left h2 {
-    font-size: clamp(20px, 5vw, 28px);
-    margin-bottom: 16px;
+    font-size: clamp(20px, 5vw, 26px);
+    margin-bottom: 12px;
   }
 
   .contact-description {
     font-size: 12px;
-    line-height: 1.5;
-    margin-bottom: 24px;
-    max-width: 280px;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    max-width: 260px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  .contact-right {
+    gap: 8px;
+  }
+
   .contact-close {
     right: 20px;
-    top: 16px;
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    top: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    z-index: 1600;
   }
 
   .contact-item {
-    padding: 12px 0;
+    padding: 8px 0;
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .contact-label {
     font-size: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .contact-value {
@@ -1163,46 +1170,58 @@
   }
 
   /* ========== 联系页面优化 ========== */
+  .contact-section {
+    padding: 30px 0 20px;
+    height: auto;
+    max-height: 65vh;
+  }
+
   .contact-content {
     grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 0 24px;
+    gap: 16px;
+    padding: 0 20px;
     text-align: center;
   }
 
   .contact-left h2 {
-    font-size: clamp(24px, 6vw, 32px);
+    font-size: clamp(20px, 5vw, 26px);
+    margin-bottom: 12px;
   }
 
   .contact-description {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 32px;
-    max-width: 300px;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    max-width: 260px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  .contact-right {
+    gap: 8px;
+  }
+
   .contact-close {
     right: 20px;
-    top: 20px;
+    top: 12px;
     width: 36px;
     height: 36px;
     font-size: 20px;
+    z-index: 1600;
   }
 
   .contact-item {
-    padding: 16px 0;
+    padding: 8px 0;
     text-align: center;
   }
 
   .contact-label {
-    font-size: 11px;
-    margin-bottom: 8px;
+    font-size: 10px;
+    margin-bottom: 4px;
   }
 
   .contact-value {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   /* ========== 内容区域优化 ========== */
