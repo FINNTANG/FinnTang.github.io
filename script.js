@@ -1,4 +1,141 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // ========== 自定义光标初始化 ==========
+  const cursor = document.getElementById('cursor');
+  const cursorDot = cursor?.querySelector('.cursor-dot');
+  const cursorCircle = cursor?.querySelector('.cursor-circle');
+  
+  let cursorMouseX = 0;
+  let cursorMouseY = 0;
+  let circleX = 0;
+  let circleY = 0;
+  
+  // 检查是否支持hover（排除移动设备）
+  const supportsHover = window.matchMedia('(hover: hover)').matches;
+  
+  if (supportsHover && cursor) {
+    // 鼠标移动事件
+    document.addEventListener('mousemove', (e) => {
+      cursorMouseX = e.clientX;
+      cursorMouseY = e.clientY;
+      
+      // 立即更新小圆点位置
+      if (cursorDot) {
+        cursorDot.style.left = cursorMouseX + 'px';
+        cursorDot.style.top = cursorMouseY + 'px';
+      }
+    });
+    
+    // 大圆圈平滑跟随
+    function animateCursor() {
+      const ease = 0.25;
+      circleX += (cursorMouseX - circleX) * ease;
+      circleY += (cursorMouseY - circleY) * ease;
+      
+      if (cursorCircle) {
+        cursorCircle.style.left = circleX + 'px';
+        cursorCircle.style.top = circleY + 'px';
+      }
+      
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    
+    // 可交互元素的悬停效果
+    const interactiveElements = 'a, button, .project-card, .filter-btn, .nav-link, input, textarea, [role="button"], .clickable';
+    const videoElements = 'video, .project-video, .project-detail-video, .project-card-video';
+    
+    document.addEventListener('mouseenter', (e) => {
+      if (e.target.matches(videoElements)) {
+        cursor.classList.add('cursor-video');
+      } else if (e.target.matches(interactiveElements)) {
+        cursor.classList.add('cursor-hover');
+      }
+    }, true);
+    
+    document.addEventListener('mouseleave', (e) => {
+      if (e.target.matches(videoElements)) {
+        cursor.classList.remove('cursor-video');
+      } else if (e.target.matches(interactiveElements)) {
+        cursor.classList.remove('cursor-hover');
+      }
+    }, true);
+    
+    // 点击效果
+    document.addEventListener('mousedown', () => {
+      cursor.classList.add('cursor-click');
+    });
+    
+    document.addEventListener('mouseup', () => {
+      cursor.classList.remove('cursor-click');
+    });
+    
+    // 文本选择悬停效果
+    const textElements = 'p, h1, h2, h3, h4, h5, h6, span, div:not(.project-card):not(.interactive), .text-selectable';
+    
+    document.addEventListener('mouseenter', (e) => {
+      if (e.target.matches(textElements) && 
+          !e.target.closest(interactiveElements) && 
+          !e.target.matches(videoElements)) {
+        cursor.classList.add('cursor-text');
+      }
+    }, true);
+    
+    document.addEventListener('mouseleave', (e) => {
+      if (e.target.matches(textElements)) {
+        cursor.classList.remove('cursor-text');
+      }
+    }, true);
+    
+    // 清理所有光标状态的辅助函数
+    function resetCursorStates() {
+      cursor.classList.remove('cursor-hover', 'cursor-video', 'cursor-text', 'cursor-click');
+    }
+    
+    // 页面切换时重置光标状态
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.filter-btn, .nav-link, #back-to-home, #main-title')) {
+        setTimeout(resetCursorStates, 100);
+      }
+    });
+    
+    // 页面失焦时隐藏光标
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+    });
+    
+    document.addEventListener('mouseenter', () => {
+      // 只有在loading screen隐藏后才显示光标
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen && loadingScreen.classList.contains('hidden')) {
+        cursor.style.opacity = '1';
+      }
+    });
+    
+    // 初始隐藏光标，直到loading完成
+    cursor.style.opacity = '0';
+    
+    // 监听loading screen的状态变化
+    const loadingObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const target = mutation.target;
+          if (target.classList.contains('hidden')) {
+            // Loading完成，显示光标
+            setTimeout(() => {
+              cursor.style.opacity = '1';
+            }, 500);
+          }
+        }
+      });
+    });
+    
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+      loadingObserver.observe(loadingScreen, { attributes: true });
+    }
+  }
+  
+  // ========== 原有代码 ==========
   const loadingScreen = document.getElementById('loading-screen');
   const homePage = document.getElementById('home-page');
   const portfolioPage = document.getElementById('portfolio-page');
@@ -1087,16 +1224,28 @@ document.addEventListener('DOMContentLoaded', function () {
         aboutSection.classList.remove('about-active');
         // Clean up about scroll listener
         cleanupAboutScrollListener();
+        
+        // 重置滚动位置到顶部
+        const portfolioPage = document.getElementById('portfolio-page');
+        portfolioPage.scrollTop = 0;
       } else if (filter === 'work') {
         workSection.style.display = 'grid';
         aboutSection.style.display = 'none';
         aboutSection.classList.remove('about-active');
         // Clean up about scroll listener
         cleanupAboutScrollListener();
+        
+        // 重置滚动位置到顶部
+        const portfolioPage = document.getElementById('portfolio-page');
+        portfolioPage.scrollTop = 0;
       } else if (filter === 'about') {
         workSection.style.display = 'none';
         aboutSection.style.display = 'block';
         aboutSection.classList.add('about-active');
+        
+        // 重置滚动位置到顶部
+        const portfolioPage = document.getElementById('portfolio-page');
+        portfolioPage.scrollTop = 0;
         
         // Add scroll listener for about page
         initAboutScrollListener();
@@ -1128,6 +1277,10 @@ document.addEventListener('DOMContentLoaded', function () {
           aboutSection.classList.remove('about-active');
           // Clean up about scroll listener
           cleanupAboutScrollListener();
+
+          // 重置滚动位置到顶部
+          const portfolioPage = document.getElementById('portfolio-page');
+          portfolioPage.scrollTop = 0;
 
           // Update filter buttons
           filterBtns.forEach((btn) => btn.classList.remove('active'));
@@ -1762,7 +1915,13 @@ class MediaLightbox {
   }
   
   showIframe(mediaItem) {
-    this.lightboxIframe.src = mediaItem.src;
+    // 如果是YouTube视频且包含mute=1参数，改为mute=0以在lightbox中播放声音
+    let src = mediaItem.src;
+    if (src.includes('youtube.com/embed') && src.includes('mute=1')) {
+      src = src.replace('mute=1', 'mute=0');
+    }
+    
+    this.lightboxIframe.src = src;
     this.lightboxIframe.classList.add('active');
     
     // iframe加载完成后移除加载状态

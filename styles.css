@@ -13,6 +13,137 @@ body {
     background-color: #000;
     color: #fff;
     overflow-x: hidden;
+    cursor: none !important; /* 强制隐藏默认光标 */
+}
+
+/* 全局隐藏所有元素的默认光标 */
+*, *::before, *::after {
+    cursor: none !important;
+}
+
+/* ========== 自定义光标设计 ========== */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+}
+
+.cursor-circle {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0.9;
+}
+
+/* 光标悬停状态 */
+.cursor-hover .cursor-circle {
+    width: 48px;
+    height: 48px;
+    border-color: rgba(255, 255, 255, 0.95);
+    opacity: 1;
+}
+
+.cursor-hover .cursor-dot {
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* 光标点击状态 */
+.cursor-click .cursor-circle {
+    width: 24px;
+    height: 24px;
+    border-color: #fff;
+    opacity: 1;
+}
+
+.cursor-click .cursor-dot {
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* 光标文本悬停状态 */
+.cursor-text .cursor-circle {
+    width: 40px;
+    height: 40px;
+    border-color: rgba(255, 255, 255, 0.75);
+    border-style: dashed;
+}
+
+/* 在特定区域调整光标样式 */
+.loading-screen.hidden ~ .custom-cursor {
+    opacity: 1;
+}
+
+.loading-screen:not(.hidden) ~ .custom-cursor {
+    opacity: 0;
+}
+
+/* Lightbox中的光标优化 */
+.media-lightbox.active ~ .custom-cursor .cursor-circle {
+    border-color: rgba(255, 255, 255, 0.9);
+    mix-blend-mode: normal;
+}
+
+.media-lightbox.active ~ .custom-cursor .cursor-dot {
+    background: rgba(255, 255, 255, 0.95);
+    mix-blend-mode: normal;
+}
+
+/* 项目详情页面中的光标 */
+.project-detail-page.active ~ .custom-cursor {
+    mix-blend-mode: normal;
+}
+
+.project-detail-page.active ~ .custom-cursor .cursor-circle {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.project-detail-page.active ~ .custom-cursor .cursor-dot {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* 视频播放时的光标状态 */
+.cursor-video .cursor-circle {
+    width: 60px;
+    height: 60px;
+    border-color: rgba(255, 255, 255, 0.9);
+    opacity: 1;
+}
+
+.cursor-video .cursor-circle::after {
+    content: '▶';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 移动设备上隐藏自定义光标 */
+@media (hover: none) and (pointer: coarse) {
+    body {
+        cursor: auto;
+    }
+    
+    .custom-cursor {
+        display: none !important;
+    }
 }
 
 /* Loading Screen */
