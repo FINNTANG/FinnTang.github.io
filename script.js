@@ -133,6 +133,46 @@ document.addEventListener('DOMContentLoaded', function () {
     if (loadingScreen) {
       loadingObserver.observe(loadingScreen, { attributes: true });
     }
+    
+    // 全屏状态检测和处理
+    function handleFullscreenChange() {
+      const isFullscreen = !!(document.fullscreenElement || 
+                             document.webkitFullscreenElement || 
+                             document.mozFullScreenElement || 
+                             document.msFullscreenElement);
+      
+      if (isFullscreen) {
+        // 进入全屏：隐藏自定义光标，恢复系统光标
+        cursor.style.display = 'none';
+        document.body.style.cursor = 'auto';
+        document.documentElement.style.cursor = 'auto';
+        // 临时移除全局cursor: none样式
+        const tempStyle = document.createElement('style');
+        tempStyle.id = 'fullscreen-cursor-override';
+        tempStyle.textContent = `
+          *, *::before, *::after {
+            cursor: auto !important;
+          }
+        `;
+        document.head.appendChild(tempStyle);
+      } else {
+        // 退出全屏：恢复自定义光标
+        cursor.style.display = 'block';
+        document.body.style.cursor = 'none';
+        document.documentElement.style.cursor = 'none';
+        // 移除临时样式
+        const tempStyle = document.getElementById('fullscreen-cursor-override');
+        if (tempStyle) {
+          tempStyle.remove();
+        }
+      }
+    }
+    
+    // 监听全屏状态变化
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
   }
   
   // ========== 原有代码 ==========
@@ -1129,6 +1169,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function hideProjectDetail() {
+    // 停止所有iframe视频播放（主要针对YouTube视频）
+    const projectIframes = projectDetailPage.querySelectorAll('.project-detail-iframe');
+    projectIframes.forEach((iframe) => {
+      // 清空iframe的src来完全停止视频播放和音频
+      iframe.src = 'about:blank';
+    });
+    
+    // 停止所有视频播放
+    const projectVideos = projectDetailPage.querySelectorAll('.project-detail-video');
+    projectVideos.forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
+      video.muted = true;
+    });
+    
     // Add exit animation
     const animateElements = projectDetailPage.querySelectorAll(
       '.project-hero, .project-content-section',

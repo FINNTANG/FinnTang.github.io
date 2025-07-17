@@ -97,7 +97,7 @@
   width: 100%;
 }
 
-/* Sidebar - Fixed positioning relative to viewport */
+/* Sidebar - Clean & Minimal Design */
 .sidebar {
   position: fixed !important;
   left: 40px !important;
@@ -105,7 +105,7 @@
   transform: translateY(-50%) !important;
   z-index: 1001 !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 16px 12px !important;
   width: auto !important;
   height: auto !important;
   display: none !important; /* 默认隐藏 */
@@ -113,6 +113,16 @@
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.sidebar:hover {
+  background: rgba(0, 0, 0, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* 显示sidebar的条件 */
@@ -123,24 +133,51 @@
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
+  align-items: center;
 }
 
 .nav-link {
   color: #fff;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 1px;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  opacity: 0.7;
+  transition: all 0.3s ease;
   writing-mode: vertical-rl;
   text-orientation: mixed;
+  text-transform: uppercase;
+  position: relative;
+  padding: 10px 6px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 0;
+  background: rgba(255, 255, 255, 0.8);
+  transition: height 0.3s ease;
 }
 
 .nav-link:hover {
   opacity: 1;
+  color: #fff;
 }
+
+.nav-link:hover::before {
+  height: 40px;
+}
+
+
 
 /* Main Content - Scrollable */
 .main-content {
