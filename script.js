@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // ========== 自定义光标初始化 ==========
+  // ========== 自定义光标初始化（性能优化版） ==========
   const cursor = document.getElementById('cursor');
   const cursorDot = cursor?.querySelector('.cursor-dot');
   const cursorCircle = cursor?.querySelector('.cursor-circle');
@@ -13,52 +13,66 @@ document.addEventListener('DOMContentLoaded', function () {
   const supportsHover = window.matchMedia('(hover: hover)').matches;
   
   if (supportsHover && cursor) {
-    // 鼠标移动事件
+    // 使用 transform 替代 left/top，性能更好
+    if (cursorDot) {
+      cursorDot.style.willChange = 'transform';
+    }
+    if (cursorCircle) {
+      cursorCircle.style.willChange = 'transform';
+    }
+    
+    // 鼠标移动事件 - 使用被动监听器提升性能
     document.addEventListener('mousemove', (e) => {
       cursorMouseX = e.clientX;
       cursorMouseY = e.clientY;
       
-      // 立即更新小圆点位置
+      // 立即更新小圆点位置 - 使用 transform 替代 left/top
       if (cursorDot) {
-        cursorDot.style.left = cursorMouseX + 'px';
-        cursorDot.style.top = cursorMouseY + 'px';
+        cursorDot.style.transform = `translate(${cursorMouseX}px, ${cursorMouseY}px) translate(-50%, -50%)`;
       }
-    });
+    }, { passive: true });
     
-    // 大圆圈平滑跟随
+    // 大圆圈平滑跟随 - 优化动画循环
+    let rafId;
     function animateCursor() {
       const ease = 0.25;
-      circleX += (cursorMouseX - circleX) * ease;
-      circleY += (cursorMouseY - circleY) * ease;
+      const dx = cursorMouseX - circleX;
+      const dy = cursorMouseY - circleY;
       
-      if (cursorCircle) {
-        cursorCircle.style.left = circleX + 'px';
-        cursorCircle.style.top = circleY + 'px';
+      // 只在移动超过阈值时更新，减少不必要的重绘
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        circleX += dx * ease;
+        circleY += dy * ease;
+        
+        if (cursorCircle) {
+          cursorCircle.style.transform = `translate(${circleX}px, ${circleY}px) translate(-50%, -50%)`;
+        }
       }
       
-      requestAnimationFrame(animateCursor);
+      rafId = requestAnimationFrame(animateCursor);
     }
     animateCursor();
     
-    // 可交互元素的悬停效果
+    // 可交互元素的悬停效果 - 使用事件委托优化性能
     const interactiveElements = 'a, button, .project-card, .filter-btn, .nav-link, input, textarea, [role="button"], .clickable';
     const videoElements = 'video, .project-video, .project-detail-video, .project-card-video';
     
-    document.addEventListener('mouseenter', (e) => {
-      if (e.target.matches(videoElements)) {
+    // 使用单一事件监听器和事件委托
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
         cursor.classList.add('cursor-video');
-      } else if (e.target.matches(interactiveElements)) {
+      } else if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
         cursor.classList.add('cursor-hover');
       }
-    }, true);
+    }, { passive: true });
     
-    document.addEventListener('mouseleave', (e) => {
-      if (e.target.matches(videoElements)) {
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
         cursor.classList.remove('cursor-video');
-      } else if (e.target.matches(interactiveElements)) {
+      } else if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
         cursor.classList.remove('cursor-hover');
       }
-    }, true);
+    }, { passive: true });
     
     // 点击效果
     document.addEventListener('mousedown', () => {
@@ -69,22 +83,24 @@ document.addEventListener('DOMContentLoaded', function () {
       cursor.classList.remove('cursor-click');
     });
     
-    // 文本选择悬停效果
+    // 文本选择悬停效果 - 优化版
     const textElements = 'p, h1, h2, h3, h4, h5, h6, span, div:not(.project-card):not(.interactive), .text-selectable';
     
-    document.addEventListener('mouseenter', (e) => {
+    document.addEventListener('mouseover', (e) => {
       if (e.target.matches(textElements) && 
           !e.target.closest(interactiveElements) && 
-          !e.target.matches(videoElements)) {
+          !e.target.matches(videoElements) &&
+          !cursor.classList.contains('cursor-hover') &&
+          !cursor.classList.contains('cursor-video')) {
         cursor.classList.add('cursor-text');
       }
-    }, true);
+    }, { passive: true });
     
-    document.addEventListener('mouseleave', (e) => {
+    document.addEventListener('mouseout', (e) => {
       if (e.target.matches(textElements)) {
         cursor.classList.remove('cursor-text');
       }
-    }, true);
+    }, { passive: true });
     
     // 清理所有光标状态的辅助函数
     function resetCursorStates() {
@@ -261,6 +277,16 @@ document.addEventListener('DOMContentLoaded', function () {
       role: 'Game Director, Writer, Sprite Artist, UI Design (Collaborative team project with fellow RISD students)',
       duration: '48 hours',
       tools: "Ren'Py, Clip Studio Paint, Photoshop, Git, Google Docs",
+    },
+    'Venom Pulse': {
+      title: 'Venom Pulse',
+      category: '[ 3D DESIGN / TOY CONCEPT ]',
+      year: '2025',
+      description:
+        'A conceptual toy gun designed and modeled in Rhino, with a focus on form aesthetics, mechanical detailing, and material interplay.',
+      role: 'Solo project – 3D Modeling, Concept Design, Rendering, Material Design',
+      duration: '2 weeks',
+      tools: 'Rhino 8, Keyshot, Photoshop',
     },
   };
 
@@ -440,6 +466,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'Dice Birdhouse',
       'FateRISD: Final Bubble',
       'FamilyBoard',
+      'Venom Pulse',
     ];
     const currentIndex = projectTitles.indexOf(currentProjectTitle);
 
@@ -1055,6 +1082,65 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p>The game includes multiple endings, satirical attacks, and anime-style dialogue.</p>
                 </div>
             `;
+    } else if (projectTitle === 'Venom Pulse') {
+      // Venom Pulse content
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Venom Pulse/venompulse-overview.png" alt="Venom Pulse Overview" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>Venom Pulse is a conceptual toy gun designed and modeled in Rhino, with a focus on form aesthetics, mechanical detailing, and material interplay. The project explores how futuristic weaponry can be reinterpreted through a play-oriented, collectible lens — emphasizing stylized geometry and transparent surfaces that reveal internal structure.</p>
+                </div>
+            `;
+
+      processSection.innerHTML = `
+                <h2 class="project-section-title">Development Process</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="Venom Pulse/venompulse-process-1.png" alt="Venom Pulse Development Process" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <h3>Design Concept</h3>
+                    <p>The design blends organic curvature with industrial precision, inspired by cybernetic fluid systems and neon bioluminescence. The color palette — black, violet, and chrome green — evokes the tension between toxicity and allure, echoing the idea of a "venomous pulse" that's both dangerous and mesmerizing.</p>
+                    <h3>3D Modeling</h3>
+                    <p>Modeled entirely in Rhino 8, focusing on form aesthetics and mechanical detailing with precise surface control.</p>
+                    <h3>Material Design</h3>
+                    <p>Developed material interplay using transparent surfaces that reveal internal structure, combining matte black, glossy violet, and chrome green finishes.</p>
+                </div>
+            `;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Venom Pulse/venompulse-final-1.png" alt="Venom Pulse Final Outcome 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Venom Pulse/venompulse-final-2.png" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Venom Pulse/venompulse-final-3.png" alt="Venom Pulse Final Outcome 3" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>A conceptual toy gun that reinterprets futuristic weaponry through a collectible lens, emphasizing stylized geometry and transparent surfaces.</p>
+                    <p>The project demonstrates proficiency in 3D product design, material exploration, and aesthetic storytelling through form.</p>
+                </div>
+            `;
     } else {
       // Default placeholder content for other projects
       overviewSection.innerHTML = `
@@ -1376,37 +1462,38 @@ document.addEventListener('DOMContentLoaded', function () {
     e.stopPropagation();
   });
 
-  // Project card interactions with enhanced effects
+  // Project card interactions with enhanced effects - 性能优化版
   const projectCards = document.querySelectorAll('.project-card');
 
   projectCards.forEach((card, index) => {
     // 预设动画延迟，但使用更快的时序
     card.style.animationDelay = `${index * 0.03}s`;
+    
+    // 预设 GPU 加速
+    card.style.willChange = 'transform';
 
-    let hoverTimeout;
     let isHovering = false;
 
     card.addEventListener('mouseenter', function () {
       if (isHovering) return;
       isHovering = true;
       
-      clearTimeout(hoverTimeout);
       if (this.classList.contains('visible')) {
-        // 使用transform而不是多个属性，提升性能
+        // 使用 transform 而不是多个属性，提升性能
         this.style.transform = 'translateY(-6px) scale(1.008)';
         this.style.filter = 'brightness(1.02)';
         this.style.boxShadow = '0 12px 24px rgba(0,0,0,0.25)';
       }
-    });
+    }, { passive: true });
 
     card.addEventListener('mouseleave', function () {
       isHovering = false;
       
-      // 移除长延迟，立即响应
+      // 立即响应
       this.style.transform = 'translateY(0) scale(1)';
       this.style.filter = 'brightness(1)';
       this.style.boxShadow = 'none';
-    });
+    }, { passive: true });
 
     // 点击事件 - 修复项目标题匹配
     card.addEventListener('click', function () {
@@ -1453,35 +1540,50 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Parallax effect for home page - 支持点击穿透
+  // Parallax effect for home page - 支持点击穿透（性能优化版）
   let mouseX = 0;
   let mouseY = 0;
+  let parallaxRafId = null;
 
   document.addEventListener('mousemove', function (e) {
     mouseX = (e.clientX / window.innerWidth) * 2 - 1;
     mouseY = (e.clientY / window.innerHeight) * 2 - 1;
 
-    // Subtle parallax effect on home content
-    if (homePage.style.display !== 'none') {
-      const homeContent = document.querySelector('.home-content');
-      const translateX = mouseX * 10;
-      const translateY = mouseY * 10;
-      homeContent.style.transform = `translate(${translateX}px, ${translateY}px)`;
+    // 使用 requestAnimationFrame 优化性能
+    if (!parallaxRafId && homePage.style.display !== 'none') {
+      parallaxRafId = requestAnimationFrame(() => {
+        const homeContent = document.querySelector('.home-content');
+        if (homeContent && homePage.style.display !== 'none') {
+          const translateX = mouseX * 10;
+          const translateY = mouseY * 10;
+          homeContent.style.transform = `translate(${translateX}px, ${translateY}px)`;
+        }
+        parallaxRafId = null;
+      });
     }
-  });
+  }, { passive: true });
 
-  // Enhanced project detail page transitions
+  // Enhanced project detail page transitions - 性能优化版
   if (projectDetailPage) {
+    let scrollRafId = null;
+    
     projectDetailPage.addEventListener('scroll', function () {
-      const scrolled = this.scrollTop;
-      const rate = scrolled * -0.5;
+      // 使用 requestAnimationFrame 节流滚动事件
+      if (!scrollRafId) {
+        scrollRafId = requestAnimationFrame(() => {
+          const scrolled = this.scrollTop;
+          const rate = scrolled * -0.5;
 
-      // Parallax effect for hero year
-      const heroYear = document.getElementById('project-hero-year');
-      if (heroYear) {
-        heroYear.style.transform = `translateY(${rate}px)`;
+          // Parallax effect for hero year
+          const heroYear = document.getElementById('project-hero-year');
+          if (heroYear) {
+            heroYear.style.transform = `translateY(${rate}px)`;
+          }
+          
+          scrollRafId = null;
+        });
       }
-    });
+    }, { passive: true });
   }
 
   // Enhanced video loading and error handling
@@ -1560,23 +1662,26 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // 优化项目卡片视频交互
+    // 优化项目卡片视频交互 - 性能优化版
     const projectCard = video.closest('.project-card');
     if (projectCard) {
-      let cardHoverTimeout;
-
       projectCard.addEventListener('mouseenter', function () {
-        clearTimeout(cardHoverTimeout);
         // 只在视频未播放时尝试播放
         if (!isPlaying && video.paused) {
-          video
-            .play()
-            .then(() => {
-              isPlaying = true;
-            })
-            .catch((e) => console.log('Video play failed:', e));
+          // 使用 requestIdleCallback 在浏览器空闲时播放视频
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+              video.play()
+                .then(() => { isPlaying = true; })
+                .catch((e) => console.log('Video play failed:', e));
+            });
+          } else {
+            video.play()
+              .then(() => { isPlaying = true; })
+              .catch((e) => console.log('Video play failed:', e));
+          }
         }
-      });
+      }, { passive: true });
 
       // 移除mouseleave的暂停逻辑，让视频持续播放
     }
@@ -1618,14 +1723,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }, index * 100 + 300);
   });
 
-  // 为图片容器添加平滑的交互效果
+  // 为图片容器添加平滑的交互效果 - 性能优化版
   const projectImageItems = document.querySelectorAll('.project-image-item');
 
   projectImageItems.forEach((item) => {
-    let hoverTimeout;
+    // 预设 GPU 加速
+    item.style.willChange = 'transform';
 
     item.addEventListener('mouseenter', function () {
-      clearTimeout(hoverTimeout);
       this.style.transform = 'translateY(-8px)';
       this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
 
@@ -1636,22 +1741,20 @@ document.addEventListener('DOMContentLoaded', function () {
         image.style.transform = 'scale(1.02)';
         image.style.filter = 'brightness(1.05)';
       }
-    });
+    }, { passive: true });
 
     item.addEventListener('mouseleave', function () {
-      hoverTimeout = setTimeout(() => {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = 'none';
+      this.style.transform = 'translateY(0)';
+      this.style.boxShadow = 'none';
 
-        const image = this.querySelector(
-          '.project-detail-image, .project-detail-video',
-        );
-        if (image) {
-          image.style.transform = 'scale(1)';
-          image.style.filter = 'brightness(1)';
-        }
-      }, 50);
-    });
+      const image = this.querySelector(
+        '.project-detail-image, .project-detail-video',
+      );
+      if (image) {
+        image.style.transform = 'scale(1)';
+        image.style.filter = 'brightness(1)';
+      }
+    }, { passive: true });
 
     // 移除原有的点击效果，因为现在点击会打开大图浏览器
     // 原有的点击效果已被MediaLightbox接管
@@ -1848,10 +1951,10 @@ class MediaLightbox {
     this.lightboxVideo.muted = true;
     
     // 暂停播放
-    this.lightboxVideo.pause();
+      this.lightboxVideo.pause();
     
     // 重置时间
-    this.lightboxVideo.currentTime = 0;
+      this.lightboxVideo.currentTime = 0;
     
     // 重置音量
     this.lightboxVideo.volume = 0;
@@ -2000,9 +2103,9 @@ class MediaLightbox {
     this.lightboxIframe.src = '';
     
     // 停止视频但保留src以避免重新加载问题
-    this.lightboxVideo.pause();
+      this.lightboxVideo.pause();
     this.lightboxVideo.muted = true;
-    this.lightboxVideo.currentTime = 0;
+      this.lightboxVideo.currentTime = 0;
     this.lightboxVideo.volume = 0;
   }
   

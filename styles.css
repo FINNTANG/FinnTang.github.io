@@ -38,7 +38,8 @@ body {
     background: #fff;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease-out;
+    transition: width 0.1s ease-out, height 0.1s ease-out;
+    will-change: transform;
 }
 
 .cursor-circle {
@@ -48,8 +49,12 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: width 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                height 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 0.9;
+    will-change: transform;
 }
 
 /* 光标悬停状态 */
@@ -61,7 +66,8 @@ body {
 }
 
 .cursor-hover .cursor-dot {
-    transform: translate(-50%, -50%) scale(1.5);
+    width: 6px;
+    height: 6px;
 }
 
 /* 光标点击状态 */
@@ -73,7 +79,8 @@ body {
 }
 
 .cursor-click .cursor-dot {
-    transform: translate(-50%, -50%) scale(0.8);
+    width: 3px;
+    height: 3px;
 }
 
 /* 光标文本悬停状态 */
@@ -1781,20 +1788,22 @@ a.about-contact-value:hover::after {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 移除不必要的 will-change，避免过度使用导致性能下降 */
 .about-section *,
 .portfolio-page *,
 .project-card * {
-  will-change: auto;
   backface-visibility: hidden;
 }
 
-/* 优化关键性能节点 */
+/* 优化关键性能节点 - 使用 GPU 加速 */
 .project-card {
   contain: layout style paint;
+  transform: translateZ(0);
 }
 
 .project-image {
   contain: layout style paint;
+  transform: translateZ(0);
 }
 
 /* 确保视频播放的性能优化 */
@@ -1802,7 +1811,14 @@ a.about-contact-value:hover::after {
 .project-card-video,
 .project-detail-video {
   transform: translateZ(0);
-  will-change: auto;
+}
+
+/* 优化过渡和动画性能 - 只对 transform 和 opacity 使用 GPU 加速 */
+.project-card,
+.project-image-item,
+.lightbox-nav,
+.lightbox-close {
+  will-change: transform, opacity;
 }
 
 /* Contact Section (Overlay) */
