@@ -1262,26 +1262,59 @@
 }
 
 @media (max-width: 768px) {
+  .home-page {
+    overflow-y: auto;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #000;
+  }
+
+  /* 移动端滚动淡入效果CSS类 */
+  .fade-in-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
   .home-content {
-    padding: 0 18px;
-    padding-top: 60px;
+    padding: 0 24px;
+    padding-top: 40px; /* 文字内容区域上边距 */
     align-items: flex-start;
+    height: auto;
+    min-height: 80vh; /* 让文字区域有足够高度 */
+    order: 2; /* 文字在球体下方 */
+    display: block;
+    flex-shrink: 0;
   }
 
   .home-info {
-    gap: 18px;
+    gap: 36px;
+    padding-bottom: 40px;
   }
 
   .main-title {
-    width: 4em;
-    line-height: 1;
-    margin-bottom: 15px;
+    width: auto;
+    max-width: 100%;
+    line-height: 0.9;
+    margin-bottom: 24px;
+    font-size: 48px;
+    letter-spacing: -2px;
   }
 
   .title-description {
-    max-width: 90%;
-    font-size: 12px;
-    line-height: 1.4;
+    max-width: 100%;
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
   }
 
   .home-logo {
@@ -1290,17 +1323,35 @@
 
   .info-section {
     border-left: none;
-    padding-left: 15px;
+    padding-left: 0;
+    margin-bottom: 0;
   }
 
   .info-label {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    opacity: 0.4;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .info-content p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+    color: #fff;
   }
 
   .nav-hint {
-    left: 15px;
-    transform: translateX(0%);
-    bottom: 30px;
+    position: relative;
+    left: auto;
+    transform: none;
+    bottom: auto;
+    margin: 10px auto 30px;
+    order: 3; /* 底部提示在最后 */
+    width: 100%;
+    opacity: 0.5;
+    padding-bottom: 20px;
   }
 
   .scroll-indicator {
@@ -1308,28 +1359,71 @@
   }
 
   .info-link {
-    margin-right: 12px;
+    margin-right: 20px;
+    font-size: 15px;
+    display: inline-block;
+    padding: 6px 0;
+    position: relative;
+    color: #fff;
+    opacity: 0.8;
+  }
+  
+  .info-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  
+  .info-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
   .spline-container {
-    width: 250px;
-    height: 250px;
-    bottom: 50px;
-    right: 15px;
-    top: initial;
+    width: 100%;
+    height: 80vh; /* 球体占据首屏大部分高度 */
+    min-height: 500px;
+    position: relative;
+    bottom: auto;
+    right: auto;
+    top: auto;
     left: auto;
-    position: absolute;
-    border-radius: 50%;
-    overflow: hidden;
+    border-radius: 0;
+    overflow: visible;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0;
+    margin: 0 auto;
+    padding: 0;
+    order: 1; /* 球体在最上方 */
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0; /* 初始隐藏 */
+    animation: splineFadeIn 1.5s ease-out 0.5s forwards; /* 0.5s延迟后开始淡入，forwards保持结束状态 */
+  }
+
+  @keyframes splineFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .spline-container spline-viewer {
-    width: 380px;
-    height: 380px;
+    width: 100%;
+    height: 100%;
+    transform: scale(1); /* 保持原始比例，避免裁剪 */
   }
 
   .spline-container::after {

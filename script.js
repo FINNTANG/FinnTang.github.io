@@ -1777,6 +1777,96 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   }
+
+  // 首页主球体特效处理
+  const homeSplineContainer = document.querySelector('.home-page .spline-container');
+  if (homeSplineContainer) {
+    const homeSplineViewer = homeSplineContainer.querySelector('spline-viewer');
+    if (homeSplineViewer) {
+      // 1. 尝试监听加载完成
+      homeSplineViewer.addEventListener('load', () => {
+        console.log('Home sphere loaded');
+        modifySplineViewerStyles(homeSplineViewer);
+      });
+
+      // 2. 兜底：如果load事件没触发（可能已加载），直接尝试注入样式
+      // 并设置一个定时器再次尝试，确保水印被隐藏
+      setTimeout(() => {
+        modifySplineViewerStyles(homeSplineViewer);
+      }, 1000);
+      
+      setTimeout(() => {
+        modifySplineViewerStyles(homeSplineViewer);
+      }, 3000);
+    }
+  }
+
+  // 通用函数：修改Spline Viewer样式（隐藏水印等）
+  function modifySplineViewerStyles(viewer) {
+    if (!viewer || !viewer.shadowRoot) return;
+    
+    try {
+      const shadow = viewer.shadowRoot;
+      // 创建样式元素
+      const style = document.createElement('style');
+      // 强制隐藏水印和Logo的各种可能选择器
+      style.textContent = `
+        #logo, .logo, .spline-watermark, #spline-watermark, a[href*="spline.design"], 
+        [class*="watermark"], [id*="watermark"] {
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+          width: 0 !important;
+          height: 0 !important;
+        }
+      `;
+      shadow.appendChild(style);
+      console.log('Spline styles injected to hide watermark');
+    } catch (e) {
+      console.error('Error injecting Spline styles:', e);
+    }
+  }
+
+  // ========== 移动端首页特效处理 ==========
+  function initMobileHomeEffects() {
+    // 只在移动端执行
+    if (window.innerWidth > 768) return;
+
+    // 1. 初始化Intersection Observer，用于文字上浮淡入
+    const mobileTextObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-visible');
+          // 可选：一旦显示后就不再观察，减少性能消耗
+          mobileTextObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    // 选择需要动画的元素
+    const textElements = document.querySelectorAll('.home-logo, .home-info .info-section, .nav-hint');
+    textElements.forEach(el => {
+      el.classList.add('fade-in-hidden'); // 初始隐藏状态
+      mobileTextObserver.observe(el);
+    });
+  }
+
+  // 调用移动端特效初始化
+  initMobileHomeEffects();
+
+  // 监听窗口大小变化，以适应横竖屏切换
+  window.addEventListener('resize', () => {
+    // 简单的防抖动
+    clearTimeout(window.resizeTimer);
+    window.resizeTimer = setTimeout(() => {
+       initMobileHomeEffects();
+    }, 250);
+  });
+
 });
 
 // Intersection Observer for animations
