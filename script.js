@@ -569,6 +569,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="The Drowned Monolith Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                loading="lazy"
                                 allowfullscreen>
                             </iframe>
                         </div>
@@ -798,6 +800,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="Tide Bound Game Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                loading="lazy"
                                 allowfullscreen>
                             </iframe>
                         </div>
