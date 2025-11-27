@@ -204,6 +204,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Project data
   const projectData = {
+    'The Drowned Monolith': {
+      title: 'The Drowned Monolith',
+      category: '[ LEVEL DESIGN / 3D ENVIRONMENT ]',
+      year: '2025',
+      description:
+        'An immersive 3D environment showcasing a submerged ancient structure, combining level design principles with atmospheric storytelling through Unreal Engine and Rhino.',
+      role: 'Level Designer, 3D Modeler, Environment Artist',
+      duration: '2 weeks',
+      tools: 'Unreal Engine 5, Rhino 8, Photoshop',
+    },
     REALITYEATER: {
       title: 'REALITYEATER',
       category: '[ AI / INTERACTIVE ]',
@@ -308,6 +318,18 @@ document.addEventListener('DOMContentLoaded', function () {
     if (sidebar) {
       sidebar.classList.add('show');
     }
+    
+    // 默认显示 OTHER WORKS 页面
+    const portfolioSection = document.getElementById('portfolio');
+    const otherworksSection = document.getElementById('otherworks');
+    if (portfolioSection) portfolioSection.style.display = 'none';
+    if (otherworksSection) otherworksSection.style.display = 'grid';
+    
+    // 更新按钮激活状态为 OTHER WORKS
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach((btn) => btn.classList.remove('active'));
+    const otherworksBtn = document.querySelector('[data-filter="otherworks"]');
+    if (otherworksBtn) otherworksBtn.classList.add('active');
     
     // 预先设置页面状态，减少重排
     portfolioPage.style.display = 'block';
@@ -459,6 +481,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Project navigation functionality
   function updateProjectNavigation(currentProjectTitle) {
     const projectTitles = [
+      'The Drowned Monolith',
       'REALITYEATER',
       'Tide Bound',
       'Shmupformer',
@@ -533,7 +556,57 @@ document.addEventListener('DOMContentLoaded', function () {
     const processSection = document.querySelector('[data-section="process"]');
     const resultsSection = document.querySelector('[data-section="results"]');
 
-    if (projectTitle === 'REALITYEATER') {
+    if (projectTitle === 'The Drowned Monolith') {
+      // The Drowned Monolith content
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <iframe 
+                                class="project-detail-iframe" 
+                                src="https://www.youtube.com/embed/hqiESOiOgnM?autoplay=1&mute=1&loop=1&playlist=hqiESOiOgnM&controls=1&playsinline=1" 
+                                title="The Drowned Monolith Overview" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>The Drowned Monolith is an atmospheric 3D environment that explores the intersection of ancient architecture and natural decay, telling a story of a civilization lost beneath the waves.</p>
+                    <p>Created using Unreal Engine 5 and Rhino, this level design project demonstrates proficiency in environmental storytelling, lighting design, and technical implementation.</p>
+                </div>
+            `;
+
+      processSection.innerHTML = `
+                <h2 class="project-section-title">Development Process</h2>
+                <div class="project-text-content">
+                    <h3>Concept & Planning</h3>
+                    <p>Developed the initial concept focusing on creating an underwater monument that evokes mystery and ancient grandeur.</p>
+                    <h3>3D Modeling in Rhino</h3>
+                    <p>Built precise architectural elements and organic forms using Rhino's powerful modeling tools, ensuring clean topology for game engine import.</p>
+                    <h3>Unreal Engine Implementation</h3>
+                    <p>Assembled and refined the environment in Unreal Engine 5, focusing on lighting, water effects, and atmospheric elements to enhance immersion.</p>
+                    <h3>Optimization & Polish</h3>
+                    <p>Optimized performance while maintaining visual fidelity, implementing dynamic lighting and post-processing effects.</p>
+                </div>
+            `;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-text-content">
+                    <p>View the full walkthrough on YouTube: <a href="https://youtu.be/hqiESOiOgnM" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">The Drowned Monolith</a></p>
+                    <p>The final environment successfully creates an evocative underwater atmosphere, demonstrating strong level design principles and technical execution.</p>
+                    <h3>Key Achievements</h3>
+                    <p>• Seamless integration between Rhino modeling and Unreal Engine</p>
+                    <p>• Effective use of lighting and atmosphere to convey narrative</p>
+                    <p>• Optimized performance for real-time rendering</p>
+                    <p>• Cohesive visual storytelling through environmental design</p>
+                </div>
+            `;
+    } else if (projectTitle === 'REALITYEATER') {
       // REALITYEATER content
       overviewSection.innerHTML = `
                 <h2 class="project-section-title">Overview</h2>
@@ -721,13 +794,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="project-image-large">
                             <iframe 
                                 class="project-detail-iframe" 
-                                src="https://www.youtube.com/embed/liMMEkX0Dlg?autoplay=1&mute=1&loop=1&playlist=liMMEkX0Dlg&controls=1&showinfo=0&rel=0&modestbranding=1&preload=metadata" 
+                                src="https://www.youtube.com/embed/liMMEkX0Dlg?autoplay=1&mute=1&loop=1&playlist=liMMEkX0Dlg&controls=1&playsinline=1" 
                                 title="Tide Bound Game Overview" 
                                 frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                allowfullscreen
-                                loading="eager">
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
                             </iframe>
                         </div>
                     </div>
@@ -1345,7 +1416,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Portfolio page functionality
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const workSection = document.getElementById('work');
+  const portfolioSection = document.getElementById('portfolio');
+  const otherworksSection = document.getElementById('otherworks');
   const aboutSection = document.getElementById('about');
   const contactSection = document.getElementById('contact');
 
@@ -1359,8 +1431,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const filter = this.getAttribute('data-filter');
 
       // Show/hide sections based on filter
-      if (filter === 'all') {
-        workSection.style.display = 'grid';
+      if (filter === 'portfolio') {
+        portfolioSection.style.display = 'grid';
+        otherworksSection.style.display = 'none';
         aboutSection.style.display = 'none';
         aboutSection.classList.remove('about-active');
         // Clean up about scroll listener
@@ -1369,8 +1442,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
-      } else if (filter === 'work') {
-        workSection.style.display = 'grid';
+      } else if (filter === 'otherworks') {
+        portfolioSection.style.display = 'none';
+        otherworksSection.style.display = 'grid';
         aboutSection.style.display = 'none';
         aboutSection.classList.remove('about-active');
         // Clean up about scroll listener
@@ -1380,7 +1454,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
       } else if (filter === 'about') {
-        workSection.style.display = 'none';
+        portfolioSection.style.display = 'none';
+        otherworksSection.style.display = 'none';
         aboutSection.style.display = 'block';
         aboutSection.classList.add('about-active');
         
@@ -1411,9 +1486,10 @@ document.addEventListener('DOMContentLoaded', function () {
         contactSection.classList.remove('active');
 
         // Handle other navigation
-        if (target === '#work') {
-          // Show work section, hide about
-          workSection.style.display = 'grid';
+        if (target === '#portfolio') {
+          // Show portfolio section, hide others
+          portfolioSection.style.display = 'grid';
+          otherworksSection.style.display = 'none';
           aboutSection.style.display = 'none';
           aboutSection.classList.remove('about-active');
           // Clean up about scroll listener
@@ -1426,7 +1502,25 @@ document.addEventListener('DOMContentLoaded', function () {
           // Update filter buttons
           filterBtns.forEach((btn) => btn.classList.remove('active'));
           document
-            .querySelector('[data-filter="work"]')
+            .querySelector('[data-filter="portfolio"]')
+            .classList.add('active');
+        } else if (target === '#otherworks') {
+          // Show other works section, hide others
+          portfolioSection.style.display = 'none';
+          otherworksSection.style.display = 'grid';
+          aboutSection.style.display = 'none';
+          aboutSection.classList.remove('about-active');
+          // Clean up about scroll listener
+          cleanupAboutScrollListener();
+
+          // 重置滚动位置到顶部
+          const portfolioPage = document.getElementById('portfolio-page');
+          portfolioPage.scrollTop = 0;
+
+          // Update filter buttons
+          filterBtns.forEach((btn) => btn.classList.remove('active'));
+          document
+            .querySelector('[data-filter="otherworks"]')
             .classList.add('active');
         } else {
           // Smooth scroll to section if it exists

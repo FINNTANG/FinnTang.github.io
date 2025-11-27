@@ -1809,6 +1809,7 @@ a.about-contact-value:hover::after {
 /* 确保视频播放的性能优化 */
 .project-video,
 .project-card-video,
+.project-card-iframe,
 .project-detail-video {
   transform: translateZ(0);
 }
@@ -1990,7 +1991,8 @@ a.about-contact-value:hover::after {
     }
 }
 
-.project-card-video {
+.project-card-video,
+.project-card-iframe {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -2004,7 +2006,8 @@ a.about-contact-value:hover::after {
     transform: translateZ(0);
 }
 
-.project-image-item:hover .project-card-video {
+.project-image-item:hover .project-card-video,
+.project-image-item:hover .project-card-iframe {
     transform: scale(1.02);
     filter: brightness(1.05);
 }
@@ -2655,4 +2658,86 @@ html {
 /* 防止body滚动 */
 body.lightbox-open {
   overflow: hidden;
+}
+
+/* Video Placeholder样式 */
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+}
+
+.video-placeholder span {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+}
+
+.video-placeholder a {
+  color: #fff !important;
+  text-decoration: underline !important;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.video-placeholder a:hover {
+  opacity: 1;
+}
+
+/* Empty State样式 */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state h2 {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.empty-state p {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0.7;
+  margin: 8px 0;
+  max-width: 600px;
+}
+
+.empty-state p:first-of-type {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .empty-state {
+    min-height: 50vh;
+    padding: 40px 20px;
+  }
+
+  .empty-state h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .empty-state p {
+    font-size: 16px;
+  }
 }

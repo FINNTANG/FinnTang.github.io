@@ -126,9 +126,9 @@
     <!-- Sidebar - 移到外面独立显示 -->
     <aside class="sidebar" id="portfolio-sidebar">
       <nav class="sidebar-nav">
-        <a href="#work" class="nav-link">work</a>
-        <a href="#archive" class="nav-link">archive</a>
-        <a href="#contact" class="nav-link">contact</a>
+        <a href="#portfolio" class="nav-link">PORTFOLIO</a>
+        <a href="#otherworks" class="nav-link">WORKS</a>
+        <a href="#contact" class="nav-link">CONTACT</a>
       </nav>
     </aside>
 
@@ -143,8 +143,8 @@
 
         <nav class="nav">
           <div class="nav-filters">
-            <button class="filter-btn active" data-filter="all">ALL</button>
-            <button class="filter-btn" data-filter="work">WORK</button>
+            <button class="filter-btn" data-filter="portfolio">PORTFOLIO</button>
+            <button class="filter-btn active" data-filter="otherworks">WORKS</button>
             <button class="filter-btn" data-filter="about">ABOUT</button>
           </div>
         </nav>
@@ -152,10 +152,36 @@
 
       <!-- Main Content -->
       <main class="main-content">
-        <!-- Work Grid -->
-        <section id="work" class="work-grid">
-          <!-- Project 1 -->
-          <div class="project-card" data-category="work">
+        <!-- Portfolio Grid (Empty for now) -->
+        <section id="portfolio" class="work-grid" style="display: none;">
+          <div class="empty-state">
+            <h2>PORTFOLIO</h2>
+            <p>研究生申请主打项目即将发布</p>
+            <p>Graduate Application Featured Projects Coming Soon</p>
+          </div>
+        </section>
+
+        <!-- Works Grid -->
+        <section id="otherworks" class="work-grid">
+          <!-- Project 1 - The Drowned Monolith -->
+          <div class="project-card" data-category="otherworks">
+            <div class="project-image">
+              <video class="project-card-video" autoplay muted loop playsinline>
+                <source src="Tomb final.mp4" type="video/mp4" />
+                <span>The Drowned Monolith</span>
+              </video>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">The Drowned Monolith</h3>
+              <div class="project-meta">
+                <span class="project-category">[ LEVEL DESIGN / 3D ENVIRONMENT ]</span>
+                <span class="project-year">2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <video class="project-video" autoplay muted loop playsinline>
                 <source src="digital pet.mp4" type="video/mp4" />
@@ -173,8 +199,8 @@
             </div>
           </div>
 
-          <!-- Project 2 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 3 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <video class="project-card-video" autoplay muted loop playsinline>
                 <source src="tidebound.mp4" type="video/mp4" />
@@ -192,8 +218,8 @@
             </div>
           </div>
 
-          <!-- Project 3 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 4 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <video class="project-card-video" autoplay muted loop playsinline>
                 <source src="CSP.mp4" type="video/mp4" />
@@ -211,8 +237,8 @@
             </div>
           </div>
 
-          <!-- Project 4 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 5 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <img
                 src="float/float.png"
@@ -231,8 +257,8 @@
             </div>
           </div>
 
-          <!-- Project 5 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 6 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <img
                 src="bird/bird-overview.png"
@@ -251,8 +277,8 @@
             </div>
           </div>
 
-          <!-- Project 6 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 7 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <img
                 src="fate/faterisd.jpg"
@@ -271,8 +297,8 @@
             </div>
           </div>
 
-          <!-- Project 7 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 8 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <img
                 src="familyboard/cover.png"
@@ -289,8 +315,8 @@
             </div>
           </div>
 
-          <!-- Project 8 -->
-          <div class="project-card" data-category="work">
+          <!-- Project 9 -->
+          <div class="project-card" data-category="otherworks">
             <div class="project-image">
               <img
                 src="Venom Pulse/cover.png"
