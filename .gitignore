@@ -1,5 +1,5 @@
 # 忽略大型视频文件（超过100MB）
-Tomb final.mp4
+# Tomb final.mp4 现在已压缩到100MB以内，可以上传
 
 # 其他大型媒体文件
 *.mp4
@@ -13,6 +13,7 @@ Tomb final.mp4
 !digital pet.mp4
 !Finnmom.mp4
 !realityeater-overview.mp4
+!"Tomb final.mp4"
 
 # 系统文件
 .DS_Store
@@ -30,4 +31,5 @@ node_modules/
 # 临时文件
 *.tmp
 *.log
+
 
