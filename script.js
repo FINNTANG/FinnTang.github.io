@@ -209,10 +209,10 @@ document.addEventListener('DOMContentLoaded', function () {
       category: '[ LEVEL DESIGN / 3D ENVIRONMENT ]',
       year: '2025',
       description:
-        'An immersive 3D environment showcasing a submerged ancient structure, combining level design principles with atmospheric storytelling through Unreal Engine and Rhino.',
-      role: 'Level Designer, 3D Modeler, Environment Artist',
+        'An atmospheric 3D environment exploring the harmonious integration of parametric architecture and organic nature, where ancient monuments merge seamlessly with mystical landscapes through computational design and environmental storytelling.',
+      role: 'Environment Designer, Parametric Modeler, Level Artist',
       duration: '2 weeks',
-      tools: 'Unreal Engine 5, Rhino 8, Photoshop',
+      tools: 'Unreal Engine 5, Rhino 8, Grasshopper, Photoshop',
     },
     REALITYEATER: {
       title: 'REALITYEATER',
@@ -577,35 +577,71 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>The Drowned Monolith is an atmospheric 3D environment that explores the intersection of ancient architecture and natural decay, telling a story of a civilization lost beneath the waves.</p>
-                    <p>Created using Unreal Engine 5 and Rhino, this level design project demonstrates proficiency in environmental storytelling, lighting design, and technical implementation.</p>
+                    <p>The Drowned Monolith is an immersive 3D environment that explores the harmony between artificial structures and organic nature, depicting an ancient monument partially reclaimed by a mystical forest and waterways.</p>
+                    <p>This project showcases the seamless integration of parametric design and environmental storytelling, where man-made architecture coexists with natural elements to create a hauntingly beautiful atmosphere that blurs the boundary between civilization and wilderness.</p>
                 </div>
             `;
 
       processSection.innerHTML = `
                 <h2 class="project-section-title">Development Process</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="The Drowned Monolith/TProcess1.jpg" alt="Grasshopper Parametric Design" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="The Drowned Monolith/TProcess2.jpg" alt="Rhino Modeling Process" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="The Drowned Monolith/TProcess3.png" alt="Unreal Engine Implementation" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
                 <div class="project-text-content">
-                    <h3>Concept & Planning</h3>
-                    <p>Developed the initial concept focusing on creating an underwater monument that evokes mystery and ancient grandeur.</p>
-                    <h3>3D Modeling in Rhino</h3>
-                    <p>Built precise architectural elements and organic forms using Rhino's powerful modeling tools, ensuring clean topology for game engine import.</p>
-                    <h3>Unreal Engine Implementation</h3>
-                    <p>Assembled and refined the environment in Unreal Engine 5, focusing on lighting, water effects, and atmospheric elements to enhance immersion.</p>
-                    <h3>Optimization & Polish</h3>
-                    <p>Optimized performance while maintaining visual fidelity, implementing dynamic lighting and post-processing effects.</p>
+                    <h3>Parametric Design with Grasshopper</h3>
+                    <p>Utilized Rhino's Grasshopper to parametrically generate the monolithic structures, allowing for precise control over the architectural geometry while maintaining organic variation. This approach enabled the creation of ancient monuments that feel both deliberately crafted and naturally weathered.</p>
+                    <h3>Bridging Digital and Natural</h3>
+                    <p>Carefully balanced geometric precision with organic irregularity to achieve a visual language where human-made structures appear to grow from—and merge back into—the natural landscape. The parametric workflow allowed iterative refinement of this delicate equilibrium.</p>
+                    <h3>Environmental Assembly in Unreal Engine 5</h3>
+                    <p>Imported the Rhino geometry into Unreal Engine 5 and integrated it with naturalistic terrain, foliage systems, and water features. Focused on atmospheric lighting and volumetric effects to enhance the sense of mystery and timelessness.</p>
+                    <h3>Atmospheric Storytelling</h3>
+                    <p>Leveraged dynamic lighting, fog effects, and carefully placed vegetation to convey a narrative of abandonment and natural reclamation. The scene evokes a sense of discovery—as if stumbling upon forgotten ruins in an untouched wilderness.</p>
                 </div>
             `;
 
       resultsSection.innerHTML = `
                 <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="The Drowned Monolith/Tfinal1.png" alt="The Drowned Monolith Final View 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="The Drowned Monolith/Tfinal2.png" alt="The Drowned Monolith Final View 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="The Drowned Monolith/Tfinal3.png" alt="The Drowned Monolith Final View 3" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
                 <div class="project-text-content">
-                    <p>View the full walkthrough on YouTube: <a href="https://youtu.be/hqiESOiOgnM" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">The Drowned Monolith</a></p>
-                    <p>The final environment successfully creates an evocative underwater atmosphere, demonstrating strong level design principles and technical execution.</p>
+                    <p>The final environment successfully realizes the vision of architectural forms harmoniously integrated with natural landscape, creating a contemplative space that explores themes of time, memory, and the relationship between human creation and the natural world.</p>
                     <h3>Key Achievements</h3>
-                    <p>• Seamless integration between Rhino modeling and Unreal Engine</p>
-                    <p>• Effective use of lighting and atmosphere to convey narrative</p>
-                    <p>• Optimized performance for real-time rendering</p>
-                    <p>• Cohesive visual storytelling through environmental design</p>
+                    <p>• Parametric design workflow using Grasshopper for procedural monument generation</p>
+                    <p>• Seamless fusion of artificial architecture and organic environmental elements</p>
+                    <p>• Atmospheric lighting and composition that enhances narrative depth</p>
+                    <p>• Optimized real-time performance in Unreal Engine 5 while maintaining visual richness</p>
+                    <p>• Evocative environmental storytelling that invites contemplation and exploration</p>
+                    <h3>Design Philosophy</h3>
+                    <p>This project demonstrates how parametric tools can be employed not just for precision, but for creating structures that feel intrinsically connected to their environment—where technology serves the vision of harmony between the built and the natural.</p>
                 </div>
             `;
     } else if (projectTitle === 'REALITYEATER') {
