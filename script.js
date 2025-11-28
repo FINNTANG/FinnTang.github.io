@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   // ========== 动画状态标志 ==========
   let worksAnimationPlayed = false; // 跟踪Works动画是否已播放
+  let portfolioAnimationPlayed = false; // 跟踪Portfolio动画是否已播放
   
   // ========== 自定义光标初始化（性能优化版） ==========
   const cursor = document.getElementById('cursor');
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 可交互元素的悬停效果 - 使用事件委托优化性能
     const interactiveElements = 'a, button, .project-card, .filter-btn, .nav-link, input, textarea, [role="button"], .clickable';
-    const videoElements = 'video, .project-video, .project-detail-video, .project-card-video';
+    const videoElements = 'video, .project-video, .project-detail-video, .project-card-video, .portfolio-video';
     
     // 使用单一事件监听器和事件委托
     document.addEventListener('mouseover', (e) => {
@@ -394,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function () {
         existingBlocker.remove();
       }
 
-      // 延迟显示Spline文字特效，避免阻塞主动画
+      // 延迟显示Spline文字特效，避免阻塞主动画 - 进一步延迟以优先显示内容
       setTimeout(() => {
         const splineText = document.getElementById('projectSplineText');
         if (splineText) {
@@ -413,10 +414,10 @@ document.addEventListener('DOMContentLoaded', function () {
           splineText.style.transition = 'opacity 0.8s ease';
           
           // 渐显Spline效果
-          setTimeout(() => {
+          requestAnimationFrame(() => {
             splineText.style.opacity = '1';
             splineText.classList.add('visible');
-          }, 100);
+          });
 
           const splineViewer = splineText.querySelector('spline-viewer');
           if (splineViewer) {
@@ -425,58 +426,88 @@ document.addEventListener('DOMContentLoaded', function () {
             splineViewer.style.transformOrigin = 'center center';
           }
         }
-      }, 300);
+      }, 600); // 增加延迟，让Portfolio内容先完全显示
 
-      // 优化视频处理 - 分批处理避免卡顿
-      setTimeout(() => {
-        const allVideos = document.querySelectorAll('.project-card-video, .project-video');
-        let videoIndex = 0;
-        
-        const processVideo = () => {
-          if (videoIndex < allVideos.length) {
-            const video = allVideos[videoIndex];
-            if (video.tagName === 'VIDEO') {
-              video.currentTime = 0;
+      // 优化视频处理 - 只在第一次加载时处理Portfolio视频
+      if (!portfolioAnimationPlayed) {
+        setTimeout(() => {
+          // 只处理Portfolio视频，分批加载避免卡顿
+          const portfolioVideos = document.querySelectorAll('.portfolio-video');
+          let videoIndex = 0;
+          
+          const processVideo = () => {
+            if (videoIndex < portfolioVideos.length) {
+              const video = portfolioVideos[videoIndex];
+              if (video.tagName === 'VIDEO' && video.paused) {
+                // 只播放暂停的视频，不重置已播放的视频
+                video.play().catch((e) => console.log('Video autoplay prevented:', e));
+              }
+              videoIndex++;
+              // 使用 requestAnimationFrame 分帧处理
+              requestAnimationFrame(processVideo);
+            }
+          };
+          
+          processVideo();
+        }, 100); // 减少延迟，更快响应
+      } else {
+        // 非第一次进入：确保Portfolio视频继续播放（不重置）
+        setTimeout(() => {
+          const portfolioVideos = document.querySelectorAll('.portfolio-video');
+          portfolioVideos.forEach((video) => {
+            if (video.tagName === 'VIDEO' && video.paused) {
               video.play().catch((e) => console.log('Video autoplay prevented:', e));
             }
-            videoIndex++;
-            // 使用 requestAnimationFrame 分帧处理
-            requestAnimationFrame(processVideo);
-          }
-        };
-        
-        processVideo();
-      }, 400);
+          });
+        }, 50);
+      }
 
       // 优化项目卡片动画 - 使用更流畅的时序
-      setTimeout(() => {
-        const projectCards = document.querySelectorAll('.project-card');
-        const portfolioCards = document.querySelectorAll('.portfolio-card');
-        
-        // Works项目卡片：只设置初始状态，不触发动画（等待用户第一次点击Works）
-        projectCards.forEach((card) => {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(40px)';
-          card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        });
-        
-        // Portfolio卡片 - 简约高级的入场动画
-        portfolioCards.forEach((card, index) => {
+      // 立即执行，不延迟，减少卡顿感
+      const projectCards = document.querySelectorAll('.project-card');
+      const portfolioCards = document.querySelectorAll('.portfolio-card');
+      
+      // Works项目卡片：只设置初始状态，不触发动画（等待用户第一次点击Works）
+      projectCards.forEach((card) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(40px)';
+        card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      });
+      
+      // Portfolio卡片 - 只在第一次进入时播放动画
+      if (!portfolioAnimationPlayed) {
+        // Portfolio卡片 - 简约高级的入场动画（初始状态）
+        portfolioCards.forEach((card) => {
           card.style.opacity = '0';
           card.style.transform = 'translateY(50px)';
           // 统一使用流畅的贝塞尔曲线
-          card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; // 缩短动画时间
         });
         
-        // Portfolio卡片 - 优雅的渐现动画
-        portfolioCards.forEach((card, index) => {
-          setTimeout(() => {
+        // Portfolio卡片 - 所有卡片同时浮现（更丝滑）- 减少延迟
+        setTimeout(() => {
+          portfolioCards.forEach((card) => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
             card.classList.add('visible');
-          }, index * 120 + 150); // 流畅的时序，简约而高级
+          });
+          portfolioAnimationPlayed = true; // 标记动画已播放
+        }, 50); // 从150ms减少到50ms，更快响应
+      } else {
+        // 如果已经播放过动画，立即显示所有卡片（无延迟）
+        portfolioCards.forEach((card) => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+          card.style.transition = 'none'; // 禁用过渡效果，立即显示
+          card.classList.add('visible');
         });
-      }, 200);
+        // 下一帧恢复过渡效果，用于hover等交互
+        requestAnimationFrame(() => {
+          portfolioCards.forEach((card) => {
+            card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          });
+        });
+      }
     });
   }
 
@@ -517,14 +548,8 @@ document.addEventListener('DOMContentLoaded', function () {
       portfolioPage.style.transform = '';
       portfolioPage.style.transition = '';
 
-      // 重置项目卡片状态
-      const projectCards = document.querySelectorAll('.project-card');
-      projectCards.forEach((card) => {
-        card.classList.remove('visible');
-        card.style.opacity = '';
-        card.style.transform = '';
-        card.style.transition = '';
-      });
+      // 不要重置项目卡片状态 - 保持它们的当前状态
+      // 这样在返回Portfolio页面时卡片仍然可见
     }, 400);
   }
 
@@ -702,32 +727,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-1.png" alt="Liftwell Page 1" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Liftwell/Page-1.png" alt="Liftwell Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-2.png" alt="Liftwell Page 2" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Liftwell/Page-2.png" alt="Liftwell Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-3.png" alt="Liftwell Page 3" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Liftwell/Page-3.png" alt="Liftwell Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-4.png" alt="Liftwell Page 4" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Liftwell/Page-4.png" alt="Liftwell Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-5.png" alt="Liftwell Page 5" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Liftwell/Page-5.png" alt="Liftwell Page 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-6.png" alt="Liftwell Page 6" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Liftwell/Page-6.png" alt="Liftwell Page 6" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -761,32 +786,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-1.png" alt="Zhulong Page 1" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Zhulong/Page-1.png" alt="Zhulong Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-2.png" alt="Zhulong Page 2" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Zhulong/Page-2.png" alt="Zhulong Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-3.png" alt="Zhulong Page 3" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Zhulong/Page-3.png" alt="Zhulong Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-4.png" alt="Zhulong Page 4" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Zhulong/Page-4.png" alt="Zhulong Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-5.png" alt="Zhulong Page 5" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Zhulong/Page-5.png" alt="Zhulong Page 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-6.png" alt="Zhulong Page 6" class="project-detail-image" loading="lazy">
+                            <img src="Portfolio/Picture/Zhulong/Page-6.png" alt="Zhulong Page 6" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -822,17 +847,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="The Drowned Monolith/TProcess1.jpg" alt="Grasshopper Parametric Design" class="project-detail-image" loading="lazy">
+                            <img src="The Drowned Monolith/TProcess1.jpg" alt="Grasshopper Parametric Design" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="The Drowned Monolith/TProcess2.jpg" alt="Rhino Modeling Process" class="project-detail-image" loading="lazy">
+                            <img src="The Drowned Monolith/TProcess2.jpg" alt="Rhino Modeling Process" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="The Drowned Monolith/TProcess3.png" alt="Unreal Engine Implementation" class="project-detail-image" loading="lazy">
+                            <img src="The Drowned Monolith/TProcess3.png" alt="Unreal Engine Implementation" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -853,17 +878,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="The Drowned Monolith/Tfinal1.png" alt="The Drowned Monolith Final View 1" class="project-detail-image" loading="lazy">
+                            <img src="The Drowned Monolith/Tfinal1.png" alt="The Drowned Monolith Final View 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="The Drowned Monolith/Tfinal2.png" alt="The Drowned Monolith Final View 2" class="project-detail-image" loading="lazy">
+                            <img src="The Drowned Monolith/Tfinal2.png" alt="The Drowned Monolith Final View 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="The Drowned Monolith/Tfinal3.png" alt="The Drowned Monolith Final View 3" class="project-detail-image" loading="lazy">
+                            <img src="The Drowned Monolith/Tfinal3.png" alt="The Drowned Monolith Final View 3" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -903,7 +928,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="realityeater/realityeater-process-1.png" alt="REALITYEATER Development Process" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-process-1.png" alt="REALITYEATER Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -930,32 +955,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-2.png" alt="REALITYEATER Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-final-2.png" alt="REALITYEATER Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-3.png" alt="REALITYEATER Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-final-3.png" alt="REALITYEATER Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-4.png" alt="REALITYEATER Final Outcome 4" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-final-4.png" alt="REALITYEATER Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-5.png" alt="REALITYEATER Final Outcome 5" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-final-5.png" alt="REALITYEATER Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-6.png" alt="REALITYEATER Final Outcome 6" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-final-6.png" alt="REALITYEATER Final Outcome 6" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-7.png" alt="REALITYEATER Final Outcome 7" class="project-detail-image" loading="lazy">
+                            <img src="realityeater/realityeater-final-7.png" alt="REALITYEATER Final Outcome 7" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -988,22 +1013,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-1.png" alt="FamilyBoard Development Process 1" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-process-1.png" alt="FamilyBoard Development Process 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-2.png" alt="FamilyBoard Development Process 2" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-process-2.png" alt="FamilyBoard Development Process 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-3.png" alt="FamilyBoard Development Process 3" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-process-3.png" alt="FamilyBoard Development Process 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-4.png" alt="FamilyBoard Development Process 4" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-process-4.png" alt="FamilyBoard Development Process 4" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1030,22 +1055,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/FM-final-2.png" alt="FamilyBoard Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-final-2.png" alt="FamilyBoard Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/FM-final-3.png" alt="FamilyBoard Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-final-3.png" alt="FamilyBoard Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/FM-final-4.png" alt="FamilyBoard Final Outcome 4" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-final-4.png" alt="FamilyBoard Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/FM-final-5.png" alt="FamilyBoard Final Outcome 5" class="project-detail-image" loading="lazy">
+                            <img src="familyboard/FM-final-5.png" alt="FamilyBoard Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1088,12 +1113,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="tidebound/tidebound-process-1.jpg" alt="Tide Bound Development Process 1" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-process-1.jpg" alt="Tide Bound Development Process 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="tidebound/tidebound-process-2.png" alt="Tide Bound Development Process 2" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-process-2.png" alt="Tide Bound Development Process 2" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1112,32 +1137,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="tidebound/tidebound-final-1.jpg" alt="Tide Bound Final Outcome 1" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-final-1.jpg" alt="Tide Bound Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="tidebound/tidebound-final-2.jpg" alt="Tide Bound Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-final-2.jpg" alt="Tide Bound Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="tidebound/tidebound-final-3.png" alt="Tide Bound Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-final-3.png" alt="Tide Bound Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="tidebound/tidebound-final-4.png" alt="Tide Bound Final Outcome 4" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-final-4.png" alt="Tide Bound Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="tidebound/tidebound-final-5.png" alt="Tide Bound Final Outcome 5" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-final-5.png" alt="Tide Bound Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="tidebound/tidebound-final-6.png" alt="Tide Bound Final Outcome 6" class="project-detail-image" loading="lazy">
+                            <img src="tidebound/tidebound-final-6.png" alt="Tide Bound Final Outcome 6" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1172,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="csp/csp-process-1.jpg" alt="Shmupformer Development Process" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-process-1.jpg" alt="Shmupformer Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1191,32 +1216,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="csp/csp-final-1.png" alt="Shmupformer Final Outcome 1" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-final-1.png" alt="Shmupformer Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="csp/csp-final-2.png" alt="Shmupformer Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-final-2.png" alt="Shmupformer Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="csp/csp-final-3.png" alt="Shmupformer Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-final-3.png" alt="Shmupformer Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="csp/csp-final-4.png" alt="Shmupformer Final Outcome 4" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-final-4.png" alt="Shmupformer Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="csp/csp-final-5.png" alt="Shmupformer Final Outcome 5" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-final-5.png" alt="Shmupformer Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="csp/csp-final-6.png" alt="Shmupformer Final Outcome 6" class="project-detail-image" loading="lazy">
+                            <img src="csp/csp-final-6.png" alt="Shmupformer Final Outcome 6" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1232,7 +1257,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="float/float-overview.jpg" alt="Float Sculpture Overview" class="project-detail-image" loading="lazy">
+                            <img src="float/float-overview.jpg" alt="Float Sculpture Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1246,7 +1271,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="float/float-process-1.png" alt="Float Woodworking Process" class="project-detail-image" loading="lazy">
+                            <img src="float/float-process-1.png" alt="Float Woodworking Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1267,17 +1292,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="float/float-final-1.jpg" alt="Float Final Outcome 1" class="project-detail-image" loading="lazy">
+                            <img src="float/float-final-1.jpg" alt="Float Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="float/float-final-2.jpg" alt="Float Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="float/float-final-2.jpg" alt="Float Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="float/float-final-3.jpg" alt="Float Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="float/float-final-3.jpg" alt="Float Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1293,7 +1318,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-overview.png" alt="Dice Birdhouse Overview" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-overview.png" alt="Dice Birdhouse Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1307,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="bird/bird-process.png" alt="Dice Birdhouse Development Process" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-process.png" alt="Dice Birdhouse Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1328,27 +1353,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-1.png" alt="Dice Birdhouse Final Outcome 1" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-final-1.png" alt="Dice Birdhouse Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-2.png" alt="Dice Birdhouse Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-final-2.png" alt="Dice Birdhouse Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-3.png" alt="Dice Birdhouse Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-final-3.png" alt="Dice Birdhouse Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-4.png" alt="Dice Birdhouse Final Outcome 4" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-final-4.png" alt="Dice Birdhouse Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-5.png" alt="Dice Birdhouse Final Outcome 5" class="project-detail-image" loading="lazy">
+                            <img src="bird/bird-final-5.png" alt="Dice Birdhouse Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1364,7 +1389,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="fate/fate-overview.png" alt="FateRISD: Final Bubble Game Overview" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-overview.png" alt="FateRISD: Final Bubble Game Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1378,12 +1403,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="fate/fate-process-1.png" alt="FateRISD Development Process 1" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-process-1.png" alt="FateRISD Development Process 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="fate/fate-process-2.png" alt="FateRISD Development Process 2" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-process-2.png" alt="FateRISD Development Process 2" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1404,22 +1429,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="fate/fate-final-1.png" alt="FateRISD Final Outcome 1" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-final-1.png" alt="FateRISD Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="fate/fate-final-2.png" alt="FateRISD Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-final-2.png" alt="FateRISD Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="fate/fate-final-3.png" alt="FateRISD Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-final-3.png" alt="FateRISD Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="fate/fate-final-4.jpg" alt="FateRISD Final Outcome 4" class="project-detail-image" loading="lazy">
+                            <img src="fate/fate-final-4.jpg" alt="FateRISD Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1435,7 +1460,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-overview.png" alt="Venom Pulse Overview" class="project-detail-image" loading="lazy">
+                            <img src="Venom_Pulse/venompulse-overview.png" alt="Venom Pulse Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1449,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="Venom_Pulse/venompulse-process-1.png" alt="Venom Pulse Development Process" class="project-detail-image" loading="lazy">
+                            <img src="Venom_Pulse/venompulse-process-1.png" alt="Venom Pulse Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1468,17 +1493,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-1.png" alt="Venom Pulse Final Outcome 1" class="project-detail-image" loading="lazy">
+                            <img src="Venom_Pulse/venompulse-final-1.png" alt="Venom Pulse Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-2.png" alt="Venom Pulse Final Outcome 2" class="project-detail-image" loading="lazy">
+                            <img src="Venom_Pulse/venompulse-final-2.png" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-3.png" alt="Venom Pulse Final Outcome 3" class="project-detail-image" loading="lazy">
+                            <img src="Venom_Pulse/venompulse-final-3.png" alt="Venom Pulse Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1549,7 +1574,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const projectImages = document.querySelectorAll('.project-detail-image');
     const projectImageItems = document.querySelectorAll('.project-image-item');
     const projectVideos = document.querySelectorAll(
-      '.project-detail-video, .project-card-video',
+      '.project-detail-video, .project-card-video, .portfolio-video',
     );
     const projectIframes = document.querySelectorAll('.project-detail-iframe');
 
@@ -1575,7 +1600,7 @@ document.addEventListener('DOMContentLoaded', function () {
         this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
 
         const media = this.querySelector(
-          '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video',
+          '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video, .portfolio-video',
         );
         if (media) {
           media.style.transform = 'scale(1.02)';
@@ -1589,7 +1614,7 @@ document.addEventListener('DOMContentLoaded', function () {
           this.style.boxShadow = 'none';
 
           const media = this.querySelector(
-            '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video',
+            '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video, .portfolio-video',
           );
           if (media) {
             media.style.transform = 'scale(1)';
@@ -1729,12 +1754,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
         
-        // 只在第一次点击时触发Works项目卡片的浮现动画
+        // Works项目卡片显示逻辑
+        const projectCards = document.querySelectorAll('.project-card');
+        
         if (!worksAnimationPlayed) {
+          // 第一次显示：播放浮现动画
           worksAnimationPlayed = true;
           
           setTimeout(() => {
-            const projectCards = document.querySelectorAll('.project-card');
             projectCards.forEach((card) => {
               // 重置动画状态
               card.style.opacity = '0';
@@ -1750,6 +1777,14 @@ document.addEventListener('DOMContentLoaded', function () {
               }, 0);
             });
           }, 100);
+        } else {
+          // 非第一次显示：确保卡片可见（不播放动画）
+          projectCards.forEach((card) => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            card.classList.add('visible');
+          });
         }
       } else if (filter === 'about') {
         portfolioSection.style.display = 'none';
@@ -1821,12 +1856,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .querySelector('[data-filter="otherworks"]')
             .classList.add('active');
           
-          // 只在第一次点击时触发Works项目卡片的浮现动画
+          // Works项目卡片显示逻辑
+          const projectCards = document.querySelectorAll('.project-card');
+          
           if (!worksAnimationPlayed) {
+            // 第一次显示：播放浮现动画
             worksAnimationPlayed = true;
             
             setTimeout(() => {
-              const projectCards = document.querySelectorAll('.project-card');
               projectCards.forEach((card) => {
                 // 重置动画状态
                 card.style.opacity = '0';
@@ -1842,6 +1879,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 0);
               });
             }, 100);
+          } else {
+            // 非第一次显示：确保卡片可见（不播放动画）
+            projectCards.forEach((card) => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+              card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              card.classList.add('visible');
+            });
           }
         } else {
           // Smooth scroll to section if it exists
@@ -2032,7 +2077,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Enhanced video loading and error handling
   const projectVideos = document.querySelectorAll(
-    '.project-video, .project-detail-video',
+    '.project-video, .project-detail-video, .portfolio-video, .project-card-video',
   );
 
   projectVideos.forEach((video) => {
