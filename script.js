@@ -347,6 +347,9 @@ document.addEventListener('DOMContentLoaded', function () {
     loadingScreen.classList.add('hidden');
     setTimeout(() => {
       loadingScreen.style.display = 'none';
+      
+      // 主页加载完成后，开始预加载关键视频
+      startVideoPreloading();
     }, 500);
   }, 2500);
 
@@ -2045,7 +2048,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ========== 智能视频懒加载系统 ==========
-  // 使用Intersection Observer只加载可见的视频
+  // 使用Intersection Observer管理视频播放
   const videoLazyLoadObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const video = entry.target;
@@ -2053,26 +2056,34 @@ document.addEventListener('DOMContentLoaded', function () {
       if (entry.isIntersecting) {
         // 视频进入可见区域
         if (video.readyState === 0) {
-          // 视频还未加载，先加载
+          // 视频还未加载，立即加载（预加载系统可能还未处理到这个视频）
+          console.log('即时加载视频:', video.src);
           video.load();
         }
         
         // 尝试播放
         if (video.paused) {
-          video.play().catch(e => {
-            console.log('Video autoplay prevented:', e);
-          });
+          // 如果视频已经预加载完成，应该能立即播放
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              console.log('视频播放成功');
+            }).catch(e => {
+              console.log('视频自动播放被阻止:', e);
+            });
+          }
         }
       } else {
         // 视频离开可见区域，暂停播放以节省资源
+        // 但保留已加载的数据，下次直接播放
         if (!video.paused) {
           video.pause();
         }
       }
     });
   }, {
-    threshold: 0.25, // 视频25%可见时触发
-    rootMargin: '50px' // 提前50px开始加载
+    threshold: 0.15, // 降低到15%，更早触发
+    rootMargin: '100px' // 增加到100px，提前更多距离
   });
 
   // 对所有项目卡片视频应用懒加载
@@ -2788,4 +2799,86 @@ function cleanupAboutScrollListener() {
   }
   
   isContactVisible = false;
+}
+
+// ========== 智能视频预加载系统 ==========
+function startVideoPreloading() {
+  console.log('开始智能预加载视频...');
+  
+  // 优先级队列：Portfolio视频 > Works视频
+  const videoPreloadQueue = [
+    // Portfolio视频（优先加载，用户最常访问）
+    { selector: '.portfolio-video', priority: 1, maxConcurrent: 1 },
+    // Works视频（延迟加载，避免阻塞）
+    { selector: '.project-video, .project-card-video', priority: 2, maxConcurrent: 2 }
+  ];
+  
+  let currentPriority = 1;
+  let loadingCount = 0;
+  
+  function preloadNextBatch() {
+    const currentBatch = videoPreloadQueue.find(q => q.priority === currentPriority);
+    if (!currentBatch) {
+      console.log('所有视频预加载完成');
+      return;
+    }
+    
+    const videos = document.querySelectorAll(currentBatch.selector);
+    const videosToLoad = Array.from(videos).filter(v => v.readyState === 0);
+    
+    if (videosToLoad.length === 0) {
+      // 当前优先级加载完成，进入下一优先级
+      currentPriority++;
+      setTimeout(() => preloadNextBatch(), 2000); // 延迟2秒，避免阻塞
+      return;
+    }
+    
+    // 限制并发加载数
+    const batch = videosToLoad.slice(0, currentBatch.maxConcurrent);
+    loadingCount = batch.length;
+    
+    batch.forEach((video, index) => {
+      // 错开加载时间，避免同时请求
+      setTimeout(() => {
+        console.log(`预加载视频: ${video.src || video.querySelector('source')?.src}`);
+        
+        // 监听加载完成
+        const onCanPlay = () => {
+          loadingCount--;
+          console.log(`视频预加载完成，剩余: ${loadingCount}`);
+          
+          if (loadingCount === 0) {
+            // 当前批次加载完成，继续下一批
+            setTimeout(() => preloadNextBatch(), 1000);
+          }
+          
+          video.removeEventListener('canplaythrough', onCanPlay);
+          video.removeEventListener('error', onError);
+        };
+        
+        const onError = () => {
+          loadingCount--;
+          console.warn(`视频预加载失败: ${video.src}`);
+          
+          if (loadingCount === 0) {
+            setTimeout(() => preloadNextBatch(), 1000);
+          }
+          
+          video.removeEventListener('canplaythrough', onCanPlay);
+          video.removeEventListener('error', onError);
+        };
+        
+        video.addEventListener('canplaythrough', onCanPlay, { once: true });
+        video.addEventListener('error', onError, { once: true });
+        
+        // 开始加载视频
+        video.load();
+      }, index * 500); // 每个视频错开500ms
+    });
+  }
+  
+  // 主页加载完成3秒后开始预加载（确保不影响主页体验）
+  setTimeout(() => {
+    preloadNextBatch();
+  }, 3000);
 }
