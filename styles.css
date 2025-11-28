@@ -443,7 +443,7 @@ body:has(.portfolio-page[style*="block"]) {
 .project-image-gallery {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 24px;
     margin-bottom: 50px;
     width: 100%;
 }
@@ -2097,7 +2097,7 @@ a.about-contact-value:hover::after {
 /* Project Detail Spline Text Effect - 作品集页面版本 */
 .project-spline-text {
     position: absolute !important;
-  top: 70px !important;
+  top: 50px !important;
     left: 60% !important;
     transform: translateX(-50%) !important;
     width: 650px !important;
@@ -2127,7 +2127,7 @@ a.about-contact-value:hover::after {
 
 /* 确保作品集页面的内容有足够的上边距，但不移动FINN TANG */
 .portfolio-page.active .portfolio-grid {
-    margin-top: 120px !important;
+    margin-top: 100px !important;
 }
 
 .spline-container {
@@ -2694,6 +2694,359 @@ body.lightbox-open {
   opacity: 1;
 }
 
+/* Portfolio Grid - Featured Projects */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  padding: 20px 0 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Portfolio Card - Premium Design */
+.portfolio-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0; /* 直角设计更适合线条动画 */
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  height: 360px; /* 更紧凑的高度 */
+  /* 初始动画状态 */
+  opacity: 0;
+  transform: translateY(50px);
+  will-change: transform, opacity;
+}
+
+.portfolio-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portfolio-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-6px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 边框线条动画 - Cinematic Reveal Style */
+.portfolio-card::before,
+.portfolio-card::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.75);
+  pointer-events: none;
+  z-index: 10;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+/* 上下边框 - 从中心水平展开 */
+.portfolio-card::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  /* 使用伪元素的border不可行，因为需要两个独立的transform轴 */
+  /* 改为：before负责上下，after负责左右 */
+}
+
+/* 修正：使用内部元素或重构伪元素逻辑 */
+/* 重新定义：before为上下边框，after为左右边框 */
+/* 我们需要使用 clip-path 或者 渐变来实现中心扩散 */
+
+/* 方案B：使用 scale 变换 */
+.portfolio-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  transform: scaleX(0);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none; /* 边框本身不能加shadow，否则scale时shadow也会变形 */
+}
+
+.portfolio-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-left: 1px solid rgba(255, 255, 255, 0.7);
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  transform: scaleY(0);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none;
+}
+
+/* 悬停触发线条动画 */
+.portfolio-card:hover::before {
+  transform: scaleX(1);
+}
+
+.portfolio-card:hover::after {
+  transform: scaleY(1);
+}
+
+/* 为了增加发光效果，我们可以利用 filter: drop-shadow 在伪元素上 */
+.portfolio-card:hover::before,
+.portfolio-card:hover::after {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+.portfolio-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.portfolio-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85; /* 提高默认透明度 */
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.95) contrast(1.05); /* 提高默认亮度 */
+  transform: scale(1);
+}
+
+.portfolio-card:hover .portfolio-video {
+  opacity: 1;
+  transform: scale(1.03);
+  filter: brightness(1.1) contrast(1.08); /* 悬停时更加明亮 */
+}
+
+.portfolio-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.05) 0%, 
+    transparent 45%, 
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  opacity: 0.7;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.portfolio-card:hover .portfolio-overlay {
+  opacity: 0.9;
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.05) 0%, 
+    transparent 40%, 
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+.portfolio-number {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 60px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.1);
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.portfolio-card:hover .portfolio-number {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px;
+  z-index: 5;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.portfolio-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  transform: translateY(3px);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.portfolio-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.portfolio-card:hover .portfolio-title {
+  transform: translateY(0);
+}
+
+.portfolio-card:hover .portfolio-meta {
+  opacity: 0.85;
+  transform: translateY(0);
+}
+
+.portfolio-category {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.portfolio-year {
+  font-size: 14px;
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+
+/* PDF Fullscreen Button */
+.pdf-fullscreen-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.pdf-page-wrapper:hover .pdf-fullscreen-btn {
+  opacity: 1;
+}
+
+.pdf-fullscreen-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.pdf-page-notice {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pdf-placeholder {
+  grid-column: 1 / -1;
+  padding: 80px 40px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.pdf-placeholder p {
+  font-size: 16px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+
+/* Portfolio Placeholder Cards */
+.portfolio-placeholder {
+  pointer-events: none;
+  opacity: 0.3;
+  cursor: default;
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+.portfolio-placeholder.visible {
+  opacity: 0.35;
+}
+
+.portfolio-placeholder:hover {
+  transform: translateY(0) !important;
+  border-color: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: none !important;
+}
+
+.portfolio-placeholder::before,
+.portfolio-placeholder::after {
+  display: none;
+}
+
+.placeholder-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.placeholder-content::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 30px,
+    rgba(255, 255, 255, 0.005) 30px,
+    rgba(255, 255, 255, 0.005) 60px
+  );
+}
+
+.placeholder-text {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: rgba(255, 255, 255, 0.18);
+  z-index: 1;
+  position: relative;
+  animation: placeholderPulse 4s ease-in-out infinite;
+}
+
+@keyframes placeholderPulse {
+  0%, 100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
 /* Empty State样式 */
 .empty-state {
   grid-column: 1 / -1;
@@ -2728,7 +3081,52 @@ body.lightbox-open {
   opacity: 0.85;
 }
 
+/* Portfolio Responsive Design */
+@media (max-width: 1200px) {
+  .portfolio-grid {
+    gap: 40px 30px;
+  }
+  
+  .portfolio-image {
+    height: 400px;
+  }
+  
+  .portfolio-number {
+    font-size: 60px;
+    top: 20px;
+    right: 20px;
+  }
+}
+
 @media (max-width: 768px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 20px 0;
+  }
+  
+  .portfolio-image {
+    height: 350px;
+  }
+  
+  .portfolio-info {
+    padding: 25px 30px;
+  }
+  
+  .portfolio-title {
+    font-size: 24px;
+  }
+  
+  .portfolio-number {
+    font-size: 50px;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .pdf-viewer {
+    min-height: 800px;
+  }
+  
   .empty-state {
     min-height: 50vh;
     padding: 40px 20px;

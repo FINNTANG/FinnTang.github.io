@@ -143,8 +143,8 @@
 
         <nav class="nav">
           <div class="nav-filters">
-            <button class="filter-btn" data-filter="portfolio">PORTFOLIO</button>
-            <button class="filter-btn active" data-filter="otherworks">WORKS</button>
+            <button class="filter-btn active" data-filter="portfolio">PORTFOLIO</button>
+            <button class="filter-btn" data-filter="otherworks">WORKS</button>
             <button class="filter-btn" data-filter="about">ABOUT</button>
           </div>
         </nav>
@@ -152,12 +152,84 @@
 
       <!-- Main Content -->
       <main class="main-content">
-        <!-- Portfolio Grid (Empty for now) -->
-        <section id="portfolio" class="work-grid" style="display: none;">
-          <div class="empty-state">
-            <h2>PORTFOLIO</h2>
-            <p>研究生申请主打项目即将发布</p>
-            <p>Graduate Application Featured Projects Coming Soon</p>
+        <!-- Portfolio Grid - Featured Projects -->
+        <section id="portfolio" class="portfolio-grid" style="display: none;">
+          <!-- Liftwell Project -->
+          <div class="portfolio-card" data-category="portfolio">
+            <div class="portfolio-image">
+              <video class="portfolio-video" autoplay muted loop playsinline>
+                <source src="Portfolio/Video/Liftwell Final Video NYU.mp4" type="video/mp4" />
+                <span>Liftwell</span>
+              </video>
+              <div class="portfolio-overlay">
+                <div class="portfolio-number">01</div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <h3 class="portfolio-title">Liftwell</h3>
+              <div class="portfolio-meta">
+                <span class="portfolio-category">[ GAME DESIGN ]</span>
+                <span class="portfolio-year">2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zhulong Project -->
+          <div class="portfolio-card" data-category="portfolio">
+            <div class="portfolio-image">
+              <video class="portfolio-video" autoplay muted loop playsinline>
+                <source src="Portfolio/Video/Zhulong Final Video NYU.mp4" type="video/mp4" />
+                <span>Zhulong</span>
+              </video>
+              <div class="portfolio-overlay">
+                <div class="portfolio-number">02</div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <h3 class="portfolio-title">Zhulong</h3>
+              <div class="portfolio-meta">
+                <span class="portfolio-category">[ CREATURE DESIGN ]</span>
+                <span class="portfolio-year">2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder Project 3 -->
+          <div class="portfolio-card portfolio-placeholder" data-category="portfolio">
+            <div class="portfolio-image">
+              <div class="placeholder-content">
+                <div class="placeholder-text">COMING SOON</div>
+              </div>
+              <div class="portfolio-overlay">
+                <div class="portfolio-number">03</div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <h3 class="portfolio-title">Project 3</h3>
+              <div class="portfolio-meta">
+                <span class="portfolio-category">[ TBD ]</span>
+                <span class="portfolio-year">2024</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder Project 4 -->
+          <div class="portfolio-card portfolio-placeholder" data-category="portfolio">
+            <div class="portfolio-image">
+              <div class="placeholder-content">
+                <div class="placeholder-text">COMING SOON</div>
+              </div>
+              <div class="portfolio-overlay">
+                <div class="portfolio-number">04</div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <h3 class="portfolio-title">Project 4</h3>
+              <div class="portfolio-meta">
+                <span class="portfolio-category">[ TBD ]</span>
+                <span class="portfolio-year">2024</span>
+              </div>
+            </div>
           </div>
         </section>
 

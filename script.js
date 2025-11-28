@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // ========== 动画状态标志 ==========
+  let worksAnimationPlayed = false; // 跟踪Works动画是否已播放
+  
   // ========== 自定义光标初始化（性能优化版） ==========
   const cursor = document.getElementById('cursor');
   const cursorDot = cursor?.querySelector('.cursor-dot');
@@ -204,6 +207,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Project data
   const projectData = {
+    'Liftwell': {
+      title: 'Liftwell',
+      category: '[ GAME DESIGN / LEVEL DESIGN ]',
+      year: '2025',
+      description:
+        'Liftwell is a first-person psychological exploration game that I built on my own in Unreal Engine 5. The story takes place in a parallel future where society has chosen efficiency over feeling.',
+      role: 'Solo developer (game design, narrative, level design, programming, environment art, UI/UX)',
+      duration: '2 months',
+      tools: 'Unreal Engine 5',
+    },
+    'Zhulong': {
+      title: 'Zhulong – The Torch Dragon',
+      category: '[ CREATURE / BOSS DESIGN ]',
+      year: '2025',
+      description:
+        'Zhulong is a creature and boss encounter project where I reinterpret the ancient Chinese torch dragon, a deity of time and light, as a fallen god in a modern action game.',
+      role: 'Creature Concept Artist, 3D Character Modeler, Rigger, Texture Artist & Technical Artist',
+      duration: '3 months',
+      tools: 'ZBrush, Maya, TopoGun, Marmoset Toolbag, Substance Painter, XGen, Unreal Engine 5',
+    },
+    'Project 3': {
+      title: 'Project 3',
+      category: '[ TBD ]',
+      year: '2024',
+      description: 'Coming Soon',
+      role: 'TBD',
+      duration: 'TBD',
+      tools: 'TBD',
+    },
+    'Project 4': {
+      title: 'Project 4',
+      category: '[ TBD ]',
+      year: '2024',
+      description: 'Coming Soon',
+      role: 'TBD',
+      duration: 'TBD',
+      tools: 'TBD',
+    },
     'The Drowned Monolith': {
       title: 'The Drowned Monolith',
       category: '[ LEVEL DESIGN / 3D ENVIRONMENT ]',
@@ -319,17 +360,17 @@ document.addEventListener('DOMContentLoaded', function () {
       sidebar.classList.add('show');
     }
     
-    // 默认显示 OTHER WORKS 页面
+    // 默认显示 PORTFOLIO 页面（修改：从OTHER WORKS改为PORTFOLIO）
     const portfolioSection = document.getElementById('portfolio');
     const otherworksSection = document.getElementById('otherworks');
-    if (portfolioSection) portfolioSection.style.display = 'none';
-    if (otherworksSection) otherworksSection.style.display = 'grid';
+    if (portfolioSection) portfolioSection.style.display = 'grid';
+    if (otherworksSection) otherworksSection.style.display = 'none';
     
-    // 更新按钮激活状态为 OTHER WORKS
+    // 更新按钮激活状态为 PORTFOLIO
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach((btn) => btn.classList.remove('active'));
-    const otherworksBtn = document.querySelector('[data-filter="otherworks"]');
-    if (otherworksBtn) otherworksBtn.classList.add('active');
+    const portfolioBtn = document.querySelector('[data-filter="portfolio"]');
+    if (portfolioBtn) portfolioBtn.classList.add('active');
     
     // 预先设置页面状态，减少重排
     portfolioPage.style.display = 'block';
@@ -359,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (splineText) {
           splineText.style.display = 'block';
           splineText.style.position = 'absolute';
-          splineText.style.top = '90px';
+          splineText.style.top = '70px';
           splineText.style.left = '60%';
           splineText.style.transform = 'translateX(-50%)';
           splineText.style.width = '650px';
@@ -410,21 +451,30 @@ document.addEventListener('DOMContentLoaded', function () {
       // 优化项目卡片动画 - 使用更流畅的时序
       setTimeout(() => {
         const projectCards = document.querySelectorAll('.project-card');
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
         
-        // 预先设置所有卡片的初始状态
-        projectCards.forEach((card, index) => {
+        // Works项目卡片：只设置初始状态，不触发动画（等待用户第一次点击Works）
+        projectCards.forEach((card) => {
           card.style.opacity = '0';
           card.style.transform = 'translateY(40px)';
           card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         });
         
-        // 分批显示卡片，创建波浪效果
-        projectCards.forEach((card, index) => {
+        // Portfolio卡片 - 简约高级的入场动画
+        portfolioCards.forEach((card, index) => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(50px)';
+          // 统一使用流畅的贝塞尔曲线
+          card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        });
+        
+        // Portfolio卡片 - 优雅的渐现动画
+        portfolioCards.forEach((card, index) => {
           setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
             card.classList.add('visible');
-          }, index * 80); // 减少延迟间隔，让动画更连贯
+          }, index * 120 + 150); // 流畅的时序，简约而高级
         });
       }, 200);
     });
@@ -480,7 +530,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Project navigation functionality
   function updateProjectNavigation(currentProjectTitle) {
+    // 更新项目顺序：Portfolio项目在前，然后是Works项目
     const projectTitles = [
+      'Liftwell',
+      'Zhulong',
+      'Project 3', // Placeholder
+      'Project 4', // Placeholder
       'The Drowned Monolith',
       'REALITYEATER',
       'Tide Bound',
@@ -499,11 +554,30 @@ document.addEventListener('DOMContentLoaded', function () {
     // Previous project
     if (currentIndex > 0) {
       const prevProject = projectTitles[currentIndex - 1];
-      prevProjectBtn.style.display = 'flex';
-      prevProjectBtn.onclick = () => showProjectDetail(prevProject);
-      prevProjectBtn.querySelector(
-        'span:last-child',
-      ).textContent = `Previous Project`;
+      // 跳过placeholder项目
+      if (prevProject !== 'Project 3' && prevProject !== 'Project 4') {
+        prevProjectBtn.style.display = 'flex';
+        prevProjectBtn.onclick = () => showProjectDetail(prevProject);
+        prevProjectBtn.querySelector(
+          'span:last-child',
+        ).textContent = `Previous Project`;
+      } else {
+        // 如果上一个是placeholder，继续往前找
+        let validPrevIndex = currentIndex - 1;
+        while (validPrevIndex >= 0 && (projectTitles[validPrevIndex] === 'Project 3' || projectTitles[validPrevIndex] === 'Project 4')) {
+          validPrevIndex--;
+        }
+        if (validPrevIndex >= 0) {
+          const validPrevProject = projectTitles[validPrevIndex];
+          prevProjectBtn.style.display = 'flex';
+          prevProjectBtn.onclick = () => showProjectDetail(validPrevProject);
+          prevProjectBtn.querySelector(
+            'span:last-child',
+          ).textContent = `Previous Project`;
+        } else {
+          prevProjectBtn.style.display = 'none';
+        }
+      }
     } else {
       prevProjectBtn.style.display = 'none';
     }
@@ -511,11 +585,30 @@ document.addEventListener('DOMContentLoaded', function () {
     // Next project
     if (currentIndex < projectTitles.length - 1) {
       const nextProject = projectTitles[currentIndex + 1];
-      nextProjectBtn.style.display = 'flex';
-      nextProjectBtn.onclick = () => showProjectDetail(nextProject);
-      nextProjectBtn.querySelector(
-        'span:first-child',
-      ).textContent = `Next Project`;
+      // 跳过placeholder项目
+      if (nextProject !== 'Project 3' && nextProject !== 'Project 4') {
+        nextProjectBtn.style.display = 'flex';
+        nextProjectBtn.onclick = () => showProjectDetail(nextProject);
+        nextProjectBtn.querySelector(
+          'span:first-child',
+        ).textContent = `Next Project`;
+      } else {
+        // 如果下一个是placeholder，继续往后找
+        let validNextIndex = currentIndex + 1;
+        while (validNextIndex < projectTitles.length && (projectTitles[validNextIndex] === 'Project 3' || projectTitles[validNextIndex] === 'Project 4')) {
+          validNextIndex++;
+        }
+        if (validNextIndex < projectTitles.length) {
+          const validNextProject = projectTitles[validNextIndex];
+          nextProjectBtn.style.display = 'flex';
+          nextProjectBtn.onclick = () => showProjectDetail(validNextProject);
+          nextProjectBtn.querySelector(
+            'span:first-child',
+          ).textContent = `Next Project`;
+        } else {
+          nextProjectBtn.style.display = 'none';
+        }
+      }
     } else {
       nextProjectBtn.style.display = 'none';
     }
@@ -541,6 +634,26 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('project-duration').textContent = project.duration;
     document.getElementById('project-tools').textContent = project.tools;
 
+    // 控制导航按钮显示（Portfolio项目隐藏Process按钮）
+    const projectNavBtns = document.querySelectorAll('.project-nav-btn');
+    const portfolioProjects = ['Liftwell', 'Zhulong'];
+    
+    projectNavBtns.forEach(btn => {
+      const btnText = btn.textContent.trim();
+      if (btnText === 'Process' && portfolioProjects.includes(projectTitle)) {
+        btn.style.display = 'none';
+      } else {
+        btn.style.display = 'block';
+      }
+      
+      // 更新Results按钮文本为Final Outcome
+      if (btnText === 'Results' && portfolioProjects.includes(projectTitle)) {
+        btn.textContent = 'Final Outcome';
+      } else if (btnText === 'Final Outcome' && !portfolioProjects.includes(projectTitle)) {
+        btn.textContent = 'Results';
+      }
+    });
+
     // Update navigation buttons
     updateProjectNavigation(projectTitle);
 
@@ -556,7 +669,129 @@ document.addEventListener('DOMContentLoaded', function () {
     const processSection = document.querySelector('[data-section="process"]');
     const resultsSection = document.querySelector('[data-section="results"]');
 
-    if (projectTitle === 'The Drowned Monolith') {
+    if (projectTitle === 'Liftwell') {
+      // Liftwell content - Portfolio Project
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <iframe 
+                                class="project-detail-iframe" 
+                                src="https://www.youtube.com/embed/hBURfXsYaEM?autoplay=1&mute=1&loop=1&playlist=hBURfXsYaEM&controls=1&playsinline=1" 
+                                title="Liftwell Overview" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                loading="lazy"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <h3>Installation</h3>
+                    <p>Visit the itch.io page: <a href="https://finntang2004.itch.io/liftwell" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; opacity: 0.9; transition: opacity 0.3s ease;">https://finntang2004.itch.io/liftwell</a></p>
+                </div>
+            `;
+
+      processSection.innerHTML = ``;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Liftwell/Page-1.png" alt="Liftwell Page 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Liftwell/Page-2.png" alt="Liftwell Page 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Liftwell/Page-3.png" alt="Liftwell Page 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Liftwell/Page-4.png" alt="Liftwell Page 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Liftwell/Page-5.png" alt="Liftwell Page 5" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Liftwell/Page-6.png" alt="Liftwell Page 6" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+            `;
+    } else if (projectTitle === 'Zhulong') {
+      // Zhulong content - Portfolio Project
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <iframe 
+                                class="project-detail-iframe" 
+                                src="https://www.youtube.com/embed/jxPHlaBWLx0?autoplay=1&mute=1&loop=1&playlist=jxPHlaBWLx0&controls=1&playsinline=1" 
+                                title="Zhulong Overview" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                loading="lazy"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+      processSection.innerHTML = ``;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Zhulong/Page-1.png" alt="Zhulong Page 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Zhulong/Page-2.png" alt="Zhulong Page 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Zhulong/Page-3.png" alt="Zhulong Page 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Zhulong/Page-4.png" alt="Zhulong Page 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Zhulong/Page-5.png" alt="Zhulong Page 5" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Zhulong/Page-6.png" alt="Zhulong Page 6" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+            `;
+    } else if (projectTitle === 'The Drowned Monolith') {
       // The Drowned Monolith content
       overviewSection.innerHTML = `
                 <h2 class="project-section-title">Overview</h2>
@@ -1493,6 +1728,29 @@ document.addEventListener('DOMContentLoaded', function () {
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
+        
+        // 只在第一次点击时触发Works项目卡片的浮现动画
+        if (!worksAnimationPlayed) {
+          worksAnimationPlayed = true;
+          
+          setTimeout(() => {
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach((card) => {
+              // 重置动画状态
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(40px)';
+              card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              card.classList.remove('visible');
+              
+              // 所有卡片一起浮现
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                card.classList.add('visible');
+              }, 0);
+            });
+          }, 100);
+        }
       } else if (filter === 'about') {
         portfolioSection.style.display = 'none';
         otherworksSection.style.display = 'none';
@@ -1562,6 +1820,29 @@ document.addEventListener('DOMContentLoaded', function () {
           document
             .querySelector('[data-filter="otherworks"]')
             .classList.add('active');
+          
+          // 只在第一次点击时触发Works项目卡片的浮现动画
+          if (!worksAnimationPlayed) {
+            worksAnimationPlayed = true;
+            
+            setTimeout(() => {
+              const projectCards = document.querySelectorAll('.project-card');
+              projectCards.forEach((card) => {
+                // 重置动画状态
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px)';
+                card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                card.classList.remove('visible');
+                
+                // 所有卡片一起浮现
+                setTimeout(() => {
+                  card.style.opacity = '1';
+                  card.style.transform = 'translateY(0)';
+                  card.classList.add('visible');
+                }, 0);
+              });
+            }, 100);
+          }
         } else {
           // Smooth scroll to section if it exists
           const targetElement = document.querySelector(target);
@@ -1636,6 +1917,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Portfolio card interactions - Premium design
+  const portfolioCards = document.querySelectorAll('.portfolio-card');
+
+  portfolioCards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+    // 移除will-change: transform，因为不再使用transform动画
+    // card.style.willChange = 'transform';
+
+    // 跳过占位符卡片的交互
+    if (card.classList.contains('portfolio-placeholder')) {
+      return;
+    }
+
+    // 移除之前的悬停事件监听器，因为现在通过CSS处理
+    // 只需要保留点击事件
+
+    // 点击事件
+    card.addEventListener('click', function () {
+      const projectTitle = this.querySelector('.portfolio-title').textContent;
+      showProjectDetail(projectTitle);
+    });
+  });
+
   // Enhanced project detail navigation
   const projectNavBtns = document.querySelectorAll('.project-nav-btn');
 
@@ -1647,7 +1951,13 @@ document.addEventListener('DOMContentLoaded', function () {
       this.classList.add('active');
 
       // Add smooth scroll to section
-      const sectionName = this.textContent.toLowerCase();
+      let sectionName = this.textContent.toLowerCase().trim();
+      
+      // 将"Final Outcome"映射到"results" section
+      if (sectionName === 'final outcome') {
+        sectionName = 'results';
+      }
+      
       const targetSection = document.querySelector(
         `[data-section="${sectionName}"]`,
       );
@@ -2352,6 +2662,7 @@ class MediaLightbox {
 
 // 初始化媒体灯箱
 const mediaLightbox = new MediaLightbox();
+
 
 // About page scroll listener for contact section
 let aboutScrollListener = null;
