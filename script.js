@@ -428,39 +428,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }, 600); // 增加延迟，让Portfolio内容先完全显示
 
-      // 优化视频处理 - 只在第一次加载时处理Portfolio视频
-      if (!portfolioAnimationPlayed) {
-        setTimeout(() => {
-          // 只处理Portfolio视频，分批加载避免卡顿
-          const portfolioVideos = document.querySelectorAll('.portfolio-video');
-          let videoIndex = 0;
-          
-          const processVideo = () => {
-            if (videoIndex < portfolioVideos.length) {
-              const video = portfolioVideos[videoIndex];
-              if (video.tagName === 'VIDEO' && video.paused) {
-                // 只播放暂停的视频，不重置已播放的视频
-                video.play().catch((e) => console.log('Video autoplay prevented:', e));
-              }
-              videoIndex++;
-              // 使用 requestAnimationFrame 分帧处理
-              requestAnimationFrame(processVideo);
-            }
-          };
-          
-          processVideo();
-        }, 100); // 减少延迟，更快响应
-      } else {
-        // 非第一次进入：确保Portfolio视频继续播放（不重置）
-        setTimeout(() => {
-          const portfolioVideos = document.querySelectorAll('.portfolio-video');
-          portfolioVideos.forEach((video) => {
-            if (video.tagName === 'VIDEO' && video.paused) {
-              video.play().catch((e) => console.log('Video autoplay prevented:', e));
-            }
-          });
-        }, 50);
-      }
+      // 视频懒加载系统会自动处理视频加载和播放
+      // 不需要手动处理，Intersection Observer会自动检测可见视频
 
       // 优化项目卡片动画 - 使用更流畅的时序
       // 立即执行，不延迟，减少卡顿感
@@ -2074,6 +2043,46 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }, { passive: true });
   }
+
+  // ========== 智能视频懒加载系统 ==========
+  // 使用Intersection Observer只加载可见的视频
+  const videoLazyLoadObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      
+      if (entry.isIntersecting) {
+        // 视频进入可见区域
+        if (video.readyState === 0) {
+          // 视频还未加载，先加载
+          video.load();
+        }
+        
+        // 尝试播放
+        if (video.paused) {
+          video.play().catch(e => {
+            console.log('Video autoplay prevented:', e);
+          });
+        }
+      } else {
+        // 视频离开可见区域，暂停播放以节省资源
+        if (!video.paused) {
+          video.pause();
+        }
+      }
+    });
+  }, {
+    threshold: 0.25, // 视频25%可见时触发
+    rootMargin: '50px' // 提前50px开始加载
+  });
+
+  // 对所有项目卡片视频应用懒加载
+  const allVideos = document.querySelectorAll(
+    '.portfolio-video, .project-video, .project-card-video'
+  );
+  
+  allVideos.forEach(video => {
+    videoLazyLoadObserver.observe(video);
+  });
 
   // Enhanced video loading and error handling
   const projectVideos = document.querySelectorAll(
