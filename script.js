@@ -228,14 +228,15 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: '3 months',
       tools: 'ZBrush, Maya, TopoGun, Marmoset Toolbag, Substance Painter, XGen, Unreal Engine 5',
     },
-    'Project 3': {
-      title: 'Project 3',
-      category: '[ TBD ]',
-      year: '2024',
-      description: 'Coming Soon',
-      role: 'TBD',
-      duration: 'TBD',
-      tools: 'TBD',
+    'Tide Bound': {
+      title: 'Tide Bound',
+      category: '[ GAME DESIGN / EDUCATION ]',
+      year: '2025',
+      description:
+        'A cooperative strategy board game with a companion web app about coastal resilience. Players work together to protect coastal communities from rising sea levels and environmental challenges through strategic decision-making and collaborative gameplay.',
+      role: 'System & interaction designer, worldbuilding and map layout, building tokens and visual identity, online interface UX/UI, playtest planning & facilitation',
+      duration: '~2 months',
+      tools: 'Figma, Adobe Illustrator, laser-cut prototyping, HTML/CSS/JavaScript (online system)',
     },
     'Project 4': {
       title: 'Project 4',
@@ -342,16 +343,8 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   };
 
-  // Loading animation
-  setTimeout(() => {
-    loadingScreen.classList.add('hidden');
-    setTimeout(() => {
-      loadingScreen.style.display = 'none';
-      
-      // 主页加载完成后，开始预加载关键视频
-      startVideoPreloading();
-    }, 500);
-  }, 2500);
+  // Loading animation - 与视频加载进度关联
+  initVideoLoadingWithProgress();
 
   // Page navigation functions
   function showPortfolio() {
@@ -531,11 +524,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const projectTitles = [
       'Liftwell',
       'Zhulong',
-      'Project 3', // Placeholder
+      'Tide Bound',
       'Project 4', // Placeholder
       'The Drowned Monolith',
       'REALITYEATER',
-      'Tide Bound',
       'Shmupformer',
       'Float',
       'Dice Birdhouse',
@@ -552,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (currentIndex > 0) {
       const prevProject = projectTitles[currentIndex - 1];
       // 跳过placeholder项目
-      if (prevProject !== 'Project 3' && prevProject !== 'Project 4') {
+      if (prevProject !== 'Project 4') {
         prevProjectBtn.style.display = 'flex';
         prevProjectBtn.onclick = () => showProjectDetail(prevProject);
         prevProjectBtn.querySelector(
@@ -561,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         // 如果上一个是placeholder，继续往前找
         let validPrevIndex = currentIndex - 1;
-        while (validPrevIndex >= 0 && (projectTitles[validPrevIndex] === 'Project 3' || projectTitles[validPrevIndex] === 'Project 4')) {
+        while (validPrevIndex >= 0 && projectTitles[validPrevIndex] === 'Project 4') {
           validPrevIndex--;
         }
         if (validPrevIndex >= 0) {
@@ -583,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (currentIndex < projectTitles.length - 1) {
       const nextProject = projectTitles[currentIndex + 1];
       // 跳过placeholder项目
-      if (nextProject !== 'Project 3' && nextProject !== 'Project 4') {
+      if (nextProject !== 'Project 4') {
         nextProjectBtn.style.display = 'flex';
         nextProjectBtn.onclick = () => showProjectDetail(nextProject);
         nextProjectBtn.querySelector(
@@ -592,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         // 如果下一个是placeholder，继续往后找
         let validNextIndex = currentIndex + 1;
-        while (validNextIndex < projectTitles.length && (projectTitles[validNextIndex] === 'Project 3' || projectTitles[validNextIndex] === 'Project 4')) {
+        while (validNextIndex < projectTitles.length && projectTitles[validNextIndex] === 'Project 4') {
           validNextIndex++;
         }
         if (validNextIndex < projectTitles.length) {
@@ -633,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 控制导航按钮显示（Portfolio项目隐藏Process按钮）
     const projectNavBtns = document.querySelectorAll('.project-nav-btn');
-    const portfolioProjects = ['Liftwell', 'Zhulong'];
+    const portfolioProjects = ['Liftwell', 'Zhulong', 'Tide Bound'];
     
     projectNavBtns.forEach(btn => {
       const btnText = btn.textContent.trim();
@@ -786,6 +778,36 @@ document.addEventListener('DOMContentLoaded', function () {
                             <img src="Portfolio/Picture/Zhulong/Page-6.png" alt="Zhulong Page 6" class="project-detail-image">
                         </div>
                     </div>
+                </div>
+            `;
+    } else if (projectTitle === 'Tide Bound') {
+      // Tide Bound content - Portfolio Project
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <iframe 
+                                class="project-detail-iframe" 
+                                src="https://www.youtube.com/embed/liMMEkX0Dlg?autoplay=1&mute=1&loop=1&playlist=liMMEkX0Dlg&controls=1&playsinline=1" 
+                                title="Tide Bound Overview" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                loading="lazy"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+      processSection.innerHTML = ``;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-text-content">
+                    <p>Final outcome content will be added here when available.</p>
                 </div>
             `;
     } else if (projectTitle === 'The Drowned Monolith') {
@@ -2801,7 +2823,167 @@ function cleanupAboutScrollListener() {
   isContactVisible = false;
 }
 
-// ========== 智能视频预加载系统 ==========
+// ========== 视频加载与进度条关联系统 ==========
+function initVideoLoadingWithProgress() {
+  const loadingScreen = document.getElementById('loading-screen');
+  const progressBar = document.querySelector('.loading-progress');
+  
+  if (!loadingScreen || !progressBar) {
+    console.warn('加载屏幕或进度条元素未找到');
+    // 如果找不到元素，使用原来的延迟隐藏逻辑
+    setTimeout(() => {
+      if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+          startVideoPreloading();
+        }, 500);
+      }
+    }, 2500);
+    return;
+  }
+  
+  // 收集所有需要预加载的视频
+  const allVideos = document.querySelectorAll('.portfolio-video, .project-video, .project-card-video');
+  const videoArray = Array.from(allVideos);
+  
+  if (videoArray.length === 0) {
+    console.log('未找到需要预加载的视频');
+    // 如果没有视频，直接隐藏加载屏幕
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+      }, 500);
+    }, 1000);
+    return;
+  }
+  
+  console.log(`开始预加载 ${videoArray.length} 个视频...`);
+  
+  let loadedCount = 0;
+  let errorCount = 0;
+  const totalVideos = videoArray.length;
+  
+  // 更新进度条
+  function updateProgress() {
+    const progress = ((loadedCount + errorCount) / totalVideos) * 100;
+    // 确保进度条在5%-100%之间平滑过渡
+    const displayProgress = Math.max(5, Math.min(100, progress));
+    progressBar.style.width = `${displayProgress}%`;
+    console.log(`加载进度: ${displayProgress.toFixed(1)}% (${loadedCount + errorCount}/${totalVideos})`);
+  }
+  
+  // 检查是否所有视频都已加载完成
+  function checkAllLoaded() {
+    if (loadedCount + errorCount >= totalVideos) {
+      console.log('所有视频加载完成，隐藏加载屏幕');
+      // 确保进度条显示100%
+      progressBar.style.width = '100%';
+      
+      // 延迟一点时间让用户看到100%的进度
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }, 300);
+    }
+  }
+  
+  // 初始化进度条为5%（表示开始加载）
+  progressBar.style.width = '5%';
+  
+  // 为每个视频设置加载监听
+  videoArray.forEach((video, index) => {
+    // 错开加载时间，避免同时发起太多请求
+    setTimeout(() => {
+      const videoSource = video.querySelector('source');
+      const videoSrc = videoSource ? videoSource.src : video.src;
+      
+      if (!videoSrc) {
+        console.warn(`视频 ${index + 1} 没有有效的源`);
+        errorCount++;
+        updateProgress();
+        checkAllLoaded();
+        return;
+      }
+      
+      console.log(`开始加载视频 ${index + 1}/${totalVideos}: ${videoSrc}`);
+      
+      // 监听加载进度
+      const onProgress = () => {
+        if (video.buffered.length > 0 && video.buffered.end(0) > 0) {
+          const bufferedPercent = (video.buffered.end(0) / video.duration) * 100;
+          // 更新单个视频的加载进度（可选，用于更精确的进度显示）
+        }
+      };
+      
+      // 监听可以播放（加载完成）
+      const onCanPlayThrough = () => {
+        loadedCount++;
+        console.log(`视频加载完成: ${videoSrc} (${loadedCount}/${totalVideos})`);
+        updateProgress();
+        checkAllLoaded();
+        
+        // 清理事件监听器
+        video.removeEventListener('canplaythrough', onCanPlayThrough);
+        video.removeEventListener('progress', onProgress);
+        video.removeEventListener('error', onError);
+      };
+      
+      // 监听加载错误
+      const onError = () => {
+        errorCount++;
+        console.warn(`视频加载失败: ${videoSrc} (错误: ${errorCount}/${totalVideos})`);
+        updateProgress();
+        checkAllLoaded();
+        
+        // 清理事件监听器
+        video.removeEventListener('canplaythrough', onCanPlayThrough);
+        video.removeEventListener('progress', onProgress);
+        video.removeEventListener('error', onError);
+      };
+      
+      // 添加事件监听器
+      video.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
+      video.addEventListener('progress', onProgress);
+      video.addEventListener('error', onError, { once: true });
+      
+      // 设置预加载属性并开始加载
+      // 即使HTML中设置了preload="none"，这里也会强制加载
+      video.preload = 'auto';
+      video.setAttribute('preload', 'auto');
+      
+      // 确保视频元素可见（即使父容器隐藏，视频也需要能够加载）
+      // 注意：现代浏览器可以加载隐藏元素中的视频，但为了确保兼容性，我们强制加载
+      try {
+        video.load();
+      } catch (e) {
+        console.warn(`加载视频时出错: ${videoSrc}`, e);
+        errorCount++;
+        updateProgress();
+        checkAllLoaded();
+      }
+    }, index * 200); // 每个视频错开200ms，避免同时请求过多
+  });
+  
+  // 设置超时保护：如果30秒后还没加载完成，强制隐藏加载屏幕
+  setTimeout(() => {
+    if (loadedCount + errorCount < totalVideos) {
+      console.warn('视频加载超时，强制隐藏加载屏幕');
+      progressBar.style.width = '100%';
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }, 300);
+    }
+  }, 30000);
+}
+
+// ========== 智能视频预加载系统（保留用于后续预加载） ==========
 function startVideoPreloading() {
   console.log('开始智能预加载视频...');
   
@@ -2882,3 +3064,4 @@ function startVideoPreloading() {
     preloadNextBatch();
   }, 3000);
 }
+

@@ -197,13 +197,7 @@ body {
     width: 0%;
     height: 100%;
     background: #fff;
-    animation: loading 2s ease-in-out forwards;
-}
-
-@keyframes loading {
-    to {
-        width: 100%;
-    }
+    transition: width 0.3s ease-out;
 }
 
 /* Project Detail Page */
