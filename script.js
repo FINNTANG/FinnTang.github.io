@@ -260,12 +260,12 @@ document.addEventListener('DOMContentLoaded', function () {
     REALITYEATER: {
       title: 'REALITYEATER',
       category: '[ AI / INTERACTIVE ]',
-      year: '2024',
+      year: '2025',
       description:
         'A cyberpunk-inspired AI-powered digital pet game that "eats" your reality through object recognition.',
-      role: 'Concept Design, Frontend Development, AI Integration, UI/UX Design',
-      duration: '2 months',
-      tools: 'JavaScript, HTML/CSS, OpenAI API, Vercel, Pixel Art',
+      role: 'Game Designer & Full-Stack Developer',
+      duration: '5 Weeks',
+      tools: 'React, Three.js, AI, WebGL, Django, LangChain, REST API',
     },
     FamilyBoard: {
       title: 'FamilyBoard',
@@ -525,9 +525,8 @@ document.addEventListener('DOMContentLoaded', function () {
       'Liftwell',
       'Zhulong',
       'Tide Bound',
-      'Project 4', // Placeholder
-      'The Drowned Monolith',
       'REALITYEATER',
+      'The Drowned Monolith',
       'Shmupformer',
       'Float',
       'Dice Birdhouse',
@@ -543,29 +542,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // Previous project
     if (currentIndex > 0) {
       const prevProject = projectTitles[currentIndex - 1];
-      // 跳过placeholder项目
-      if (prevProject !== 'Project 4') {
+      // 所有项目都可以导航
+      if (prevProject) {
         prevProjectBtn.style.display = 'flex';
         prevProjectBtn.onclick = () => showProjectDetail(prevProject);
         prevProjectBtn.querySelector(
           'span:last-child',
         ).textContent = `Previous Project`;
       } else {
-        // 如果上一个是placeholder，继续往前找
-        let validPrevIndex = currentIndex - 1;
-        while (validPrevIndex >= 0 && projectTitles[validPrevIndex] === 'Project 4') {
-          validPrevIndex--;
-        }
-        if (validPrevIndex >= 0) {
-          const validPrevProject = projectTitles[validPrevIndex];
-          prevProjectBtn.style.display = 'flex';
-          prevProjectBtn.onclick = () => showProjectDetail(validPrevProject);
-          prevProjectBtn.querySelector(
-            'span:last-child',
-          ).textContent = `Previous Project`;
-        } else {
-          prevProjectBtn.style.display = 'none';
-        }
+        prevProjectBtn.style.display = 'flex';
+        prevProjectBtn.onclick = () => showProjectDetail(prevProject);
+        prevProjectBtn.querySelector(
+          'span:last-child',
+        ).textContent = `Previous Project`;
       }
     } else {
       prevProjectBtn.style.display = 'none';
@@ -574,29 +563,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // Next project
     if (currentIndex < projectTitles.length - 1) {
       const nextProject = projectTitles[currentIndex + 1];
-      // 跳过placeholder项目
-      if (nextProject !== 'Project 4') {
+      // 所有项目都可以导航
+      if (nextProject) {
         nextProjectBtn.style.display = 'flex';
         nextProjectBtn.onclick = () => showProjectDetail(nextProject);
         nextProjectBtn.querySelector(
           'span:first-child',
         ).textContent = `Next Project`;
       } else {
-        // 如果下一个是placeholder，继续往后找
-        let validNextIndex = currentIndex + 1;
-        while (validNextIndex < projectTitles.length && projectTitles[validNextIndex] === 'Project 4') {
-          validNextIndex++;
-        }
-        if (validNextIndex < projectTitles.length) {
-          const validNextProject = projectTitles[validNextIndex];
-          nextProjectBtn.style.display = 'flex';
-          nextProjectBtn.onclick = () => showProjectDetail(validNextProject);
-          nextProjectBtn.querySelector(
-            'span:first-child',
-          ).textContent = `Next Project`;
-        } else {
-          nextProjectBtn.style.display = 'none';
-        }
+        nextProjectBtn.style.display = 'flex';
+        nextProjectBtn.onclick = () => showProjectDetail(nextProject);
+        nextProjectBtn.querySelector(
+          'span:first-child',
+        ).textContent = `Next Project`;
       }
     } else {
       nextProjectBtn.style.display = 'none';
@@ -625,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 控制导航按钮显示（Portfolio项目隐藏Process按钮）
     const projectNavBtns = document.querySelectorAll('.project-nav-btn');
-    const portfolioProjects = ['Liftwell', 'Zhulong', 'Tide Bound'];
+    const portfolioProjects = ['Liftwell', 'Zhulong', 'Tide Bound', 'REALITYEATER'];
     
     projectNavBtns.forEach(btn => {
       const btnText = btn.textContent.trim();
@@ -806,8 +785,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
       resultsSection.innerHTML = `
                 <h2 class="project-section-title">Final Outcome</h2>
-                <div class="project-text-content">
-                    <p>Final outcome content will be added here when available.</p>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-1.png" alt="Tide Bound Page 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-2.png" alt="Tide Bound Page 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-3.png" alt="Tide Bound Page 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-4.png" alt="Tide Bound Page 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-5.png" alt="Tide Bound Page 5" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-6.png" alt="Tide Bound Page 6" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-7.png" alt="Tide Bound Page 7" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Tidebound/Page-8.png" alt="Tide Bound Page 8" class="project-detail-image">
+                        </div>
+                    </div>
                 </div>
             `;
     } else if (projectTitle === 'The Drowned Monolith') {
@@ -899,88 +917,54 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             `;
     } else if (projectTitle === 'REALITYEATER') {
-      // REALITYEATER content
+      // REALITYEATER content - Portfolio Project
       overviewSection.innerHTML = `
                 <h2 class="project-section-title">Overview</h2>
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
                             <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="realityeater-overview.mp4" type="video/mp4">
+                                <source src="Portfolio/Video/Realityeater Nyu.mp4" type="video/mp4">
                                 <span>REALITYEATER Game Interface</span>
                             </video>
                         </div>
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>REALITYEATER is a virtual pet browser game where players use real-world items to feed a glitchy, sentient digital pet through webcam-based object recognition.</p>
+                    <p>Click this link to try the game: <a href="https://pet.plusdoit.com/" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; opacity: 0.9; transition: opacity 0.3s ease;">https://pet.plusdoit.com/</a></p>
                 </div>
             `;
 
-      processSection.innerHTML = `
-                <h2 class="project-section-title">Development Process</h2>
-                <div class="project-image-gallery">
-                    <div class="project-image-item">
-                        <div class="project-image-medium">
-                            <img src="realityeater/realityeater-process-1.png" alt="REALITYEATER Development Process" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <h3>AI Integration</h3>
-                    <p>Built interactive pet with camera-based object recognition using OpenAI API.</p>
-                    <h3>Visual Design</h3>
-                    <p>Designed glitch-style UI with pixel art aesthetics and terminal-like interfaces.</p>
-                    <h3>Behavioral Logic</h3>
-                    <p>Created JSON-based interaction logic and emotional states for the pet.</p>
-                </div>
-            `;
+      processSection.innerHTML = ``;
 
       resultsSection.innerHTML = `
                 <h2 class="project-section-title">Final Outcome</h2>
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="realityeater/realityeater-final-1.mp4" type="video/mp4">
-                                <span>REALITYEATER Final Outcome Video</span>
-                            </video>
+                            <img src="Portfolio/Picture/Realityeater/Page-1.png" alt="REALITYEATER Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-2.png" alt="REALITYEATER Final Outcome 2" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-2.png" alt="REALITYEATER Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-3.png" alt="REALITYEATER Final Outcome 3" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-3.png" alt="REALITYEATER Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-4.png" alt="REALITYEATER Final Outcome 4" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-4.png" alt="REALITYEATER Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-5.png" alt="REALITYEATER Final Outcome 5" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-5.png" alt="REALITYEATER Page 5" class="project-detail-image">
                         </div>
                     </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-6.png" alt="REALITYEATER Final Outcome 6" class="project-detail-image">
-                        </div>
-                    </div>
-                    <div class="project-image-item">
-                        <div class="project-image-large">
-                            <img src="realityeater/realityeater-final-7.png" alt="REALITYEATER Final Outcome 7" class="project-detail-image">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-text-content">
-                    <p>Live prototype available at <a href="https://digital-pet-code-world.vercel.app/" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">digital-pet-code-world.vercel.app</a></p>
-                    <p>Players can interact with the pet through typed messages and feed it real objects via webcam input.</p>
                 </div>
             `;
     } else if (projectTitle === 'FamilyBoard') {
