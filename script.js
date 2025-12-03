@@ -550,11 +550,11 @@ document.addEventListener('DOMContentLoaded', function () {
           'span:last-child',
         ).textContent = `Previous Project`;
       } else {
-        prevProjectBtn.style.display = 'flex';
+          prevProjectBtn.style.display = 'flex';
         prevProjectBtn.onclick = () => showProjectDetail(prevProject);
-        prevProjectBtn.querySelector(
-          'span:last-child',
-        ).textContent = `Previous Project`;
+          prevProjectBtn.querySelector(
+            'span:last-child',
+          ).textContent = `Previous Project`;
       }
     } else {
       prevProjectBtn.style.display = 'none';
@@ -571,11 +571,11 @@ document.addEventListener('DOMContentLoaded', function () {
           'span:first-child',
         ).textContent = `Next Project`;
       } else {
-        nextProjectBtn.style.display = 'flex';
+          nextProjectBtn.style.display = 'flex';
         nextProjectBtn.onclick = () => showProjectDetail(nextProject);
-        nextProjectBtn.querySelector(
-          'span:first-child',
-        ).textContent = `Next Project`;
+          nextProjectBtn.querySelector(
+            'span:first-child',
+          ).textContent = `Next Project`;
       }
     } else {
       nextProjectBtn.style.display = 'none';
@@ -2807,7 +2807,7 @@ function cleanupAboutScrollListener() {
   isContactVisible = false;
 }
 
-// ========== 视频加载与进度条关联系统 ==========
+// ========== 视频加载与进度条关联系统（优化版） ==========
 function initVideoLoadingWithProgress() {
   const loadingScreen = document.getElementById('loading-screen');
   const progressBar = document.querySelector('.loading-progress');
@@ -2827,11 +2827,15 @@ function initVideoLoadingWithProgress() {
     return;
   }
   
-  // 收集所有需要预加载的视频
-  const allVideos = document.querySelectorAll('.portfolio-video, .project-video, .project-card-video');
-  const videoArray = Array.from(allVideos);
+  // 优先加载Portfolio视频（用户最常访问的页面）
+  const portfolioVideos = document.querySelectorAll('.portfolio-video');
+  const worksVideos = document.querySelectorAll('.project-video, .project-card-video');
   
-  if (videoArray.length === 0) {
+  const portfolioVideoArray = Array.from(portfolioVideos);
+  const worksVideoArray = Array.from(worksVideos);
+  const allVideos = [...portfolioVideoArray, ...worksVideoArray];
+  
+  if (allVideos.length === 0) {
     console.log('未找到需要预加载的视频');
     // 如果没有视频，直接隐藏加载屏幕
     setTimeout(() => {
@@ -2843,11 +2847,29 @@ function initVideoLoadingWithProgress() {
     return;
   }
   
-  console.log(`开始预加载 ${videoArray.length} 个视频...`);
+  console.log(`开始预加载 ${allVideos.length} 个视频（Portfolio: ${portfolioVideoArray.length}, Works: ${worksVideoArray.length}）...`);
   
   let loadedCount = 0;
   let errorCount = 0;
-  const totalVideos = videoArray.length;
+  let portfolioLoadedCount = 0;
+  let portfolioErrorCount = 0;
+  const totalVideos = allVideos.length;
+  const totalPortfolioVideos = portfolioVideoArray.length;
+  let loadingScreenHidden = false;
+  
+  // 隐藏加载屏幕的函数
+  function hideLoadingScreen() {
+    if (loadingScreenHidden) return;
+    loadingScreenHidden = true;
+    console.log('隐藏加载屏幕，后台继续加载剩余视频');
+    progressBar.style.width = '100%';
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+      }, 500);
+    }, 300);
+  }
   
   // 更新进度条
   function updateProgress() {
@@ -2858,29 +2880,36 @@ function initVideoLoadingWithProgress() {
     console.log(`加载进度: ${displayProgress.toFixed(1)}% (${loadedCount + errorCount}/${totalVideos})`);
   }
   
+  // 检查是否可以提前隐藏加载屏幕
+  function checkCanHideEarly() {
+    // 如果Portfolio视频全部加载完成，或者达到70%进度，就隐藏加载屏幕
+    const portfolioProgress = portfolioVideoArray.length > 0 
+      ? (portfolioLoadedCount + portfolioErrorCount) / portfolioVideoArray.length 
+      : 1;
+    const overallProgress = (loadedCount + errorCount) / totalVideos;
+    
+    if (portfolioProgress >= 1 || overallProgress >= 0.7) {
+      hideLoadingScreen();
+      return true;
+    }
+    return false;
+  }
+  
   // 检查是否所有视频都已加载完成
   function checkAllLoaded() {
     if (loadedCount + errorCount >= totalVideos) {
-      console.log('所有视频加载完成，隐藏加载屏幕');
-      // 确保进度条显示100%
-      progressBar.style.width = '100%';
-      
-      // 延迟一点时间让用户看到100%的进度
-      setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }, 300);
+      console.log('所有视频加载完成');
+      if (!loadingScreenHidden) {
+        hideLoadingScreen();
+      }
     }
   }
   
   // 初始化进度条为5%（表示开始加载）
   progressBar.style.width = '5%';
   
-  // 为每个视频设置加载监听
-  videoArray.forEach((video, index) => {
-    // 错开加载时间，避免同时发起太多请求
+  // 加载单个视频的函数
+  function loadVideo(video, index, isPortfolio) {
     setTimeout(() => {
       const videoSource = video.querySelector('source');
       const videoSrc = videoSource ? videoSource.src : video.src;
@@ -2888,83 +2917,89 @@ function initVideoLoadingWithProgress() {
       if (!videoSrc) {
         console.warn(`视频 ${index + 1} 没有有效的源`);
         errorCount++;
+        if (isPortfolio) portfolioErrorCount++;
         updateProgress();
+        checkCanHideEarly();
         checkAllLoaded();
         return;
       }
       
       console.log(`开始加载视频 ${index + 1}/${totalVideos}: ${videoSrc}`);
       
-      // 监听加载进度
-      const onProgress = () => {
-        if (video.buffered.length > 0 && video.buffered.end(0) > 0) {
-          const bufferedPercent = (video.buffered.end(0) / video.duration) * 100;
-          // 更新单个视频的加载进度（可选，用于更精确的进度显示）
-        }
-      };
-      
       // 监听可以播放（加载完成）
       const onCanPlayThrough = () => {
         loadedCount++;
+        if (isPortfolio) portfolioLoadedCount++;
         console.log(`视频加载完成: ${videoSrc} (${loadedCount}/${totalVideos})`);
         updateProgress();
+        
+        // 检查是否可以提前隐藏加载屏幕
+        if (!loadingScreenHidden) {
+          checkCanHideEarly();
+        }
         checkAllLoaded();
         
         // 清理事件监听器
         video.removeEventListener('canplaythrough', onCanPlayThrough);
-        video.removeEventListener('progress', onProgress);
         video.removeEventListener('error', onError);
       };
       
       // 监听加载错误
       const onError = () => {
         errorCount++;
+        if (isPortfolio) portfolioErrorCount++;
         console.warn(`视频加载失败: ${videoSrc} (错误: ${errorCount}/${totalVideos})`);
         updateProgress();
+        
+        // 检查是否可以提前隐藏加载屏幕
+        if (!loadingScreenHidden) {
+          checkCanHideEarly();
+        }
         checkAllLoaded();
         
         // 清理事件监听器
         video.removeEventListener('canplaythrough', onCanPlayThrough);
-        video.removeEventListener('progress', onProgress);
         video.removeEventListener('error', onError);
       };
       
       // 添加事件监听器
       video.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
-      video.addEventListener('progress', onProgress);
       video.addEventListener('error', onError, { once: true });
       
       // 设置预加载属性并开始加载
-      // 即使HTML中设置了preload="none"，这里也会强制加载
       video.preload = 'auto';
       video.setAttribute('preload', 'auto');
       
-      // 确保视频元素可见（即使父容器隐藏，视频也需要能够加载）
-      // 注意：现代浏览器可以加载隐藏元素中的视频，但为了确保兼容性，我们强制加载
       try {
         video.load();
       } catch (e) {
         console.warn(`加载视频时出错: ${videoSrc}`, e);
         errorCount++;
+        if (isPortfolio) portfolioErrorCount++;
         updateProgress();
+        checkCanHideEarly();
         checkAllLoaded();
       }
-    }, index * 200); // 每个视频错开200ms，避免同时请求过多
+    }, index * 150); // 每个视频错开150ms，加快加载速度
+  }
+  
+  // 优先加载Portfolio视频
+  portfolioVideoArray.forEach((video, index) => {
+    loadVideo(video, index, true);
   });
   
-  // 设置超时保护：如果30秒后还没加载完成，强制隐藏加载屏幕
+  // 然后加载Works视频（延迟一点，避免阻塞Portfolio视频）
+  worksVideoArray.forEach((video, index) => {
+    loadVideo(video, portfolioVideoArray.length + index, false);
+  });
+  
+  // 设置最大等待时间：8秒后强制隐藏加载屏幕
   setTimeout(() => {
-    if (loadedCount + errorCount < totalVideos) {
-      console.warn('视频加载超时，强制隐藏加载屏幕');
-      progressBar.style.width = '100%';
-      setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }, 300);
+    if (!loadingScreenHidden) {
+      console.log('达到最大等待时间，隐藏加载屏幕');
+      hideLoadingScreen();
     }
-  }, 30000);
+  }, 8000);
 }
 
 // ========== 智能视频预加载系统（保留用于后续预加载） ==========
