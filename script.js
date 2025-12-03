@@ -650,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="Liftwell Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
                                 loading="lazy"
                                 allowfullscreen>
                             </iframe>
@@ -713,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="Zhulong Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
                                 loading="lazy"
                                 allowfullscreen>
                             </iframe>
@@ -772,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="Tide Bound Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
                                 loading="lazy"
                                 allowfullscreen>
                             </iframe>
@@ -841,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="The Drowned Monolith Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
                                 loading="lazy"
                                 allowfullscreen>
                             </iframe>
@@ -1074,7 +1074,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 title="Tide Bound Game Overview" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                sandbox="allow-scripts allow-same-origin allow-presentation"
+                                sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
                                 loading="lazy"
                                 allowfullscreen>
                             </iframe>

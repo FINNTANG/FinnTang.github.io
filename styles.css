@@ -2014,16 +2014,17 @@ a.about-contact-value:hover::after {
     background: #000;
     display: block;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* 优化iframe渲染性能 */
-    will-change: transform, filter;
+    /* 概览中的 YouTube 外链视频保持静态，不做缩放动画 */
+    transition: none;
+    will-change: auto;
     backface-visibility: hidden;
-    transform: translateZ(0);
+    transform: none;
 }
 
 .project-image-item:hover .project-detail-iframe {
-    transform: scale(1.02);
-    filter: brightness(1.05);
+    /* 覆盖默认 hover 动画：嵌入的 YouTube 视频不放大、不变亮 */
+    transform: none;
+    filter: none;
 }
 
 /* 为长图片（如tidebound-process-1）特殊处理容器高度 */
