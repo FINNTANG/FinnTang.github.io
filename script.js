@@ -670,32 +670,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-1.png" alt="Liftwell Page 1" class="project-detail-image">
+                            <img src="Portfolio/Picture/Liftwell/Page-1.jpg" alt="Liftwell Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-2.png" alt="Liftwell Page 2" class="project-detail-image">
+                            <img src="Portfolio/Picture/Liftwell/Page-2.jpg" alt="Liftwell Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-3.png" alt="Liftwell Page 3" class="project-detail-image">
+                            <img src="Portfolio/Picture/Liftwell/Page-3.jpg" alt="Liftwell Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-4.png" alt="Liftwell Page 4" class="project-detail-image">
+                            <img src="Portfolio/Picture/Liftwell/Page-4.jpg" alt="Liftwell Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-5.png" alt="Liftwell Page 5" class="project-detail-image">
+                            <img src="Portfolio/Picture/Liftwell/Page-5.jpg" alt="Liftwell Page 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Liftwell/Page-6.png" alt="Liftwell Page 6" class="project-detail-image">
+                            <img src="Portfolio/Picture/Liftwell/Page-6.jpg" alt="Liftwell Page 6" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -729,32 +729,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-1.png" alt="Zhulong Page 1" class="project-detail-image">
+                            <img src="Portfolio/Picture/Zhulong/Page-1.jpg" alt="Zhulong Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-2.png" alt="Zhulong Page 2" class="project-detail-image">
+                            <img src="Portfolio/Picture/Zhulong/Page-2.jpg" alt="Zhulong Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-3.png" alt="Zhulong Page 3" class="project-detail-image">
+                            <img src="Portfolio/Picture/Zhulong/Page-3.jpg" alt="Zhulong Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-4.png" alt="Zhulong Page 4" class="project-detail-image">
+                            <img src="Portfolio/Picture/Zhulong/Page-4.jpg" alt="Zhulong Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-5.png" alt="Zhulong Page 5" class="project-detail-image">
+                            <img src="Portfolio/Picture/Zhulong/Page-5.jpg" alt="Zhulong Page 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Zhulong/Page-6.png" alt="Zhulong Page 6" class="project-detail-image">
+                            <img src="Portfolio/Picture/Zhulong/Page-6.jpg" alt="Zhulong Page 6" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -788,42 +788,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-1.png" alt="Tide Bound Page 1" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-1.jpg" alt="Tide Bound Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-2.png" alt="Tide Bound Page 2" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-2.jpg" alt="Tide Bound Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-3.png" alt="Tide Bound Page 3" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-3.jpg" alt="Tide Bound Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-4.png" alt="Tide Bound Page 4" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-4.jpg" alt="Tide Bound Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-5.png" alt="Tide Bound Page 5" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-5.jpg" alt="Tide Bound Page 5" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-6.png" alt="Tide Bound Page 6" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-6.jpg" alt="Tide Bound Page 6" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-7.png" alt="Tide Bound Page 7" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-7.jpg" alt="Tide Bound Page 7" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Tidebound/Page-8.png" alt="Tide Bound Page 8" class="project-detail-image">
+                            <img src="Portfolio/Picture/Tidebound/Page-8.jpg" alt="Tide Bound Page 8" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -942,27 +942,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-1.png" alt="REALITYEATER Page 1" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-1.jpg" alt="REALITYEATER Page 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-2.png" alt="REALITYEATER Page 2" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-2.jpg" alt="REALITYEATER Page 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-3.png" alt="REALITYEATER Page 3" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-3.jpg" alt="REALITYEATER Page 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-4.png" alt="REALITYEATER Page 4" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-4.jpg" alt="REALITYEATER Page 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-5.png" alt="REALITYEATER Page 5" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/Page-5.jpg" alt="REALITYEATER Page 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
