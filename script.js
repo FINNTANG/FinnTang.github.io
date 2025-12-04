@@ -288,6 +288,17 @@ document.addEventListener('DOMContentLoaded', function () {
       tools:
         'Illustrator, Photoshop, InDesign, Physical Prototyping, Research-based Design Methods',
     },
+    'NASA HERC WHEEL': {
+      title: 'NASA HERC WHEEL',
+      category: '[ DESIGN ENGINEERING / VEHICLE DESIGN ]',
+      year: '2025',
+      description:
+        'Fully handcrafted carbon fiber wheel designed for NASA Human Exploration Rover Challenge, focusing on light weightness and durability through parametric design and carbon fiber manufacturing techniques.',
+      role: 'Design Engineer, Carbon Fiber Manufacturing, Mold Working, Metal Machining',
+      duration: '13 Weeks',
+      tools:
+        'Research, Carbon Fiber Manufacturing, Mold Working, Metal Machining, 3D Modeling, Rendering',
+    },
     Shmupformer: {
       title: 'Shmupformer',
       category: '[ GAME DEVELOPMENT / COLLABORATION ]',
@@ -526,6 +537,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'Zhulong',
       'Tide Bound',
       'REALITYEATER',
+      'NASA HERC WHEEL',
       'The Drowned Monolith',
       'Shmupformer',
       'Float',
@@ -859,17 +871,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="The Drowned Monolith/TProcess1.jpg" alt="Grasshopper Parametric Design" class="project-detail-image">
+                            <img src="The Drowned Monolith/Process1.jpg" alt="Grasshopper Parametric Design" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="The Drowned Monolith/TProcess2.jpg" alt="Rhino Modeling Process" class="project-detail-image">
+                            <img src="The Drowned Monolith/Process2.jpg" alt="Rhino Modeling Process" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="The Drowned Monolith/TProcess3.png" alt="Unreal Engine Implementation" class="project-detail-image">
+                            <img src="The Drowned Monolith/Process3.jpg" alt="Unreal Engine Implementation" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="The Drowned Monolith/Process4.jpg" alt="Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -890,17 +907,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="The Drowned Monolith/Tfinal1.png" alt="The Drowned Monolith Final View 1" class="project-detail-image">
+                            <img src="The Drowned Monolith/Final1.jpg" alt="The Drowned Monolith Final View 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="The Drowned Monolith/Tfinal2.png" alt="The Drowned Monolith Final View 2" class="project-detail-image">
+                            <img src="The Drowned Monolith/Final2.jpg" alt="The Drowned Monolith Final View 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="The Drowned Monolith/Tfinal3.png" alt="The Drowned Monolith Final View 3" class="project-detail-image">
+                            <img src="The Drowned Monolith/Final3.jpg" alt="The Drowned Monolith Final View 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="The Drowned Monolith/Final4.jpg" alt="The Drowned Monolith Final View 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="The Drowned Monolith/Final5.jpg" alt="The Drowned Monolith Final View 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -914,6 +941,113 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p>• Evocative environmental storytelling that invites contemplation and exploration</p>
                     <h3>Design Philosophy</h3>
                     <p>This project demonstrates how parametric tools can be employed not just for precision, but for creating structures that feel intrinsically connected to their environment—where technology serves the vision of harmony between the built and the natural.</p>
+                </div>
+            `;
+    } else if (projectTitle === 'NASA HERC WHEEL') {
+      // NASA HERC WHEEL content
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Overview.jpg" alt="NASA HERC Wheel Overview" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>NASA HERC WHEEL is a fully handcrafted carbon fiber wheel designed for the NASA Human Exploration Rover Challenge. The project focuses on achieving light weightness and durability through innovative design engineering and carbon fiber manufacturing techniques.</p>
+                    <p>This wheel was made for a Rover team with the goal of combining lightweight construction with structural integrity. Carbon fiber was chosen as the main material for its exceptional strength-to-weight ratio, durability, and production efficiency.</p>
+                    <h3>About the Wheel</h3>
+                    <p>The wheel features a multi-component design that was manufactured using smaller 3D printed molds for carbon fiber lay-ups. Due to manufacturing constraints, the wheel is composed of different parts assembled together using strong adhesive resins, allowing for precise control over each component's geometry and material distribution.</p>
+                    <p>Weight reduction was achieved by using minimum carbon fiber materials strategically placed, and incorporating curvatures to the surfaces to increase strength without adding bulk. This approach demonstrates how computational design thinking can optimize material usage while maintaining structural performance.</p>
+                </div>
+            `;
+
+      processSection.innerHTML = `
+                <h2 class="project-section-title">Development Process</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="NASA/Process1.jpg" alt="NASA HERC Wheel Process 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="NASA/Process2.jpg" alt="NASA HERC Wheel Process 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="NASA/Process3.jpg" alt="NASA HERC Wheel Process 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="NASA/Process4.jpg" alt="NASA HERC Wheel Process 4" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <h3>Design & Manufacturing Approach</h3>
+                    <p>The wheel was designed through careful consideration of manufacturing constraints and material properties. Using 3D printed molds for carbon fiber lay-ups allowed for precise control over component geometry while working within the limitations of available equipment.</p>
+                    <h3>Component Assembly</h3>
+                    <p>The wheel is composed of multiple parts including connection tubes, hub, rims, connection pieces, spokes, tread, disk & caliper, upright, and axle. Each component was carefully designed to work together, with controlled mold surfaces ensuring maximum adhesion during glue-up processes.</p>
+                    <h3>Carbon Fiber Lay-up & Adhesion</h3>
+                    <p>Strong adhesive resins were used to bond the components together, creating a unified structure that maintains both strength and weight efficiency. The assembly process required precise alignment and controlled curing conditions to ensure optimal bonding.</p>
+                    <h3>Engineering & Testing</h3>
+                    <p>Throughout the development process, the design team focused on balancing weight reduction with structural integrity, testing various configurations to achieve the optimal strength-to-weight ratio for the Rover challenge requirements.</p>
+                </div>
+            `;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final1.jpg" alt="NASA HERC Wheel Final 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final2.jpg" alt="NASA HERC Wheel Final 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final3.jpg" alt="NASA HERC Wheel Final 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final4.jpg" alt="NASA HERC Wheel Final 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final5.jpg" alt="NASA HERC Wheel Final 5" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final6.jpg" alt="NASA HERC Wheel Final 6" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="NASA/Final7.jpg" alt="NASA HERC Wheel Final 7" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>The final wheel successfully demonstrates the integration of design engineering with hands-on manufacturing skills, creating a functional carbon fiber wheel that meets the demanding requirements of the NASA Human Exploration Rover Challenge.</p>
+                    <h3>Key Achievements</h3>
+                    <p>• Fully handcrafted carbon fiber wheel with optimized weight-to-strength ratio</p>
+                    <p>• Successful integration of multiple components through precision assembly techniques</p>
+                    <p>• Innovative use of 3D printed molds for carbon fiber manufacturing</p>
+                    <p>• Effective application of structural curvature for enhanced strength without added weight</p>
+                    <p>• Collaboration between design team members (Tiancheng Feng & Zining Tang) to achieve project goals</p>
+                    <h3>Design Philosophy</h3>
+                    <p>This project showcases how computational design thinking and traditional craftsmanship can work together to solve engineering challenges. The emphasis on material efficiency and structural optimization reflects a holistic approach to design engineering, where every gram matters and every curve serves a purpose.</p>
                 </div>
             `;
     } else if (projectTitle === 'REALITYEATER') {
@@ -1249,7 +1383,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="float/float-process-1.png" alt="Float Woodworking Process" class="project-detail-image">
+                            <img src="float/float-process-1.jpg" alt="Float Woodworking Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1296,7 +1430,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-overview.png" alt="Dice Birdhouse Overview" class="project-detail-image">
+                            <img src="bird/bird-overview.jpg" alt="Dice Birdhouse Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1310,7 +1444,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="bird/bird-process.png" alt="Dice Birdhouse Development Process" class="project-detail-image">
+                            <img src="bird/bird-process.jpg" alt="Dice Birdhouse Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1331,27 +1465,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-1.png" alt="Dice Birdhouse Final Outcome 1" class="project-detail-image">
+                            <img src="bird/bird-final-1.jpg" alt="Dice Birdhouse Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-2.png" alt="Dice Birdhouse Final Outcome 2" class="project-detail-image">
+                            <img src="bird/bird-final-2.jpg" alt="Dice Birdhouse Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-3.png" alt="Dice Birdhouse Final Outcome 3" class="project-detail-image">
+                            <img src="bird/bird-final-3.jpg" alt="Dice Birdhouse Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-4.png" alt="Dice Birdhouse Final Outcome 4" class="project-detail-image">
+                            <img src="bird/bird-final-4.jpg" alt="Dice Birdhouse Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="bird/bird-final-5.png" alt="Dice Birdhouse Final Outcome 5" class="project-detail-image">
+                            <img src="bird/bird-final-5.jpg" alt="Dice Birdhouse Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1438,7 +1572,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-overview.png" alt="Venom Pulse Overview" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-overview.jpg" alt="Venom Pulse Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1452,7 +1586,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="Venom_Pulse/venompulse-process-1.png" alt="Venom Pulse Development Process" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-process-1.jpg" alt="Venom Pulse Development Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1471,17 +1605,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-1.png" alt="Venom Pulse Final Outcome 1" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-final-1.jpg" alt="Venom Pulse Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-2.png" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-final-2.jpg" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-3.png" alt="Venom Pulse Final Outcome 3" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-final-3.jpg" alt="Venom Pulse Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                 </div>
