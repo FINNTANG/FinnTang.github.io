@@ -671,7 +671,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <h3>Installation</h3>
-                    <p>Visit the itch.io page: <a href="https://finntang2004.itch.io/liftwell" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; opacity: 0.9; transition: opacity 0.3s ease;">https://finntang2004.itch.io/liftwell</a></p>
+                    <div class="project-external-link-container">
+                        <div class="project-link-label">Play the Game</div>
+                        <a href="https://finntang2004.itch.io/liftwell" target="_blank" rel="noopener noreferrer" class="project-cta-link">
+                            <span class="project-cta-text">Play on itch.io</span>
+                            <svg class="project-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             `;
 
@@ -789,6 +798,18 @@ document.addEventListener('DOMContentLoaded', function () {
                                 allowfullscreen>
                             </iframe>
                         </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <div class="project-external-link-container">
+                        <div class="project-link-label">Try the Online System</div>
+                        <a href="https://ocean-board-game.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-cta-link">
+                            <span class="project-cta-text">Explore Online Interface</span>
+                            <svg class="project-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             `;
@@ -955,11 +976,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>NASA HERC WHEEL is a fully handcrafted carbon fiber wheel designed for the NASA Human Exploration Rover Challenge. The project focuses on achieving light weightness and durability through innovative design engineering and carbon fiber manufacturing techniques.</p>
-                    <p>This wheel was made for a Rover team with the goal of combining lightweight construction with structural integrity. Carbon fiber was chosen as the main material for its exceptional strength-to-weight ratio, durability, and production efficiency.</p>
+                    <p>NASA HERC WHEEL is a fully handcrafted carbon fiber wheel designed for the NASA Human Exploration Rover Challenge. The project focuses on achieving lightweight construction and structural integrity through innovative design engineering and carbon fiber manufacturing techniques.</p>
                     <h3>About the Wheel</h3>
-                    <p>The wheel features a multi-component design that was manufactured using smaller 3D printed molds for carbon fiber lay-ups. Due to manufacturing constraints, the wheel is composed of different parts assembled together using strong adhesive resins, allowing for precise control over each component's geometry and material distribution.</p>
-                    <p>Weight reduction was achieved by using minimum carbon fiber materials strategically placed, and incorporating curvatures to the surfaces to increase strength without adding bulk. This approach demonstrates how computational design thinking can optimize material usage while maintaining structural performance.</p>
+                    <p>The wheel features a multi-component design manufactured using 3D printed molds for carbon fiber lay-ups. Components are assembled using strong adhesive resins, allowing precise control over geometry and material distribution. Strategic material placement and surface curvature enhance strength without adding bulk.</p>
                 </div>
             `;
 
@@ -989,13 +1008,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <h3>Design & Manufacturing Approach</h3>
-                    <p>The wheel was designed through careful consideration of manufacturing constraints and material properties. Using 3D printed molds for carbon fiber lay-ups allowed for precise control over component geometry while working within the limitations of available equipment.</p>
+                    <p>This project was developed through close collaboration between team members (Tiancheng Feng & Zining Tang), combining complementary expertise in design engineering, material science, and manufacturing. Working together, we navigated manufacturing constraints and optimized each component's geometry using 3D printed molds for carbon fiber lay-ups.</p>
                     <h3>Component Assembly</h3>
-                    <p>The wheel is composed of multiple parts including connection tubes, hub, rims, connection pieces, spokes, tread, disk & caliper, upright, and axle. Each component was carefully designed to work together, with controlled mold surfaces ensuring maximum adhesion during glue-up processes.</p>
-                    <h3>Carbon Fiber Lay-up & Adhesion</h3>
-                    <p>Strong adhesive resins were used to bond the components together, creating a unified structure that maintains both strength and weight efficiency. The assembly process required precise alignment and controlled curing conditions to ensure optimal bonding.</p>
+                    <p>The wheel comprises multiple parts—connection tubes, hub, rims, spokes, tread, and axle—each carefully designed for optimal integration. Controlled mold surfaces ensured maximum adhesion during glue-up processes, requiring precise alignment and controlled curing conditions.</p>
                     <h3>Engineering & Testing</h3>
-                    <p>Throughout the development process, the design team focused on balancing weight reduction with structural integrity, testing various configurations to achieve the optimal strength-to-weight ratio for the Rover challenge requirements.</p>
+                    <p>Throughout the development process, the design focused on balancing weight reduction with structural integrity, testing various configurations to achieve optimal performance. This iterative approach optimized the strength-to-weight ratio for the Rover challenge requirements.</p>
                 </div>
             `;
 
@@ -1041,11 +1058,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-text-content">
                     <p>The final wheel successfully demonstrates the integration of design engineering with hands-on manufacturing skills, creating a functional carbon fiber wheel that meets the demanding requirements of the NASA Human Exploration Rover Challenge.</p>
                     <h3>Key Achievements</h3>
+                    <p>• Successful collaboration between design team members (Tiancheng Feng & Zining Tang), demonstrating effective teamwork in combining design, engineering, and manufacturing expertise</p>
                     <p>• Fully handcrafted carbon fiber wheel with optimized weight-to-strength ratio</p>
                     <p>• Successful integration of multiple components through precision assembly techniques</p>
                     <p>• Innovative use of 3D printed molds for carbon fiber manufacturing</p>
                     <p>• Effective application of structural curvature for enhanced strength without added weight</p>
-                    <p>• Collaboration between design team members (Tiancheng Feng & Zining Tang) to achieve project goals</p>
                     <h3>Design Philosophy</h3>
                     <p>This project showcases how computational design thinking and traditional craftsmanship can work together to solve engineering challenges. The emphasis on material efficiency and structural optimization reflects a holistic approach to design engineering, where every gram matters and every curve serves a purpose.</p>
                 </div>
@@ -1065,7 +1082,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Click this link to try the game: <a href="https://pet.plusdoit.com/" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; opacity: 0.9; transition: opacity 0.3s ease;">https://pet.plusdoit.com/</a></p>
+                    <div class="project-external-link-container">
+                        <div class="project-link-label">Try the Game</div>
+                        <a href="https://pet.plusdoit.com/" target="_blank" rel="noopener noreferrer" class="project-cta-link">
+                            <span class="project-cta-text">Play REALITYEATER Now</span>
+                            <svg class="project-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             `;
 
@@ -1216,6 +1242,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
+                    <div class="project-external-link-container">
+                        <div class="project-link-label">Try the Online System</div>
+                        <a href="https://ocean-board-game.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-cta-link">
+                            <span class="project-cta-text">Explore Online Interface</span>
+                            <svg class="project-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
                     <p>Tide Bound is a tabletop card game designed for beach play that encourages engagement with marine ecology and environmental decision-making.</p>
                 </div>
             `;
@@ -1507,6 +1543,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <p>FateRISD: Final Bubble is a humorous visual novel and battle parody made during the 2025 Global Game Jam, featuring original characters inspired by RISD students.</p>
+                    <div class="project-external-link-container">
+                        <div class="project-link-label">Play the Game</div>
+                        <a href="https://finntang2004.itch.io/faterisdfinal" target="_blank" rel="noopener noreferrer" class="project-cta-link">
+                            <span class="project-cta-text">Play on itch.io</span>
+                            <svg class="project-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             `;
 
@@ -1561,7 +1607,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Play now on itch.io: <a href="https://finntang2004.itch.io/faterisdfinal" target="_blank" style="color: #fff; text-decoration: underline; opacity: 0.8;">finntang2004.itch.io/faterisdfinal</a></p>
                     <p>The game includes multiple endings, satirical attacks, and anime-style dialogue.</p>
                 </div>
             `;
@@ -1705,32 +1750,48 @@ document.addEventListener('DOMContentLoaded', function () {
     // Apply hover interactions to new items
     projectImageItems.forEach((item) => {
       let hoverTimeout;
+      
+      // 检查是否包含 iframe（YouTube 视频）
+      const hasIframe = item.querySelector('.project-detail-iframe');
 
       item.addEventListener('mouseenter', function () {
         clearTimeout(hoverTimeout);
-        this.style.transform = 'translateY(-8px)';
-        this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+        
+        // 如果包含 iframe，不应用浮起效果
+        if (!hasIframe) {
+          this.style.transform = 'translateY(-8px)';
+          this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+        }
 
         const media = this.querySelector(
           '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video, .portfolio-video',
         );
         if (media) {
-          media.style.transform = 'scale(1.02)';
-          media.style.filter = 'brightness(1.05)';
+          // 如果是 iframe，不应用缩放和亮度效果
+          if (!media.classList.contains('project-detail-iframe')) {
+            media.style.transform = 'scale(1.02)';
+            media.style.filter = 'brightness(1.05)';
+          }
         }
       });
 
       item.addEventListener('mouseleave', function () {
         hoverTimeout = setTimeout(() => {
-          this.style.transform = 'translateY(0)';
-          this.style.boxShadow = 'none';
+          // 如果包含 iframe，不需要重置 transform
+          if (!hasIframe) {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+          }
 
           const media = this.querySelector(
             '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video, .portfolio-video',
           );
           if (media) {
-            media.style.transform = 'scale(1)';
-            media.style.filter = 'brightness(1)';
+            // 如果是 iframe，不需要重置 transform 和 filter
+            if (!media.classList.contains('project-detail-iframe')) {
+              media.style.transform = 'scale(1)';
+              media.style.filter = 'brightness(1)';
+            }
           }
         }, 50);
       });
