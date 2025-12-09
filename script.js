@@ -312,14 +312,14 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     Float: {
       title: 'Float',
-      category: '[ WOODWORKING / SCULPTURE ]',
+      category: '[ PHYSICAL COMPUTING / SCULPTURE ]',
       year: '2025',
       description:
-        'A sculptural wooden bowl that defies gravity through bent lamination and elegant joinery.',
-      role: 'Solo project – Concept Design, Woodturning, Lamination, Assembly, Finish',
+        'A sculptural form exploration that defies gravity through bent lamination and parametric joinery, demonstrating the integration of computational thinking with tangible fabrication.',
+      role: 'Solo project – Concept Design, Material Prototyping, Lamination Engineering, Assembly, Finish',
       duration: '2 weeks',
       tools:
-        'Lathe, Band Saw, Clamps, Wood Glue, Dowels, Cherry Block, 3-ply Polywood',
+        'Lathe, Precision Tools, Lamination Systems, Material Analysis, Cherry Wood, 3-ply Polywood',
     },
     'Dice Birdhouse': {
       title: 'Dice Birdhouse',
@@ -1410,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Float is a sculptural wooden bowl that appears to "float" above ground, supported by three gracefully curved polywood legs achieved through bent lamination.</p>
+                    <p>Float is a sculptural wooden bowl that appears to defy gravity, supported by three gracefully curved polywood legs. The project explores the integration of computational joinery design with traditional woodworking techniques, demonstrating how parametric thinking can enhance material craftsmanship.</p>
                 </div>
             `;
 
@@ -1419,19 +1419,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="float/float-process-1.jpg" alt="Float Woodworking Process" class="project-detail-image">
+                            <img src="float/float-process-1.jpg" alt="Float Material Prototyping Process" class="project-detail-image">
                         </div>
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <h3>Material Preparation</h3>
-                    <p>Started with a 10-foot block of cherry and thin sheets of polywood for the curved legs.</p>
-                    <h3>Bowl Turning</h3>
-                    <p>Turned the bowl on a lathe, stabilizing large wood masses and repairing piercing accidents.</p>
-                    <h3>Bent Lamination</h3>
-                    <p>Used bent lamination for the legs to achieve graceful curves.</p>
-                    <h3>Joinery Design</h3>
-                    <p>Designed joints that invisibly support the weight while enhancing the illusion of floating.</p>
+                    <h3>Material Selection & Preparation</h3>
+                    <p>Selected cherry wood for the bowl and polywood laminate sheets for the legs, analyzing material properties to optimize for both structural integrity and aesthetic qualities. The material choice reflects a balance between traditional woodworking aesthetics and engineering requirements.</p>
+                    <h3>Lathe Work & Bowl Forming</h3>
+                    <p>Turned the bowl on a lathe using precision techniques, applying computational thinking to traditional woodturning processes. This phase required careful attention to wood grain orientation and wall thickness consistency.</p>
+                    <h3>Bent Lamination & Leg Construction</h3>
+                    <p>Employed bent lamination techniques to create the three curved legs, using controlled heat and pressure to achieve organic compound curves. This process demonstrates how traditional woodworking methods can be enhanced through engineering precision.</p>
+                    <h3>Parametric Joinery Design</h3>
+                    <p>Designed invisible joinery systems that structurally integrate the legs with the bowl while maintaining the illusion of levitation. The joints were computationally optimized for load distribution and visual seamlessness.</p>
                 </div>
             `;
 
@@ -1455,8 +1455,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>A visually balanced wood sculpture combining solid mass with visual lightness.</p>
-                    <p>Float reflects a harmony between organic form and engineered control.</p>
+                    <p>A sculptural wooden form that combines traditional woodworking techniques with computational design thinking, achieving visual lightness through structural optimization and material engineering.</p>
+                    <p>Float demonstrates how parametric design principles can enhance craft processes, creating a harmonious integration of algorithmic precision and material exploration.</p>
                 </div>
             `;
     } else if (projectTitle === 'Dice Birdhouse') {
@@ -1650,17 +1650,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-1.jpg" alt="Venom Pulse Final Outcome 1" class="project-detail-image">
+                            <img src="Venom_Pulse/GUN.59.jpg" alt="Venom Pulse Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-2.jpg" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
+                            <img src="Venom_Pulse/GUN.90.jpg" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-final-3.jpg" alt="Venom Pulse Final Outcome 3" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-final-1.jpg" alt="Venom Pulse Final Outcome 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Venom_Pulse/venompulse-final-2.jpg" alt="Venom Pulse Final Outcome 4" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Venom_Pulse/venompulse-final-3.jpg" alt="Venom Pulse Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
