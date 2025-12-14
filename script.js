@@ -1074,10 +1074,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="Portfolio/Video/Realityeater Nyu.mp4" type="video/mp4">
-                                <span>REALITYEATER Game Interface</span>
-                            </video>
+                            <iframe class="project-detail-iframe" src="https://www.youtube.com/embed/SlbFY9K3Slk?autoplay=1&mute=1&controls=0&loop=1&playlist=SlbFY9K3Slk" title="REALITYEATER Overview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -1102,27 +1099,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-1.jpg" alt="REALITYEATER Page 1" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/2.jpg" alt="REALITYEATER Final Outcome 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-2.jpg" alt="REALITYEATER Page 2" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/3.jpg" alt="REALITYEATER Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-3.jpg" alt="REALITYEATER Page 3" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/4.jpg" alt="REALITYEATER Final Outcome 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-4.jpg" alt="REALITYEATER Page 4" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/5.jpg" alt="REALITYEATER Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Portfolio/Picture/Realityeater/Page-5.jpg" alt="REALITYEATER Page 5" class="project-detail-image">
+                            <img src="Portfolio/Picture/Realityeater/6.jpg" alt="REALITYEATER Final Outcome 5" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Realityeater/7.jpg" alt="REALITYEATER Final Outcome 6" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Realityeater/8.jpg" alt="REALITYEATER Final Outcome 7" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="Portfolio/Picture/Realityeater/9.jpg" alt="REALITYEATER Final Outcome 8" class="project-detail-image">
                         </div>
                     </div>
                 </div>
