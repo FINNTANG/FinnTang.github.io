@@ -1074,7 +1074,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <iframe class="project-detail-iframe" src="https://www.youtube.com/embed/SlbFY9K3Slk?autoplay=1&mute=1&controls=0&loop=1&playlist=SlbFY9K3Slk" title="REALITYEATER Overview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe class="project-detail-iframe" src="https://www.youtube.com/embed/SlbFY9K3Slk?autoplay=1&mute=1&loop=1&playlist=SlbFY9K3Slk&controls=1&playsinline=1" title="REALITYEATER Overview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
