@@ -70,11 +70,12 @@
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 1px;
-  cursor: pointer;
-  padding: 8px 0;
+  cursor: pointer !important;
+  padding: 8px 12px !important; /* 增加左右padding确保整个区域可点击 */
   position: relative;
   transition: opacity 0.3s ease;
   opacity: 0.6;
+  pointer-events: auto !important; /* 确保按钮可以点击 */
 }
 
 .filter-btn.active {
@@ -90,6 +91,7 @@
   height: 1px;
   background: #fff;
   transition: width 0.3s ease;
+  pointer-events: none !important; /* 确保伪元素不会阻挡点击 */
 }
 
 .filter-btn.active::after,
