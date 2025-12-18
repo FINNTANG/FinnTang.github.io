@@ -354,8 +354,40 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   };
 
-  // Loading animation - 与视频加载进度关联
-  initVideoLoadingWithProgress();
+  // Loading animation - 简单可靠的加载逻辑
+  const progressBar = document.querySelector('.loading-progress');
+  
+  // 模拟进度条动画
+  let progress = 0;
+  const progressInterval = setInterval(() => {
+    progress += Math.random() * 15 + 10;
+    if (progress > 100) progress = 100;
+    if (progressBar) {
+      progressBar.style.width = `${progress}%`;
+    }
+    if (progress >= 100) {
+      clearInterval(progressInterval);
+    }
+  }, 200);
+  
+  // 2.5秒后隐藏加载屏幕并显示光标
+  setTimeout(() => {
+    if (progressBar) {
+      progressBar.style.width = '100%';
+    }
+    if (loadingScreen) {
+      loadingScreen.classList.add('hidden');
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+      }, 500);
+    }
+    // 确保光标显示
+    if (cursor) {
+      setTimeout(() => {
+        cursor.style.opacity = '1';
+      }, 600);
+    }
+  }, 2500);
 
   // Page navigation functions
   function showPortfolio() {
@@ -2361,8 +2393,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
   // 在 Portfolio 页面激活时立即执行
-  const portfolioSection = document.getElementById('portfolio');
-  if (portfolioSection) {
+  const portfolioSectionForVideos = document.getElementById('portfolio');
+  if (portfolioSectionForVideos) {
     // 页面加载后立即执行
     setTimeout(() => ensurePortfolioVideosPlay(), 300);
     
