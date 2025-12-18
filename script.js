@@ -60,10 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // 可交互元素的悬停效果 - 使用事件委托优化性能
     const interactiveElements = 'a, button, .project-card, .filter-btn, .nav-link, input, textarea, [role="button"], .clickable';
     const videoElements = 'video, .project-video, .project-detail-video, .project-card-video, .portfolio-video';
+    const detailMediaElements = '.project-image-item, .project-detail-image, .project-detail-video';
     
     // 使用单一事件监听器和事件委托
     document.addEventListener('mouseover', (e) => {
-      if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
+      if (e.target.closest(detailMediaElements)) {
+        cursor.classList.add('cursor-view');
+      } else if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
         cursor.classList.add('cursor-video');
       } else if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
         cursor.classList.add('cursor-hover');
@@ -71,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { passive: true });
     
     document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(detailMediaElements)) {
+        cursor.classList.remove('cursor-view');
+      }
+      
       if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
         cursor.classList.remove('cursor-video');
       } else if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
@@ -108,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 清理所有光标状态的辅助函数
     function resetCursorStates() {
-      cursor.classList.remove('cursor-hover', 'cursor-video', 'cursor-text', 'cursor-click');
+      cursor.classList.remove('cursor-hover', 'cursor-video', 'cursor-text', 'cursor-click', 'cursor-view');
     }
     
     // 页面切换时重置光标状态
@@ -1810,43 +1817,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       item.addEventListener('mouseenter', function () {
         clearTimeout(hoverTimeout);
-        
-        // 如果包含 iframe，不应用浮起效果
-        if (!hasIframe) {
-          this.style.transform = 'translateY(-8px)';
-          this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
-        }
-
-        const media = this.querySelector(
-          '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video, .portfolio-video',
-        );
-        if (media) {
-          // 如果是 iframe，不应用缩放和亮度效果
-          if (!media.classList.contains('project-detail-iframe')) {
-            media.style.transform = 'scale(1.02)';
-            media.style.filter = 'brightness(1.05)';
-          }
-        }
+        // JS transform removed to use CSS
       });
 
       item.addEventListener('mouseleave', function () {
         hoverTimeout = setTimeout(() => {
-          // 如果包含 iframe，不需要重置 transform
-          if (!hasIframe) {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = 'none';
-          }
-
-          const media = this.querySelector(
-            '.project-detail-image, .project-detail-video, .project-detail-iframe, .project-card-video, .portfolio-video',
-          );
-          if (media) {
-            // 如果是 iframe，不需要重置 transform 和 filter
-            if (!media.classList.contains('project-detail-iframe')) {
-              media.style.transform = 'scale(1)';
-              media.style.filter = 'brightness(1)';
-            }
-          }
+          // JS transform removed to use CSS
         }, 50);
       });
     });
@@ -2182,8 +2158,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isHovering = true;
       
       if (this.classList.contains('visible')) {
-        // 使用 transform 而不是多个属性，提升性能
-        this.style.transform = 'translateY(-6px) scale(1.008)';
+        // JS transform removed to use CSS
         this.style.filter = 'brightness(1.02)';
         this.style.boxShadow = '0 12px 24px rgba(0,0,0,0.25)';
       }
@@ -2192,8 +2167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     card.addEventListener('mouseleave', function () {
       isHovering = false;
       
-      // 立即响应
-      this.style.transform = 'translateY(0) scale(1)';
+      // JS transform removed to use CSS
       this.style.filter = 'brightness(1)';
       this.style.boxShadow = 'none';
     }, { passive: true });
@@ -2613,27 +2587,27 @@ document.addEventListener('DOMContentLoaded', function () {
     item.style.willChange = 'transform';
 
     item.addEventListener('mouseenter', function () {
-      this.style.transform = 'translateY(-8px)';
+      // JS transform removed to use CSS
       this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
 
       const image = this.querySelector(
         '.project-detail-image, .project-detail-video',
       );
       if (image) {
-        image.style.transform = 'scale(1.02)';
+        // JS transform removed to use CSS
         image.style.filter = 'brightness(1.05)';
       }
     }, { passive: true });
 
     item.addEventListener('mouseleave', function () {
-      this.style.transform = 'translateY(0)';
+      // JS transform removed to use CSS
       this.style.boxShadow = 'none';
 
       const image = this.querySelector(
         '.project-detail-image, .project-detail-video',
       );
       if (image) {
-        image.style.transform = 'scale(1)';
+        // JS transform removed to use CSS
         image.style.filter = 'brightness(1)';
       }
     }, { passive: true });

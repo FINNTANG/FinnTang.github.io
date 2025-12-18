@@ -215,9 +215,9 @@
 }
 
 .project-card:hover {
-  transform: translateY(-6px) scale(1.008);
-  filter: brightness(1.02);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px) scale(1.002) !important;
+  filter: brightness(1.02) !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* 移除可能导致闪烁的伪元素动画 */
@@ -263,7 +263,7 @@
 
 .project-card:hover .project-video,
 .project-card:hover .project-card-image {
-  transform: scale(1.015);
+  transform: scale(1.005);
 }
 
 .placeholder-image {
@@ -291,7 +291,7 @@
 .project-card:hover .placeholder-image {
   background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
   color: #888;
-  transform: scale(1.015);
+  transform: scale(1.005);
 }
 
 .project-info {

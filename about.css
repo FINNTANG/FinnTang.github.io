@@ -58,7 +58,7 @@
 
 .about-photo:hover {
   filter: grayscale(0%);
-  transform: scale(1.02);
+  transform: scale(1.005);
 }
 
 .about-right {
@@ -325,7 +325,7 @@
 .philosophy-focus:hover {
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.04);
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .focus-title {
@@ -401,7 +401,7 @@
 .expertise-column:hover {
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.04);
-  transform: translateY(-8px);
+  transform: translateY(-3px);
 }
 
 .expertise-icon {

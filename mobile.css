@@ -52,7 +52,7 @@
   }
 
   .about-contact-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-2px);
   }
 
   .about-contact h3 {
@@ -212,7 +212,7 @@
   }
 
   .project-card:active {
-    transform: translateY(-2px) scale(0.98);
+    transform: translateY(-1px) scale(0.995);
     background: linear-gradient(135deg, rgba(12, 12, 12, 0.98) 0%, rgba(6, 6, 6, 1) 100%);
     border-color: rgba(255, 255, 255, 0.12);
     box-shadow: 
@@ -223,7 +223,7 @@
   }
 
   .project-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-2px);
     background: linear-gradient(135deg, rgba(18, 18, 18, 0.98) 0%, rgba(10, 10, 10, 1) 100%);
     border-color: rgba(255, 255, 255, 0.15);
     box-shadow: 
@@ -259,7 +259,7 @@
   .project-card:hover .project-video,
   .project-card:hover .project-card-video,
   .project-card:hover .project-card-image {
-    transform: scale(1.05);
+    transform: scale(1.01);
   }
 
   .project-info {
@@ -887,7 +887,7 @@
   }
 
   .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     background: linear-gradient(135deg, rgba(18, 18, 18, 0.96) 0%, rgba(10, 10, 10, 0.98) 100%);
     border-color: rgba(255, 255, 255, 0.12);
     box-shadow: 

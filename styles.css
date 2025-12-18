@@ -98,12 +98,28 @@ h1, h2, h3, h4, h5, h6,
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                height 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                background 0.3s ease,
+                backdrop-filter 0.3s ease,
+                opacity 0.3s ease;
     opacity: 0.9;
     will-change: transform;
+}
+
+/* 高级查看状态光标 */
+.cursor-view .cursor-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: invert(1) grayscale(1) blur(2px);
+    opacity: 1;
+}
+
+.cursor-view .cursor-dot {
+    opacity: 0;
 }
 
 /* 光标悬停状态 */
@@ -496,13 +512,42 @@ body:has(.portfolio-page[style*="block"]) {
     margin-bottom: 0;
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
+    position: relative;
+    background: #0a0a0a;
 }
 
 .project-image-item:hover {
-    transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) !important;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 优雅的 VIEW 提示框 */
+.project-image-item::after {
+    content: 'VIEW';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: #fff;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 24px;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.project-image-item:hover::after {
+    opacity: 1;
+    letter-spacing: 0.4em;
 }
 
 .project-image-item:hover .project-image-large,
@@ -542,8 +587,8 @@ body:has(.portfolio-page[style*="block"]) {
 }
 
 .project-image-item:hover .project-detail-image {
-    transform: scale(1.02);
-    filter: brightness(1.05);
+    transform: scale(1.005) !important;
+    filter: brightness(1.1) !important;
 }
 
 /* 为medium尺寸图片优化显示 */
@@ -568,8 +613,8 @@ body:has(.portfolio-page[style*="block"]) {
 }
 
 .project-image-item:hover .project-detail-video {
-    transform: scale(1.02);
-    filter: brightness(1.05);
+    transform: scale(1.005) !important;
+    filter: brightness(1.1) !important;
 }
 
 .project-text-content {
@@ -872,7 +917,7 @@ html {
 }
 
 .about-photo-container:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-3px) scale(1.005);
   border-color: rgba(255, 255, 255, 0.25);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
   background: rgba(255, 255, 255, 0.02);
@@ -887,7 +932,7 @@ html {
 }
 
 .about-photo-container:hover .about-photo {
-  transform: scale(1.05);
+  transform: scale(1.01);
   filter: brightness(1.1) contrast(1.05);
 }
 
@@ -933,7 +978,7 @@ html {
 }
 
 .stat-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.03);
 }
@@ -1059,7 +1104,7 @@ html {
 }
 
 .highlight-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-2px);
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -1168,7 +1213,7 @@ html {
 }
 
 .expertise-category:hover {
-  transform: translateY(-12px);
+  transform: translateY(-3px);
   border-color: rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
@@ -1235,7 +1280,7 @@ html {
 .expertise-category:hover .category-icon {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
 
 .category-header h3 {
@@ -1426,7 +1471,7 @@ html {
 }
 
 .info-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   border-color: rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.04);
 }
@@ -1640,7 +1685,7 @@ html {
 }
 
 .about-contact-card:hover {
-  transform: translateY(-12px);
+  transform: translateY(-3px);
   border-color: rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
@@ -1649,7 +1694,7 @@ html {
 .about-contact-card:hover .contact-icon {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05) translateY(-2px);
+  transform: scale(1.01) translateY(-1px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -1672,7 +1717,7 @@ html {
 
 .about-contact-card:hover .about-contact-label {
   opacity: 0.7;
-  transform: translateY(-1px);
+  transform: translateY(-0.5px);
 }
 
 .about-contact-value {
@@ -1689,7 +1734,7 @@ html {
 
 .about-contact-value:hover {
   opacity: 0.85;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 /* 链接特殊效果 */
@@ -1753,7 +1798,7 @@ a.about-contact-value:hover::after {
 }
 
 .skill-category:hover {
-  transform: translateY(-8px);
+  transform: translateY(-3px);
   border-color: rgba(255, 255, 255, 0.12);
   background: linear-gradient(
     135deg,
@@ -1798,7 +1843,7 @@ a.about-contact-value:hover::after {
 }
 
 .about-intro .intro-highlight:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.04) 0%,
@@ -2051,8 +2096,7 @@ a.about-contact-value:hover::after {
 
 .project-image-item:hover .project-card-video,
 .project-image-item:hover .project-card-iframe {
-    transform: scale(1.02);
-    filter: brightness(1.05);
+    filter: brightness(1.1);
 }
 
 .project-detail-iframe {
@@ -2438,7 +2482,7 @@ html {
 .lightbox-close:hover {
   background: rgba(0, 0, 0, 0.8);
   border-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .lightbox-close svg {
@@ -2770,10 +2814,10 @@ body.lightbox-open {
 }
 
 .portfolio-card:hover {
-  background: rgba(255, 255, 255, 0.03);
-  transform: translateY(-6px);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* 边框线条动画 - Cinematic Reveal Style */
@@ -2870,7 +2914,7 @@ body.lightbox-open {
 
 .portfolio-card:hover .portfolio-video {
   opacity: 1;
-  transform: scale(1.03);
+  transform: scale(1.008);
   filter: brightness(1.1) contrast(1.08); /* 悬停时更加明亮 */
 }
 

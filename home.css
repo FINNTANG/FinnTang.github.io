@@ -107,7 +107,7 @@ spline-viewer .watermark {
 }
 
 .main-title:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
   background: linear-gradient(45deg, #fff, #fff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
