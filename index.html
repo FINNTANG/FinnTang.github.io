@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finn Tang - Portfolio</title>
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://prod.spline.design">
+    
+    <!-- Critical CSS -->
     <link rel="icon" href="./finnlogo.png" type="image/png">
     <link rel="shortcut icon" href="./finnlogo.png" type="image/png">
     <link rel="stylesheet" href="styles.css" />
@@ -11,10 +19,17 @@
     <link rel="stylesheet" href="./profile.css" />
     <link rel="stylesheet" href="./mobile.css" />
     <link rel="stylesheet" href="./about.css" />
+    
+    <!-- Optimized font loading -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="./Portfolio/Video/Liftwell_Final_Video_NYU.mp4" type="video/mp4">
+    <link rel="preload" as="image" href="./NASA/Cover.jpg">
+    <link rel="preload" as="image" href="./familyboard/cover.jpg">
     <script
       type="module"
       src="https://unpkg.com/@splinetool/viewer@1.0.35/build/spline-viewer.js"
@@ -157,7 +172,7 @@
           <!-- Liftwell Project -->
           <div class="portfolio-card" data-category="portfolio">
             <div class="portfolio-image">
-              <video class="portfolio-video" autoplay muted loop playsinline preload="none">
+              <video class="portfolio-video" autoplay muted loop playsinline preload="metadata">
                 <source src="Portfolio/Video/Liftwell_Final_Video_NYU.mp4" type="video/mp4" />
                 <span>Liftwell</span>
               </video>
@@ -177,7 +192,7 @@
           <!-- Zhulong Project -->
           <div class="portfolio-card" data-category="portfolio">
             <div class="portfolio-image">
-              <video class="portfolio-video" autoplay muted loop playsinline preload="none">
+              <video class="portfolio-video" autoplay muted loop playsinline preload="metadata">
                 <source src="Portfolio/Video/Zhulong_Final_Video_NYU.mp4" type="video/mp4" />
                 <span>Zhulong</span>
               </video>
@@ -197,7 +212,7 @@
           <!-- Tide Bound Project -->
           <div class="portfolio-card" data-category="portfolio">
             <div class="portfolio-image">
-              <video class="portfolio-video" autoplay muted loop playsinline preload="none">
+              <video class="portfolio-video" autoplay muted loop playsinline preload="metadata">
                 <source src="Portfolio/Video/tidebound.mp4" type="video/mp4" />
                 <span>Tide Bound</span>
               </video>
@@ -217,7 +232,7 @@
           <!-- REALITYEATER Project -->
           <div class="portfolio-card" data-category="portfolio">
             <div class="portfolio-image">
-              <video class="portfolio-video" autoplay muted loop playsinline preload="none">
+              <video class="portfolio-video" autoplay muted loop playsinline preload="metadata">
                 <source src="Portfolio/Video/Re_Web.mp4" type="video/mp4" />
                 <span>REALITYEATER</span>
               </video>
@@ -244,7 +259,8 @@
                 src="NASA/Cover.jpg"
                 alt="NASA HERC Wheel"
                 class="project-card-image"
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
               />
             </div>
             <div class="project-info">
@@ -259,7 +275,7 @@
           <!-- Project 2 - The Drowned Monolith -->
           <div class="project-card" data-category="otherworks">
             <div class="project-image">
-              <video class="project-card-video" autoplay muted loop playsinline preload="none">
+              <video class="project-card-video" autoplay muted loop playsinline preload="metadata">
                 <source src="Tomb_final.mp4" type="video/mp4" />
                 <span>The Drowned Monolith</span>
               </video>
@@ -276,7 +292,7 @@
           <!-- Project 2 -->
           <div class="project-card" data-category="otherworks">
             <div class="project-image">
-              <video class="project-video" autoplay muted loop playsinline preload="none">
+              <video class="project-video" autoplay muted loop playsinline preload="metadata">
                 <source src="digital_pet.mp4" type="video/mp4" />
                 <div class="placeholder-image">
                   <span>REALITYEATER Interface</span>
@@ -295,7 +311,7 @@
           <!-- Project 3 -->
           <div class="project-card" data-category="otherworks">
             <div class="project-image">
-              <video class="project-card-video" autoplay muted loop playsinline preload="none">
+              <video class="project-card-video" autoplay muted loop playsinline preload="metadata">
                 <source src="tidebound.mp4" type="video/mp4" />
                 <span>Tide Bound Game</span>
               </video>
@@ -314,7 +330,7 @@
           <!-- Project 4 -->
           <div class="project-card" data-category="otherworks">
             <div class="project-image">
-              <video class="project-card-video" autoplay muted loop playsinline preload="none">
+              <video class="project-card-video" autoplay muted loop playsinline preload="metadata">
                 <source src="CSP.mp4" type="video/mp4" />
                 <span>Shmupformer Game</span>
               </video>
@@ -337,7 +353,7 @@
                 src="float/float.jpg"
                 alt="Float Sculpture"
                 class="project-card-image"
-                loading="lazy"
+                loading="eager"
               />
             </div>
             <div class="project-info">
@@ -358,7 +374,7 @@
                 src="bird/bird-overview.jpg"
                 alt="Dice Birdhouse"
                 class="project-card-image"
-                loading="lazy"
+                loading="eager"
               />
             </div>
             <div class="project-info">
@@ -379,7 +395,7 @@
                 src="fate/faterisd.jpg"
                 alt="FateRISD: Final Bubble"
                 class="project-card-image"
-                loading="lazy"
+                loading="eager"
               />
             </div>
             <div class="project-info">
@@ -400,7 +416,8 @@
                 src="familyboard/cover.jpg"
                 alt="FamilyBoard Dashboard"
                 class="project-card-image"
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
               />
             </div>
             <div class="project-info">
@@ -419,7 +436,7 @@
                 src="Venom_Pulse/cover.jpg"
                 alt="Venom Pulse Toy Gun"
                 class="project-card-image"
-                loading="lazy"
+                loading="eager"
               />
             </div>
             <div class="project-info">

@@ -3223,12 +3223,12 @@ function initVideoLoadingWithProgress() {
 function startVideoPreloading() {
   console.log('开始智能预加载视频...');
   
-  // 优先级队列：Portfolio视频 > Works视频
+  // 优化：更积极的预加载策略
   const videoPreloadQueue = [
-    // Portfolio视频（优先加载，用户最常访问）
-    { selector: '.portfolio-video', priority: 1, maxConcurrent: 1 },
-    // Works视频（延迟加载，避免阻塞）
-    { selector: '.project-video, .project-card-video', priority: 2, maxConcurrent: 2 }
+    // Portfolio视频（最优先，立即加载）
+    { selector: '.portfolio-video', priority: 1, maxConcurrent: 2, delay: 0 },
+    // Works区域前5个视频（次优先）
+    { selector: '.project-video, .project-card-video', priority: 2, maxConcurrent: 3, delay: 1000 }
   ];
   
   let currentPriority = 1;
@@ -3242,12 +3242,14 @@ function startVideoPreloading() {
     }
     
     const videos = document.querySelectorAll(currentBatch.selector);
-    const videosToLoad = Array.from(videos).filter(v => v.readyState === 0);
+    const videosToLoad = Array.from(videos)
+      .filter(v => v.readyState === 0)
+      .slice(0, currentPriority === 2 ? 5 : videos.length); // Works只预加载前5个
     
     if (videosToLoad.length === 0) {
       // 当前优先级加载完成，进入下一优先级
       currentPriority++;
-      setTimeout(() => preloadNextBatch(), 2000); // 延迟2秒，避免阻塞
+      setTimeout(() => preloadNextBatch(), currentBatch.delay);
       return;
     }
     
@@ -3256,18 +3258,22 @@ function startVideoPreloading() {
     loadingCount = batch.length;
     
     batch.forEach((video, index) => {
-      // 错开加载时间，避免同时请求
+      // Portfolio视频立即加载，其他视频错开时间
+      const loadDelay = currentPriority === 1 ? index * 200 : index * 300;
+      
       setTimeout(() => {
         console.log(`预加载视频: ${video.src || video.querySelector('source')?.src}`);
         
-        // 监听加载完成
+        // 设置更快的加载策略
+        video.preload = 'auto';
+        
         const onCanPlay = () => {
           loadingCount--;
           console.log(`视频预加载完成，剩余: ${loadingCount}`);
           
           if (loadingCount === 0) {
             // 当前批次加载完成，继续下一批
-            setTimeout(() => preloadNextBatch(), 1000);
+            setTimeout(() => preloadNextBatch(), 500);
           }
           
           video.removeEventListener('canplaythrough', onCanPlay);
@@ -3279,7 +3285,7 @@ function startVideoPreloading() {
           console.warn(`视频预加载失败: ${video.src}`);
           
           if (loadingCount === 0) {
-            setTimeout(() => preloadNextBatch(), 1000);
+            setTimeout(() => preloadNextBatch(), 500);
           }
           
           video.removeEventListener('canplaythrough', onCanPlay);
@@ -3291,13 +3297,13 @@ function startVideoPreloading() {
         
         // 开始加载视频
         video.load();
-      }, index * 500); // 每个视频错开500ms
+      }, loadDelay);
     });
   }
   
-  // 主页加载完成3秒后开始预加载（确保不影响主页体验）
+  // 主页加载完成1秒后立即开始预加载（更激进的策略）
   setTimeout(() => {
     preloadNextBatch();
-  }, 3000);
+  }, 1000);
 }
 
