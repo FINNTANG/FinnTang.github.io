@@ -550,6 +550,11 @@ body:has(.portfolio-page[style*="block"]) {
     letter-spacing: 0.4em;
 }
 
+/* 隐藏包含iframe（YouTube外链视频）的项目图片的VIEW提示 */
+.project-image-item:has(iframe)::after {
+    display: none !important;
+}
+
 .project-image-item:hover .project-image-large,
 .project-image-item:hover .project-image-medium {
     color: inherit;
