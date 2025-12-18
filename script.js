@@ -1163,22 +1163,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-1.png" alt="FamilyBoard Development Process 1" class="project-detail-image">
+                            <img src="familyboard/FM-process-1.jpg" alt="FamilyBoard Development Process 1" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-2.png" alt="FamilyBoard Development Process 2" class="project-detail-image">
+                            <img src="familyboard/FM-process-2.jpg" alt="FamilyBoard Development Process 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-3.png" alt="FamilyBoard Development Process 3" class="project-detail-image">
+                            <img src="familyboard/FM-process-3.jpg" alt="FamilyBoard Development Process 3" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="familyboard/FM-process-4.png" alt="FamilyBoard Development Process 4" class="project-detail-image">
+                            <img src="familyboard/FM-process-4.jpg" alt="FamilyBoard Development Process 4" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1215,12 +1215,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/FM-final-4.png" alt="FamilyBoard Final Outcome 4" class="project-detail-image">
+                            <img src="familyboard/FM-final-4.jpg" alt="FamilyBoard Final Outcome 4" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="familyboard/FM-final-5.png" alt="FamilyBoard Final Outcome 5" class="project-detail-image">
+                            <img src="familyboard/FM-final-5.jpg" alt="FamilyBoard Final Outcome 5" class="project-detail-image">
                         </div>
                     </div>
                 </div>
