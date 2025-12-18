@@ -1937,6 +1937,22 @@ document.addEventListener('DOMContentLoaded', function () {
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
+        
+        // 强制重新播放所有 Portfolio 视频
+        setTimeout(() => {
+          const portfolioVideos = document.querySelectorAll('.portfolio-video');
+          portfolioVideos.forEach((video, index) => {
+            setTimeout(() => {
+              if (video.paused) {
+                video.play().catch(e => {
+                  console.log(`Portfolio 视频 ${index} 重新播放失败:`, e);
+                  // 重试一次
+                  setTimeout(() => video.play().catch(() => {}), 300);
+                });
+              }
+            }, index * 150);
+          });
+        }, 300);
       } else if (filter === 'otherworks') {
         portfolioSection.style.display = 'none';
         otherworksSection.style.display = 'grid';
@@ -2270,6 +2286,94 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { passive: true });
   }
 
+  // ========== Portfolio 视频强制播放系统 ==========
+  // 确保 Portfolio 页面的视频始终能正常播放
+  function ensurePortfolioVideosPlay() {
+    const portfolioVideos = document.querySelectorAll('.portfolio-video');
+    
+    portfolioVideos.forEach((video, index) => {
+      // 添加多重保障机制
+      let playAttempts = 0;
+      const maxAttempts = 5;
+      
+      function attemptPlay() {
+        if (playAttempts >= maxAttempts) {
+          console.warn(`视频 ${index} 播放失败，已尝试 ${maxAttempts} 次`);
+          return;
+        }
+        
+        playAttempts++;
+        
+        // 确保视频已加载
+        if (video.readyState < 2) {
+          video.load();
+          video.addEventListener('loadeddata', () => {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(e => {
+                console.log(`Portfolio 视频 ${index} 播放重试 ${playAttempts}:`, e);
+                setTimeout(() => attemptPlay(), 500);
+              });
+            }
+          }, { once: true });
+        } else {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              console.log(`Portfolio 视频 ${index} 播放成功`);
+            }).catch(e => {
+              console.log(`Portfolio 视频 ${index} 播放重试 ${playAttempts}:`, e);
+              setTimeout(() => attemptPlay(), 500);
+            });
+          }
+        }
+      }
+      
+      // 立即尝试播放
+      setTimeout(() => attemptPlay(), index * 200);
+      
+      // 监听 Portfolio 页面显示事件
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (btn.dataset.filter === 'portfolio') {
+            setTimeout(() => {
+              if (video.paused) {
+                attemptPlay();
+              }
+            }, 500);
+          }
+        });
+      });
+      
+      // 用户交互后重试（某些浏览器需要用户交互才能自动播放）
+      const playOnInteraction = () => {
+        if (video.paused) {
+          video.play().catch(e => console.log('交互后播放失败:', e));
+        }
+        document.removeEventListener('click', playOnInteraction);
+        document.removeEventListener('scroll', playOnInteraction);
+      };
+      
+      document.addEventListener('click', playOnInteraction, { once: true, passive: true });
+      document.addEventListener('scroll', playOnInteraction, { once: true, passive: true });
+    });
+  }
+  
+  // 在 Portfolio 页面激活时立即执行
+  const portfolioSection = document.getElementById('portfolio');
+  if (portfolioSection) {
+    // 页面加载后立即执行
+    setTimeout(() => ensurePortfolioVideosPlay(), 300);
+    
+    // 监听页面显示（从其他标签页返回时）
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        ensurePortfolioVideosPlay();
+      }
+    });
+  }
+
   // ========== 智能视频懒加载系统 ==========
   // 使用Intersection Observer管理视频播放
   const videoLazyLoadObserver = new IntersectionObserver((entries) => {
@@ -2279,34 +2383,48 @@ document.addEventListener('DOMContentLoaded', function () {
       if (entry.isIntersecting) {
         // 视频进入可见区域
         if (video.readyState === 0) {
-          // 视频还未加载，立即加载（预加载系统可能还未处理到这个视频）
+          // 视频还未加载，立即加载
           console.log('即时加载视频:', video.src);
           video.load();
         }
         
+        // 对于 Portfolio 视频，更激进的播放策略
+        const isPortfolioVideo = video.classList.contains('portfolio-video');
+        
         // 尝试播放
         if (video.paused) {
-          // 如果视频已经预加载完成，应该能立即播放
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              console.log('视频播放成功');
-            }).catch(e => {
-              console.log('视频自动播放被阻止:', e);
-            });
+          const attemptPlayWithRetry = (retries = 3) => {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise.then(() => {
+                console.log(`视频播放成功: ${isPortfolioVideo ? 'Portfolio' : 'Works'}`);
+              }).catch(e => {
+                console.log(`视频播放失败 (剩余重试: ${retries}):`, e);
+                if (retries > 0) {
+                  setTimeout(() => attemptPlayWithRetry(retries - 1), 300);
+                }
+              });
+            }
+          };
+          
+          // Portfolio 视频立即播放，其他视频稍微延迟
+          if (isPortfolioVideo) {
+            attemptPlayWithRetry(5); // Portfolio 视频重试更多次
+          } else {
+            setTimeout(() => attemptPlayWithRetry(2), 100);
           }
         }
       } else {
-        // 视频离开可见区域，暂停播放以节省资源
-        // 但保留已加载的数据，下次直接播放
-        if (!video.paused) {
+        // 视频离开可见区域
+        // Portfolio 视频不暂停，保持播放
+        if (!video.classList.contains('portfolio-video') && !video.paused) {
           video.pause();
         }
       }
     });
   }, {
-    threshold: 0.15, // 降低到15%，更早触发
-    rootMargin: '100px' // 增加到100px，提前更多距离
+    threshold: 0.1, // Portfolio 卡片只要 10% 可见就触发
+    rootMargin: '150px' // 提前 150px 开始准备
   });
 
   // 对所有项目卡片视频应用懒加载
