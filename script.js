@@ -1186,7 +1186,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="project-image-item">
                         <div class="project-image-large">
                             <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="Finnmom.mp4" type="video/mp4">
+                                <source src="http://oss-tang.plusdoit.com/Finnmom.mp4" type="video/mp4">
                                 <span>FamilyBoard Dashboard Overview</span>
                             </video>
                         </div>
@@ -1378,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="project-image-item">
                         <div class="project-image-large">
                             <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="CSP.mp4" type="video/mp4">
+                                <source src="http://oss-tang.plusdoit.com/CSP.mp4" type="video/mp4">
                                 <span>Shmupformer Game Overview</span>
                             </video>
                         </div>
