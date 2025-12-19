@@ -2190,7 +2190,7 @@ a.about-contact-value:hover::after {
 /* Project Detail Spline Text Effect - 作品集页面版本 */
 .project-spline-text {
     position: absolute !important;
-  top: 50px !important;
+  top: 100px !important; /* 调整到header下方，避免覆盖导航栏 */
     left: 60% !important;
     transform: translateX(-50%) !important;
     width: 650px !important;
@@ -2213,7 +2213,7 @@ a.about-contact-value:hover::after {
     width: 100% !important;
     height: 100% !important;
     border-radius: 10px !important;
-    pointer-events: auto !important;
+    pointer-events: none !important; /* 改为none，防止阻挡header点击 */
     transform: scale(1.3) !important;
     transform-origin: center center !important;
 }

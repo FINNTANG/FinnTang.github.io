@@ -23,8 +23,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999 !important; /* 提高z-index确保在Spline元素之上 */
   height: 80px;
+  pointer-events: auto !important; /* 确保header可以接收点击事件 */
 }
 
 .logo {
