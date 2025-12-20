@@ -2017,6 +2017,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
 
+        // 确保Portfolio卡片可见 - 修复无法返回的问题
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
+        portfolioCards.forEach((card) => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+          card.classList.add('visible');
+        });
+
         // 强制重新播放所有 Portfolio 视频
         setTimeout(() => {
           const portfolioVideos = document.querySelectorAll('.portfolio-video');
