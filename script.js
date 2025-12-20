@@ -2,20 +2,20 @@ document.addEventListener('DOMContentLoaded', function () {
   // ========== 动画状态标志 ==========
   let worksAnimationPlayed = false; // 跟踪Works动画是否已播放
   let portfolioAnimationPlayed = false; // 跟踪Portfolio动画是否已播放
-  
+
   // ========== 自定义光标初始化（性能优化版） ==========
   const cursor = document.getElementById('cursor');
   const cursorDot = cursor?.querySelector('.cursor-dot');
   const cursorCircle = cursor?.querySelector('.cursor-circle');
-  
+
   let cursorMouseX = 0;
   let cursorMouseY = 0;
   let circleX = 0;
   let circleY = 0;
-  
+
   // 检查是否支持hover（排除移动设备）
   const supportsHover = window.matchMedia('(hover: hover)').matches;
-  
+
   if (supportsHover && cursor) {
     // 使用 transform 替代 left/top，性能更好
     if (cursorDot) {
@@ -24,112 +24,158 @@ document.addEventListener('DOMContentLoaded', function () {
     if (cursorCircle) {
       cursorCircle.style.willChange = 'transform';
     }
-    
+
     // 鼠标移动事件 - 使用被动监听器提升性能
-    document.addEventListener('mousemove', (e) => {
-      cursorMouseX = e.clientX;
-      cursorMouseY = e.clientY;
-      
-      // 立即更新小圆点位置 - 使用 transform 替代 left/top
-      if (cursorDot) {
-        cursorDot.style.transform = `translate(${cursorMouseX}px, ${cursorMouseY}px) translate(-50%, -50%)`;
-      }
-    }, { passive: true });
-    
+    document.addEventListener(
+      'mousemove',
+      (e) => {
+        cursorMouseX = e.clientX;
+        cursorMouseY = e.clientY;
+
+        // 立即更新小圆点位置 - 使用 transform 替代 left/top
+        if (cursorDot) {
+          cursorDot.style.transform = `translate(${cursorMouseX}px, ${cursorMouseY}px) translate(-50%, -50%)`;
+        }
+      },
+      { passive: true },
+    );
+
     // 大圆圈平滑跟随 - 优化动画循环
     let rafId;
     function animateCursor() {
       const ease = 0.25;
       const dx = cursorMouseX - circleX;
       const dy = cursorMouseY - circleY;
-      
+
       // 只在移动超过阈值时更新，减少不必要的重绘
       if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
         circleX += dx * ease;
         circleY += dy * ease;
-        
+
         if (cursorCircle) {
           cursorCircle.style.transform = `translate(${circleX}px, ${circleY}px) translate(-50%, -50%)`;
         }
       }
-      
+
       rafId = requestAnimationFrame(animateCursor);
     }
     animateCursor();
-    
+
     // 可交互元素的悬停效果 - 使用事件委托优化性能
-    const interactiveElements = 'a, button, .project-card, .filter-btn, .nav-link, input, textarea, [role="button"], .clickable';
-    const videoElements = 'video, .project-video, .project-detail-video, .project-card-video, .portfolio-video';
-    const detailMediaElements = '.project-image-item, .project-detail-image, .project-detail-video';
-    
+    const interactiveElements =
+      'a, button, .project-card, .filter-btn, .nav-link, input, textarea, [role="button"], .clickable';
+    const videoElements =
+      'video, .project-video, .project-detail-video, .project-card-video, .portfolio-video';
+    const detailMediaElements =
+      '.project-image-item, .project-detail-image, .project-detail-video';
+
     // 使用单一事件监听器和事件委托
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(detailMediaElements)) {
-        cursor.classList.add('cursor-view');
-      } else if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
-        cursor.classList.add('cursor-video');
-      } else if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
-        cursor.classList.add('cursor-hover');
-      }
-    }, { passive: true });
-    
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest(detailMediaElements)) {
-        cursor.classList.remove('cursor-view');
-      }
-      
-      if (e.target.matches(videoElements) || e.target.closest(videoElements)) {
-        cursor.classList.remove('cursor-video');
-      } else if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
-        cursor.classList.remove('cursor-hover');
-      }
-    }, { passive: true });
-    
+    document.addEventListener(
+      'mouseover',
+      (e) => {
+        if (e.target.closest(detailMediaElements)) {
+          cursor.classList.add('cursor-view');
+        } else if (
+          e.target.matches(videoElements) ||
+          e.target.closest(videoElements)
+        ) {
+          cursor.classList.add('cursor-video');
+        } else if (
+          e.target.matches(interactiveElements) ||
+          e.target.closest(interactiveElements)
+        ) {
+          cursor.classList.add('cursor-hover');
+        }
+      },
+      { passive: true },
+    );
+
+    document.addEventListener(
+      'mouseout',
+      (e) => {
+        if (e.target.closest(detailMediaElements)) {
+          cursor.classList.remove('cursor-view');
+        }
+
+        if (
+          e.target.matches(videoElements) ||
+          e.target.closest(videoElements)
+        ) {
+          cursor.classList.remove('cursor-video');
+        } else if (
+          e.target.matches(interactiveElements) ||
+          e.target.closest(interactiveElements)
+        ) {
+          cursor.classList.remove('cursor-hover');
+        }
+      },
+      { passive: true },
+    );
+
     // 点击效果
     document.addEventListener('mousedown', () => {
       cursor.classList.add('cursor-click');
     });
-    
+
     document.addEventListener('mouseup', () => {
       cursor.classList.remove('cursor-click');
     });
-    
+
     // 文本选择悬停效果 - 优化版
-    const textElements = 'p, h1, h2, h3, h4, h5, h6, span, div:not(.project-card):not(.interactive), .text-selectable';
-    
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.matches(textElements) && 
-          !e.target.closest(interactiveElements) && 
+    const textElements =
+      'p, h1, h2, h3, h4, h5, h6, span, div:not(.project-card):not(.interactive), .text-selectable';
+
+    document.addEventListener(
+      'mouseover',
+      (e) => {
+        if (
+          e.target.matches(textElements) &&
+          !e.target.closest(interactiveElements) &&
           !e.target.matches(videoElements) &&
           !cursor.classList.contains('cursor-hover') &&
-          !cursor.classList.contains('cursor-video')) {
-        cursor.classList.add('cursor-text');
-      }
-    }, { passive: true });
-    
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.matches(textElements)) {
-        cursor.classList.remove('cursor-text');
-      }
-    }, { passive: true });
-    
+          !cursor.classList.contains('cursor-video')
+        ) {
+          cursor.classList.add('cursor-text');
+        }
+      },
+      { passive: true },
+    );
+
+    document.addEventListener(
+      'mouseout',
+      (e) => {
+        if (e.target.matches(textElements)) {
+          cursor.classList.remove('cursor-text');
+        }
+      },
+      { passive: true },
+    );
+
     // 清理所有光标状态的辅助函数
     function resetCursorStates() {
-      cursor.classList.remove('cursor-hover', 'cursor-video', 'cursor-text', 'cursor-click', 'cursor-view');
+      cursor.classList.remove(
+        'cursor-hover',
+        'cursor-video',
+        'cursor-text',
+        'cursor-click',
+        'cursor-view',
+      );
     }
-    
+
     // 页面切换时重置光标状态
     document.addEventListener('click', (e) => {
-      if (e.target.matches('.filter-btn, .nav-link, #back-to-home, #main-title')) {
+      if (
+        e.target.matches('.filter-btn, .nav-link, #back-to-home, #main-title')
+      ) {
         setTimeout(resetCursorStates, 100);
       }
     });
-    
+
     // 页面失焦时隐藏光标
     document.addEventListener('mouseleave', () => {
       cursor.style.opacity = '0';
     });
-    
+
     document.addEventListener('mouseenter', () => {
       // 只有在loading screen隐藏后才显示光标
       const loadingScreen = document.getElementById('loading-screen');
@@ -137,14 +183,17 @@ document.addEventListener('DOMContentLoaded', function () {
         cursor.style.opacity = '1';
       }
     });
-    
+
     // 初始隐藏光标，直到loading完成
     cursor.style.opacity = '0';
-    
+
     // 监听loading screen的状态变化
     const loadingObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
+        ) {
           const target = mutation.target;
           if (target.classList.contains('hidden')) {
             // Loading完成，显示光标
@@ -155,19 +204,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     });
-    
+
     const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) {
       loadingObserver.observe(loadingScreen, { attributes: true });
     }
-    
+
     // 全屏状态检测和处理
     function handleFullscreenChange() {
-      const isFullscreen = !!(document.fullscreenElement || 
-                             document.webkitFullscreenElement || 
-                             document.mozFullScreenElement || 
-                             document.msFullscreenElement);
-      
+      const isFullscreen = !!(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+
       if (isFullscreen) {
         // 进入全屏：隐藏自定义光标，恢复系统光标
         cursor.style.display = 'none';
@@ -194,14 +245,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-    
+
     // 监听全屏状态变化
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
     document.addEventListener('mozfullscreenchange', handleFullscreenChange);
     document.addEventListener('msfullscreenchange', handleFullscreenChange);
   }
-  
+
   // ========== 原有代码 ==========
   const loadingScreen = document.getElementById('loading-screen');
   const homePage = document.getElementById('home-page');
@@ -215,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Project data
   const projectData = {
-    'Liftwell': {
+    Liftwell: {
       title: 'Liftwell',
       category: '[ GAME DESIGN / LEVEL DESIGN ]',
       year: '2025',
@@ -225,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: '2 months',
       tools: 'Unreal Engine 5',
     },
-    'Zhulong': {
+    Zhulong: {
       title: 'Zhulong – The Torch Dragon',
       category: '[ CREATURE / BOSS DESIGN ]',
       year: '2025',
@@ -233,7 +284,8 @@ document.addEventListener('DOMContentLoaded', function () {
         'Zhulong is a creature and boss encounter project where I reinterpret the ancient Chinese torch dragon, a deity of time and light, as a fallen god in a modern action game.',
       role: 'Creature Concept Artist, 3D Character Modeler, Rigger, Texture Artist & Technical Artist',
       duration: '3 months',
-      tools: 'ZBrush, Maya, TopoGun, Marmoset Toolbag, Substance Painter, XGen, Unreal Engine 5',
+      tools:
+        'ZBrush, Maya, TopoGun, Marmoset Toolbag, Substance Painter, XGen, Unreal Engine 5',
     },
     'Tide Bound': {
       title: 'Tide Bound',
@@ -243,7 +295,8 @@ document.addEventListener('DOMContentLoaded', function () {
         'A cooperative strategy board game with a companion web app about coastal resilience. Players work together to protect coastal communities from rising sea levels and environmental challenges through strategic decision-making and collaborative gameplay.',
       role: 'System & interaction designer, worldbuilding and map layout, building tokens and visual identity, online interface UX/UI, playtest planning & facilitation',
       duration: '~2 months',
-      tools: 'Figma, Adobe Illustrator, laser-cut prototyping, HTML/CSS/JavaScript (online system)',
+      tools:
+        'Figma, Adobe Illustrator, laser-cut prototyping, HTML/CSS/JavaScript (online system)',
     },
     'Project 4': {
       title: 'Project 4',
@@ -363,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Loading animation - 简单可靠的加载逻辑
   const progressBar = document.querySelector('.loading-progress');
-  
+
   // 模拟进度条动画
   let progress = 0;
   const progressInterval = setInterval(() => {
@@ -376,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
       clearInterval(progressInterval);
     }
   }, 200);
-  
+
   // 2.5秒后隐藏加载屏幕并显示光标
   setTimeout(() => {
     if (progressBar) {
@@ -400,43 +453,46 @@ document.addEventListener('DOMContentLoaded', function () {
   function showPortfolio() {
     // 立即隐藏主页，避免重叠渲染
     homePage.style.display = 'none';
-    
+
     // 显示sidebar
     const sidebar = document.querySelector('.sidebar');
     if (sidebar) {
       sidebar.classList.add('show');
     }
-    
+
     // 默认显示 PORTFOLIO 页面（修改：从OTHER WORKS改为PORTFOLIO）
     const portfolioSection = document.getElementById('portfolio');
     const otherworksSection = document.getElementById('otherworks');
     if (portfolioSection) portfolioSection.style.display = 'grid';
     if (otherworksSection) otherworksSection.style.display = 'none';
-    
+
     // 更新按钮激活状态为 PORTFOLIO
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach((btn) => btn.classList.remove('active'));
     const portfolioBtn = document.querySelector('[data-filter="portfolio"]');
     if (portfolioBtn) portfolioBtn.classList.add('active');
-    
+
     // 预先设置页面状态，减少重排
     portfolioPage.style.display = 'block';
     portfolioPage.style.opacity = '0';
     portfolioPage.style.transform = 'translateY(20px)';
-    
+
     // 移除其他页面状态
     projectDetailPage.classList.remove('active');
-    
+
     // 使用requestAnimationFrame确保DOM更新完成后再开始动画
     requestAnimationFrame(() => {
       // 添加页面转换类并开始动画
       portfolioPage.classList.add('page-transition', 'active');
       portfolioPage.style.opacity = '1';
       portfolioPage.style.transform = 'translateY(0)';
-      portfolioPage.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      
+      portfolioPage.style.transition =
+        'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
       // 清理主页的水印遮挡层
-      const existingBlocker = document.getElementById('spline-watermark-blocker');
+      const existingBlocker = document.getElementById(
+        'spline-watermark-blocker',
+      );
       if (existingBlocker) {
         existingBlocker.remove();
       }
@@ -458,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function () {
           splineText.style.pointerEvents = 'none';
           splineText.style.background = 'transparent';
           splineText.style.transition = 'opacity 0.8s ease';
-          
+
           // 渐显Spline效果
           requestAnimationFrame(() => {
             splineText.style.opacity = '1';
@@ -481,14 +537,14 @@ document.addEventListener('DOMContentLoaded', function () {
       // 立即执行，不延迟，减少卡顿感
       const projectCards = document.querySelectorAll('.project-card');
       const portfolioCards = document.querySelectorAll('.portfolio-card');
-      
+
       // Works项目卡片：只设置初始状态，不触发动画（等待用户第一次点击Works）
       projectCards.forEach((card) => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(40px)';
         card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       });
-      
+
       // Portfolio卡片 - 只在第一次进入时播放动画
       if (!portfolioAnimationPlayed) {
         // Portfolio卡片 - 简约高级的入场动画（初始状态）
@@ -496,9 +552,10 @@ document.addEventListener('DOMContentLoaded', function () {
           card.style.opacity = '0';
           card.style.transform = 'translateY(50px)';
           // 统一使用流畅的贝塞尔曲线
-          card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; // 缩短动画时间
+          card.style.transition =
+            'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; // 缩短动画时间
         });
-        
+
         // Portfolio卡片 - 所有卡片同时浮现（更丝滑）- 减少延迟
         setTimeout(() => {
           portfolioCards.forEach((card) => {
@@ -519,7 +576,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // 下一帧恢复过渡效果，用于hover等交互
         requestAnimationFrame(() => {
           portfolioCards.forEach((card) => {
-            card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            card.style.transition =
+              'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
           });
         });
       }
@@ -532,15 +590,16 @@ document.addEventListener('DOMContentLoaded', function () {
     if (sidebar) {
       sidebar.classList.remove('show');
     }
-    
+
     // 添加离开动画
     portfolioPage.style.opacity = '0';
     portfolioPage.style.transform = 'translateY(-20px)';
-    portfolioPage.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    
+    portfolioPage.style.transition =
+      'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
     // Clean up about scroll listener
     cleanupAboutScrollListener();
-    
+
     // 隐藏Spline文字特效
     const splineText = document.getElementById('projectSplineText');
     if (splineText) {
@@ -550,13 +609,13 @@ document.addEventListener('DOMContentLoaded', function () {
         splineText.classList.remove('visible');
       }, 400);
     }
-    
+
     // 延迟切换页面直到动画完成
     setTimeout(() => {
       portfolioPage.style.display = 'none';
       projectDetailPage.classList.remove('active');
       homePage.style.display = 'block';
-      
+
       // 重置作品集页面状态
       portfolioPage.classList.remove('page-transition', 'active');
       portfolioPage.style.opacity = '';
@@ -601,11 +660,11 @@ document.addEventListener('DOMContentLoaded', function () {
           'span:last-child',
         ).textContent = `Previous Project`;
       } else {
-          prevProjectBtn.style.display = 'flex';
+        prevProjectBtn.style.display = 'flex';
         prevProjectBtn.onclick = () => showProjectDetail(prevProject);
-          prevProjectBtn.querySelector(
-            'span:last-child',
-          ).textContent = `Previous Project`;
+        prevProjectBtn.querySelector(
+          'span:last-child',
+        ).textContent = `Previous Project`;
       }
     } else {
       prevProjectBtn.style.display = 'none';
@@ -622,11 +681,11 @@ document.addEventListener('DOMContentLoaded', function () {
           'span:first-child',
         ).textContent = `Next Project`;
       } else {
-          nextProjectBtn.style.display = 'flex';
+        nextProjectBtn.style.display = 'flex';
         nextProjectBtn.onclick = () => showProjectDetail(nextProject);
-          nextProjectBtn.querySelector(
-            'span:first-child',
-          ).textContent = `Next Project`;
+        nextProjectBtn.querySelector(
+          'span:first-child',
+        ).textContent = `Next Project`;
       }
     } else {
       nextProjectBtn.style.display = 'none';
@@ -655,20 +714,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 控制导航按钮显示（Portfolio项目隐藏Process按钮）
     const projectNavBtns = document.querySelectorAll('.project-nav-btn');
-    const portfolioProjects = ['Liftwell', 'Zhulong', 'Tide Bound', 'REALITYEATER'];
-    
-    projectNavBtns.forEach(btn => {
+    const portfolioProjects = [
+      'Liftwell',
+      'Zhulong',
+      'Tide Bound',
+      'REALITYEATER',
+    ];
+
+    projectNavBtns.forEach((btn) => {
       const btnText = btn.textContent.trim();
       if (btnText === 'Process' && portfolioProjects.includes(projectTitle)) {
         btn.style.display = 'none';
       } else {
         btn.style.display = 'block';
       }
-      
+
       // 更新Results按钮文本为Final Outcome
       if (btnText === 'Results' && portfolioProjects.includes(projectTitle)) {
         btn.textContent = 'Final Outcome';
-      } else if (btnText === 'Final Outcome' && !portfolioProjects.includes(projectTitle)) {
+      } else if (
+        btnText === 'Final Outcome' &&
+        !portfolioProjects.includes(projectTitle)
+      ) {
         btn.textContent = 'Results';
       }
     });
@@ -1186,7 +1253,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="project-image-item">
                         <div class="project-image-large">
                             <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="http://oss-tang.plusdoit.com/Finnmom.mp4" type="video/mp4">
+                                <source src="https://oss-tang.plusdoit.com/Finnmom.mp4" type="video/mp4">
                                 <span>FamilyBoard Dashboard Overview</span>
                             </video>
                         </div>
@@ -1378,7 +1445,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="project-image-item">
                         <div class="project-image-large">
                             <video class="project-detail-video" autoplay muted loop playsinline>
-                                <source src="http://oss-tang.plusdoit.com/CSP.mp4" type="video/mp4">
+                                <source src="https://oss-tang.plusdoit.com/CSP.mp4" type="video/mp4">
                                 <span>Shmupformer Game Overview</span>
                             </video>
                         </div>
@@ -1811,7 +1878,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Apply hover interactions to new items
     projectImageItems.forEach((item) => {
       let hoverTimeout;
-      
+
       // 检查是否包含 iframe（YouTube 视频）
       const hasIframe = item.querySelector('.project-detail-iframe');
 
@@ -1830,20 +1897,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function hideProjectDetail() {
     // 停止所有iframe视频播放（主要针对YouTube视频）
-    const projectIframes = projectDetailPage.querySelectorAll('.project-detail-iframe');
+    const projectIframes = projectDetailPage.querySelectorAll(
+      '.project-detail-iframe',
+    );
     projectIframes.forEach((iframe) => {
       // 清空iframe的src来完全停止视频播放和音频
       iframe.src = 'about:blank';
     });
-    
+
     // 停止所有视频播放
-    const projectVideos = projectDetailPage.querySelectorAll('.project-detail-video');
+    const projectVideos = projectDetailPage.querySelectorAll(
+      '.project-detail-video',
+    );
     projectVideos.forEach((video) => {
       video.pause();
       video.currentTime = 0;
       video.muted = true;
     });
-    
+
     // Add exit animation
     const animateElements = projectDetailPage.querySelectorAll(
       '.project-hero, .project-content-section',
@@ -1941,18 +2012,18 @@ document.addEventListener('DOMContentLoaded', function () {
         aboutSection.classList.remove('about-active');
         // Clean up about scroll listener
         cleanupAboutScrollListener();
-        
+
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
-        
+
         // 强制重新播放所有 Portfolio 视频
         setTimeout(() => {
           const portfolioVideos = document.querySelectorAll('.portfolio-video');
           portfolioVideos.forEach((video, index) => {
             setTimeout(() => {
               if (video.paused) {
-                video.play().catch(e => {
+                video.play().catch((e) => {
                   console.log(`Portfolio 视频 ${index} 重新播放失败:`, e);
                   // 重试一次
                   setTimeout(() => video.play().catch(() => {}), 300);
@@ -1968,26 +2039,27 @@ document.addEventListener('DOMContentLoaded', function () {
         aboutSection.classList.remove('about-active');
         // Clean up about scroll listener
         cleanupAboutScrollListener();
-        
+
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
-        
+
         // Works项目卡片显示逻辑
         const projectCards = document.querySelectorAll('.project-card');
-        
+
         if (!worksAnimationPlayed) {
           // 第一次显示：播放浮现动画
           worksAnimationPlayed = true;
-          
+
           setTimeout(() => {
             projectCards.forEach((card) => {
               // 重置动画状态
               card.style.opacity = '0';
               card.style.transform = 'translateY(40px)';
-              card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              card.style.transition =
+                'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
               card.classList.remove('visible');
-              
+
               // 所有卡片一起浮现
               setTimeout(() => {
                 card.style.opacity = '1';
@@ -2001,7 +2073,8 @@ document.addEventListener('DOMContentLoaded', function () {
           projectCards.forEach((card) => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
-            card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            card.style.transition =
+              'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             card.classList.add('visible');
           });
         }
@@ -2010,11 +2083,11 @@ document.addEventListener('DOMContentLoaded', function () {
         otherworksSection.style.display = 'none';
         aboutSection.style.display = 'block';
         aboutSection.classList.add('about-active');
-        
+
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
         portfolioPage.scrollTop = 0;
-        
+
         // Add scroll listener for about page
         initAboutScrollListener();
       }
@@ -2074,22 +2147,23 @@ document.addEventListener('DOMContentLoaded', function () {
           document
             .querySelector('[data-filter="otherworks"]')
             .classList.add('active');
-          
+
           // Works项目卡片显示逻辑
           const projectCards = document.querySelectorAll('.project-card');
-          
+
           if (!worksAnimationPlayed) {
             // 第一次显示：播放浮现动画
             worksAnimationPlayed = true;
-            
+
             setTimeout(() => {
               projectCards.forEach((card) => {
                 // 重置动画状态
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(40px)';
-                card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                card.style.transition =
+                  'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 card.classList.remove('visible');
-                
+
                 // 所有卡片一起浮现
                 setTimeout(() => {
                   card.style.opacity = '1';
@@ -2103,7 +2177,8 @@ document.addEventListener('DOMContentLoaded', function () {
             projectCards.forEach((card) => {
               card.style.opacity = '1';
               card.style.transform = 'translateY(0)';
-              card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              card.style.transition =
+                'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
               card.classList.add('visible');
             });
           }
@@ -2147,30 +2222,38 @@ document.addEventListener('DOMContentLoaded', function () {
   projectCards.forEach((card, index) => {
     // 预设动画延迟，但使用更快的时序
     card.style.animationDelay = `${index * 0.03}s`;
-    
+
     // 预设 GPU 加速
     card.style.willChange = 'transform';
 
     let isHovering = false;
 
-    card.addEventListener('mouseenter', function () {
-      if (isHovering) return;
-      isHovering = true;
-      
-      if (this.classList.contains('visible')) {
-        // JS transform removed to use CSS
-        this.style.filter = 'brightness(1.02)';
-        this.style.boxShadow = '0 12px 24px rgba(0,0,0,0.25)';
-      }
-    }, { passive: true });
+    card.addEventListener(
+      'mouseenter',
+      function () {
+        if (isHovering) return;
+        isHovering = true;
 
-    card.addEventListener('mouseleave', function () {
-      isHovering = false;
-      
-      // JS transform removed to use CSS
-      this.style.filter = 'brightness(1)';
-      this.style.boxShadow = 'none';
-    }, { passive: true });
+        if (this.classList.contains('visible')) {
+          // JS transform removed to use CSS
+          this.style.filter = 'brightness(1.02)';
+          this.style.boxShadow = '0 12px 24px rgba(0,0,0,0.25)';
+        }
+      },
+      { passive: true },
+    );
+
+    card.addEventListener(
+      'mouseleave',
+      function () {
+        isHovering = false;
+
+        // JS transform removed to use CSS
+        this.style.filter = 'brightness(1)';
+        this.style.boxShadow = 'none';
+      },
+      { passive: true },
+    );
 
     // 点击事件 - 修复项目标题匹配
     card.addEventListener('click', function () {
@@ -2214,12 +2297,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Add smooth scroll to section
       let sectionName = this.textContent.toLowerCase().trim();
-      
+
       // 将"Final Outcome"映射到"results" section
       if (sectionName === 'final outcome') {
         sectionName = 'results';
       }
-      
+
       const targetSection = document.querySelector(
         `[data-section="${sectionName}"]`,
       );
@@ -2251,96 +2334,116 @@ document.addEventListener('DOMContentLoaded', function () {
   let mouseY = 0;
   let parallaxRafId = null;
 
-  document.addEventListener('mousemove', function (e) {
-    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+  document.addEventListener(
+    'mousemove',
+    function (e) {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
 
-    // 使用 requestAnimationFrame 优化性能
-    if (!parallaxRafId && homePage.style.display !== 'none') {
-      parallaxRafId = requestAnimationFrame(() => {
-        const homeContent = document.querySelector('.home-content');
-        if (homeContent && homePage.style.display !== 'none') {
-          const translateX = mouseX * 10;
-          const translateY = mouseY * 10;
-          homeContent.style.transform = `translate(${translateX}px, ${translateY}px)`;
-        }
-        parallaxRafId = null;
-      });
-    }
-  }, { passive: true });
+      // 使用 requestAnimationFrame 优化性能
+      if (!parallaxRafId && homePage.style.display !== 'none') {
+        parallaxRafId = requestAnimationFrame(() => {
+          const homeContent = document.querySelector('.home-content');
+          if (homeContent && homePage.style.display !== 'none') {
+            const translateX = mouseX * 10;
+            const translateY = mouseY * 10;
+            homeContent.style.transform = `translate(${translateX}px, ${translateY}px)`;
+          }
+          parallaxRafId = null;
+        });
+      }
+    },
+    { passive: true },
+  );
 
   // Enhanced project detail page transitions - 性能优化版
   if (projectDetailPage) {
     let scrollRafId = null;
-    
-    projectDetailPage.addEventListener('scroll', function () {
-      // 使用 requestAnimationFrame 节流滚动事件
-      if (!scrollRafId) {
-        scrollRafId = requestAnimationFrame(() => {
-          const scrolled = this.scrollTop;
-          const rate = scrolled * -0.5;
 
-          // Parallax effect for hero year
-          const heroYear = document.getElementById('project-hero-year');
-          if (heroYear) {
-            heroYear.style.transform = `translateY(${rate}px)`;
-          }
-          
-          scrollRafId = null;
-        });
-      }
-    }, { passive: true });
+    projectDetailPage.addEventListener(
+      'scroll',
+      function () {
+        // 使用 requestAnimationFrame 节流滚动事件
+        if (!scrollRafId) {
+          scrollRafId = requestAnimationFrame(() => {
+            const scrolled = this.scrollTop;
+            const rate = scrolled * -0.5;
+
+            // Parallax effect for hero year
+            const heroYear = document.getElementById('project-hero-year');
+            if (heroYear) {
+              heroYear.style.transform = `translateY(${rate}px)`;
+            }
+
+            scrollRafId = null;
+          });
+        }
+      },
+      { passive: true },
+    );
   }
 
   // ========== Portfolio 视频强制播放系统 ==========
   // 确保 Portfolio 页面的视频始终能正常播放
   function ensurePortfolioVideosPlay() {
     const portfolioVideos = document.querySelectorAll('.portfolio-video');
-    
+
     portfolioVideos.forEach((video, index) => {
       // 添加多重保障机制
       let playAttempts = 0;
       const maxAttempts = 5;
-      
+
       function attemptPlay() {
         if (playAttempts >= maxAttempts) {
           console.warn(`视频 ${index} 播放失败，已尝试 ${maxAttempts} 次`);
           return;
         }
-        
+
         playAttempts++;
-        
+
         // 确保视频已加载
         if (video.readyState < 2) {
           video.load();
-          video.addEventListener('loadeddata', () => {
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(e => {
-                console.log(`Portfolio 视频 ${index} 播放重试 ${playAttempts}:`, e);
-                setTimeout(() => attemptPlay(), 500);
-              });
-            }
-          }, { once: true });
+          video.addEventListener(
+            'loadeddata',
+            () => {
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise.catch((e) => {
+                  console.log(
+                    `Portfolio 视频 ${index} 播放重试 ${playAttempts}:`,
+                    e,
+                  );
+                  setTimeout(() => attemptPlay(), 500);
+                });
+              }
+            },
+            { once: true },
+          );
         } else {
           const playPromise = video.play();
           if (playPromise !== undefined) {
-            playPromise.then(() => {
-              console.log(`Portfolio 视频 ${index} 播放成功`);
-            }).catch(e => {
-              console.log(`Portfolio 视频 ${index} 播放重试 ${playAttempts}:`, e);
-              setTimeout(() => attemptPlay(), 500);
-            });
+            playPromise
+              .then(() => {
+                console.log(`Portfolio 视频 ${index} 播放成功`);
+              })
+              .catch((e) => {
+                console.log(
+                  `Portfolio 视频 ${index} 播放重试 ${playAttempts}:`,
+                  e,
+                );
+                setTimeout(() => attemptPlay(), 500);
+              });
           }
         }
       }
-      
+
       // 立即尝试播放
       setTimeout(() => attemptPlay(), index * 200);
-      
+
       // 监听 Portfolio 页面显示事件
       const filterBtns = document.querySelectorAll('.filter-btn');
-      filterBtns.forEach(btn => {
+      filterBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
           if (btn.dataset.filter === 'portfolio') {
             setTimeout(() => {
@@ -2351,27 +2454,33 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         });
       });
-      
+
       // 用户交互后重试（某些浏览器需要用户交互才能自动播放）
       const playOnInteraction = () => {
         if (video.paused) {
-          video.play().catch(e => console.log('交互后播放失败:', e));
+          video.play().catch((e) => console.log('交互后播放失败:', e));
         }
         document.removeEventListener('click', playOnInteraction);
         document.removeEventListener('scroll', playOnInteraction);
       };
-      
-      document.addEventListener('click', playOnInteraction, { once: true, passive: true });
-      document.addEventListener('scroll', playOnInteraction, { once: true, passive: true });
+
+      document.addEventListener('click', playOnInteraction, {
+        once: true,
+        passive: true,
+      });
+      document.addEventListener('scroll', playOnInteraction, {
+        once: true,
+        passive: true,
+      });
     });
   }
-  
+
   // 在 Portfolio 页面激活时立即执行
   const portfolioSectionForVideos = document.getElementById('portfolio');
   if (portfolioSectionForVideos) {
     // 页面加载后立即执行
     setTimeout(() => ensurePortfolioVideosPlay(), 300);
-    
+
     // 监听页面显示（从其他标签页返回时）
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
@@ -2382,63 +2491,72 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ========== 智能视频懒加载系统 ==========
   // 使用Intersection Observer管理视频播放
-  const videoLazyLoadObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const video = entry.target;
-      
-      if (entry.isIntersecting) {
-        // 视频进入可见区域
-        if (video.readyState === 0) {
-          // 视频还未加载，立即加载
-          console.log('即时加载视频:', video.src);
-          video.load();
-        }
-        
-        // 对于 Portfolio 视频，更激进的播放策略
-        const isPortfolioVideo = video.classList.contains('portfolio-video');
-        
-        // 尝试播放
-        if (video.paused) {
-          const attemptPlayWithRetry = (retries = 3) => {
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise.then(() => {
-                console.log(`视频播放成功: ${isPortfolioVideo ? 'Portfolio' : 'Works'}`);
-              }).catch(e => {
-                console.log(`视频播放失败 (剩余重试: ${retries}):`, e);
-                if (retries > 0) {
-                  setTimeout(() => attemptPlayWithRetry(retries - 1), 300);
-                }
-              });
+  const videoLazyLoadObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+
+        if (entry.isIntersecting) {
+          // 视频进入可见区域
+          if (video.readyState === 0) {
+            // 视频还未加载，立即加载
+            console.log('即时加载视频:', video.src);
+            video.load();
+          }
+
+          // 对于 Portfolio 视频，更激进的播放策略
+          const isPortfolioVideo = video.classList.contains('portfolio-video');
+
+          // 尝试播放
+          if (video.paused) {
+            const attemptPlayWithRetry = (retries = 3) => {
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise
+                  .then(() => {
+                    console.log(
+                      `视频播放成功: ${
+                        isPortfolioVideo ? 'Portfolio' : 'Works'
+                      }`,
+                    );
+                  })
+                  .catch((e) => {
+                    console.log(`视频播放失败 (剩余重试: ${retries}):`, e);
+                    if (retries > 0) {
+                      setTimeout(() => attemptPlayWithRetry(retries - 1), 300);
+                    }
+                  });
+              }
+            };
+
+            // Portfolio 视频立即播放，其他视频稍微延迟
+            if (isPortfolioVideo) {
+              attemptPlayWithRetry(5); // Portfolio 视频重试更多次
+            } else {
+              setTimeout(() => attemptPlayWithRetry(2), 100);
             }
-          };
-          
-          // Portfolio 视频立即播放，其他视频稍微延迟
-          if (isPortfolioVideo) {
-            attemptPlayWithRetry(5); // Portfolio 视频重试更多次
-          } else {
-            setTimeout(() => attemptPlayWithRetry(2), 100);
+          }
+        } else {
+          // 视频离开可见区域
+          // Portfolio 视频不暂停，保持播放
+          if (!video.classList.contains('portfolio-video') && !video.paused) {
+            video.pause();
           }
         }
-      } else {
-        // 视频离开可见区域
-        // Portfolio 视频不暂停，保持播放
-        if (!video.classList.contains('portfolio-video') && !video.paused) {
-          video.pause();
-        }
-      }
-    });
-  }, {
-    threshold: 0.1, // Portfolio 卡片只要 10% 可见就触发
-    rootMargin: '150px' // 提前 150px 开始准备
-  });
+      });
+    },
+    {
+      threshold: 0.1, // Portfolio 卡片只要 10% 可见就触发
+      rootMargin: '150px', // 提前 150px 开始准备
+    },
+  );
 
   // 对所有项目卡片视频应用懒加载
   const allVideos = document.querySelectorAll(
-    '.portfolio-video, .project-video, .project-card-video'
+    '.portfolio-video, .project-video, .project-card-video',
   );
-  
-  allVideos.forEach(video => {
+
+  allVideos.forEach((video) => {
     videoLazyLoadObserver.observe(video);
   });
 
@@ -2521,23 +2639,33 @@ document.addEventListener('DOMContentLoaded', function () {
     // 优化项目卡片视频交互 - 性能优化版
     const projectCard = video.closest('.project-card');
     if (projectCard) {
-      projectCard.addEventListener('mouseenter', function () {
-        // 只在视频未播放时尝试播放
-        if (!isPlaying && video.paused) {
-          // 使用 requestIdleCallback 在浏览器空闲时播放视频
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-              video.play()
-                .then(() => { isPlaying = true; })
+      projectCard.addEventListener(
+        'mouseenter',
+        function () {
+          // 只在视频未播放时尝试播放
+          if (!isPlaying && video.paused) {
+            // 使用 requestIdleCallback 在浏览器空闲时播放视频
+            if ('requestIdleCallback' in window) {
+              requestIdleCallback(() => {
+                video
+                  .play()
+                  .then(() => {
+                    isPlaying = true;
+                  })
+                  .catch((e) => console.log('Video play failed:', e));
+              });
+            } else {
+              video
+                .play()
+                .then(() => {
+                  isPlaying = true;
+                })
                 .catch((e) => console.log('Video play failed:', e));
-            });
-          } else {
-            video.play()
-              .then(() => { isPlaying = true; })
-              .catch((e) => console.log('Video play failed:', e));
+            }
           }
-        }
-      }, { passive: true });
+        },
+        { passive: true },
+      );
 
       // 移除mouseleave的暂停逻辑，让视频持续播放
     }
@@ -2586,31 +2714,39 @@ document.addEventListener('DOMContentLoaded', function () {
     // 预设 GPU 加速
     item.style.willChange = 'transform';
 
-    item.addEventListener('mouseenter', function () {
-      // JS transform removed to use CSS
-      this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
-
-      const image = this.querySelector(
-        '.project-detail-image, .project-detail-video',
-      );
-      if (image) {
+    item.addEventListener(
+      'mouseenter',
+      function () {
         // JS transform removed to use CSS
-        image.style.filter = 'brightness(1.05)';
-      }
-    }, { passive: true });
+        this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
 
-    item.addEventListener('mouseleave', function () {
-      // JS transform removed to use CSS
-      this.style.boxShadow = 'none';
+        const image = this.querySelector(
+          '.project-detail-image, .project-detail-video',
+        );
+        if (image) {
+          // JS transform removed to use CSS
+          image.style.filter = 'brightness(1.05)';
+        }
+      },
+      { passive: true },
+    );
 
-      const image = this.querySelector(
-        '.project-detail-image, .project-detail-video',
-      );
-      if (image) {
+    item.addEventListener(
+      'mouseleave',
+      function () {
         // JS transform removed to use CSS
-        image.style.filter = 'brightness(1)';
-      }
-    }, { passive: true });
+        this.style.boxShadow = 'none';
+
+        const image = this.querySelector(
+          '.project-detail-image, .project-detail-video',
+        );
+        if (image) {
+          // JS transform removed to use CSS
+          image.style.filter = 'brightness(1)';
+        }
+      },
+      { passive: true },
+    );
 
     // 移除原有的点击效果，因为现在点击会打开大图浏览器
     // 原有的点击效果已被MediaLightbox接管
@@ -2635,7 +2771,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 首页主球体特效处理
-  const homeSplineContainer = document.querySelector('.home-page .spline-container');
+  const homeSplineContainer = document.querySelector(
+    '.home-page .spline-container',
+  );
   if (homeSplineContainer) {
     const homeSplineViewer = homeSplineContainer.querySelector('spline-viewer');
     if (homeSplineViewer) {
@@ -2650,7 +2788,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => {
         modifySplineViewerStyles(homeSplineViewer);
       }, 1000);
-      
+
       setTimeout(() => {
         modifySplineViewerStyles(homeSplineViewer);
       }, 3000);
@@ -2660,7 +2798,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 通用函数：修改Spline Viewer样式（隐藏水印等）
   function modifySplineViewerStyles(viewer) {
     if (!viewer || !viewer.shadowRoot) return;
-    
+
     try {
       const shadow = viewer.shadowRoot;
       // 创建样式元素
@@ -2690,22 +2828,27 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth > 768) return;
 
     // 1. 初始化Intersection Observer，用于文字上浮淡入
-    const mobileTextObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in-visible');
-          // 可选：一旦显示后就不再观察，减少性能消耗
-          mobileTextObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -10% 0px'
-    });
+    const mobileTextObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-visible');
+            // 可选：一旦显示后就不再观察，减少性能消耗
+            mobileTextObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -10% 0px',
+      },
+    );
 
     // 选择需要动画的元素
-    const textElements = document.querySelectorAll('.home-logo, .home-info .info-section, .nav-hint');
-    textElements.forEach(el => {
+    const textElements = document.querySelectorAll(
+      '.home-logo, .home-info .info-section, .nav-hint',
+    );
+    textElements.forEach((el) => {
       el.classList.add('fade-in-hidden'); // 初始隐藏状态
       mobileTextObserver.observe(el);
     });
@@ -2719,10 +2862,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // 简单的防抖动
     clearTimeout(window.resizeTimer);
     window.resizeTimer = setTimeout(() => {
-       initMobileHomeEffects();
+      initMobileHomeEffects();
     }, 250);
   });
-
 });
 
 // Intersection Observer for animations
@@ -2763,35 +2905,40 @@ class MediaLightbox {
     this.lightboxCurrent = document.getElementById('lightbox-current');
     this.lightboxTotal = document.getElementById('lightbox-total');
     this.lightboxTitle = document.getElementById('lightbox-title');
-    this.lightboxMediaContainer = document.querySelector('.lightbox-media-container');
-    
+    this.lightboxMediaContainer = document.querySelector(
+      '.lightbox-media-container',
+    );
+
     this.currentIndex = 0;
     this.mediaItems = [];
     this.isOpen = false;
-    
+
     this.init();
   }
-  
+
   init() {
     // 关闭按钮事件
     this.lightboxClose.addEventListener('click', () => this.close());
-    
+
     // 导航按钮事件
     this.lightboxPrev.addEventListener('click', () => this.previous());
     this.lightboxNext.addEventListener('click', () => this.next());
-    
+
     // 点击遮罩关闭
     this.lightbox.addEventListener('click', (e) => {
-      if (e.target === this.lightbox || e.target.classList.contains('lightbox-overlay')) {
+      if (
+        e.target === this.lightbox ||
+        e.target.classList.contains('lightbox-overlay')
+      ) {
         this.close();
       }
     });
-    
+
     // 键盘事件
     document.addEventListener('keydown', (e) => {
       if (!this.isOpen) return;
-      
-      switch(e.key) {
+
+      switch (e.key) {
         case 'Escape':
           this.close();
           break;
@@ -2803,51 +2950,55 @@ class MediaLightbox {
           break;
       }
     });
-    
+
     // 初始化媒体项目点击事件
     this.initializeMediaItems();
   }
-  
+
   initializeMediaItems() {
     // 为所有项目详情页面的媒体元素添加点击事件
     document.addEventListener('click', (e) => {
       const mediaElement = e.target.closest('.project-image-item');
       if (!mediaElement) return;
-      
+
       // 检查是否在项目详情页面中
       const projectDetailPage = document.getElementById('project-detail-page');
       if (!projectDetailPage.classList.contains('active')) return;
-      
+
       e.preventDefault();
       e.stopPropagation();
-      
+
       // 收集当前页面的所有媒体项目
       this.collectMediaItems();
-      
+
       // 找到当前点击的媒体在列表中的索引
-      const allMediaItems = document.querySelectorAll('.project-content-section .project-image-item');
+      const allMediaItems = document.querySelectorAll(
+        '.project-content-section .project-image-item',
+      );
       this.currentIndex = Array.from(allMediaItems).indexOf(mediaElement);
-      
+
       // 打开灯箱
       this.open();
     });
   }
-  
+
   collectMediaItems() {
     this.mediaItems = [];
-    const mediaItems = document.querySelectorAll('.project-content-section .project-image-item');
-    
+    const mediaItems = document.querySelectorAll(
+      '.project-content-section .project-image-item',
+    );
+
     mediaItems.forEach((item, index) => {
       const img = item.querySelector('.project-detail-image');
       const video = item.querySelector('.project-detail-video');
       const iframe = item.querySelector('.project-detail-iframe');
-      
+
       if (img) {
         this.mediaItems.push({
           type: 'image',
           src: img.src,
           alt: img.alt || `Image ${index + 1}`,
-          title: img.alt || `Project Image ${index + 1}`
+          title: img.alt || `Project Image ${index + 1}`,
         });
       } else if (video) {
         const source = video.querySelector('source');
@@ -2855,56 +3006,56 @@ class MediaLightbox {
           type: 'video',
           src: source ? source.src : video.src,
           alt: `Video ${index + 1}`,
-          title: `Project Video ${index + 1}`
+          title: `Project Video ${index + 1}`,
         });
       } else if (iframe) {
         this.mediaItems.push({
           type: 'iframe',
           src: iframe.src,
           alt: `Interactive Content ${index + 1}`,
-          title: `Interactive Content ${index + 1}`
+          title: `Interactive Content ${index + 1}`,
         });
       }
     });
   }
-  
+
   open() {
     if (this.mediaItems.length === 0) return;
-    
+
     this.isOpen = true;
     document.body.classList.add('lightbox-open');
     this.lightbox.classList.add('active');
-    
+
     this.updateCounter();
     this.showMedia();
     this.updateNavigation();
   }
-  
+
   close() {
     this.isOpen = false;
     document.body.classList.remove('lightbox-open');
     this.lightbox.classList.remove('active');
-    
+
     // 强制停止lightbox视频的音频
     this.forceStopLightboxVideo();
-    
+
     // 清理媒体内容
     this.hideAllMedia();
   }
-  
+
   forceStopLightboxVideo() {
     // 立即静音
     this.lightboxVideo.muted = true;
-    
+
     // 暂停播放
-      this.lightboxVideo.pause();
-    
+    this.lightboxVideo.pause();
+
     // 重置时间
-      this.lightboxVideo.currentTime = 0;
-    
+    this.lightboxVideo.currentTime = 0;
+
     // 重置音量
     this.lightboxVideo.volume = 0;
-    
+
     // 不清空src，而是通过移除事件监听器来停止音频
     // 移除所有事件监听器
     this.lightboxVideo.onloadeddata = null;
@@ -2912,52 +3063,53 @@ class MediaLightbox {
     this.lightboxVideo.onended = null;
     this.lightboxVideo.ontimeupdate = null;
   }
-  
+
   previous() {
     if (this.mediaItems.length <= 1) return;
-    
+
     // 停止当前视频音频
     if (this.lightboxVideo.classList.contains('active')) {
       this.lightboxVideo.pause();
       this.lightboxVideo.muted = true;
       this.lightboxVideo.volume = 0;
     }
-    
-    this.currentIndex = (this.currentIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
+
+    this.currentIndex =
+      (this.currentIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
     this.showMedia();
     this.updateCounter();
   }
-  
+
   next() {
     if (this.mediaItems.length <= 1) return;
-    
+
     // 停止当前视频音频
     if (this.lightboxVideo.classList.contains('active')) {
       this.lightboxVideo.pause();
       this.lightboxVideo.muted = true;
       this.lightboxVideo.volume = 0;
     }
-    
+
     this.currentIndex = (this.currentIndex + 1) % this.mediaItems.length;
     this.showMedia();
     this.updateCounter();
   }
-  
+
   showMedia() {
     const mediaItem = this.mediaItems[this.currentIndex];
     if (!mediaItem) return;
-    
+
     // 显示加载状态
     this.lightboxMediaContainer.classList.add('loading');
-    
+
     // 隐藏所有媒体
     this.hideAllMedia();
-    
+
     // 更新标题
     this.lightboxTitle.textContent = mediaItem.title;
-    
+
     // 根据媒体类型显示对应元素
-    switch(mediaItem.type) {
+    switch (mediaItem.type) {
       case 'image':
         this.showImage(mediaItem);
         break;
@@ -2969,97 +3121,97 @@ class MediaLightbox {
         break;
     }
   }
-  
+
   showImage(mediaItem) {
     this.lightboxImage.src = mediaItem.src;
     this.lightboxImage.alt = mediaItem.alt;
     this.lightboxImage.classList.add('active');
-    
+
     // 图片加载完成后移除加载状态
     this.lightboxImage.onload = () => {
       this.lightboxMediaContainer.classList.remove('loading');
     };
-    
+
     this.lightboxImage.onerror = () => {
       this.lightboxMediaContainer.classList.remove('loading');
       console.error('Failed to load image:', mediaItem.src);
     };
   }
-  
+
   showVideo(mediaItem) {
     // 先重置视频状态
     this.lightboxVideo.pause();
     this.lightboxVideo.currentTime = 0;
-    
+
     // 设置新的视频源
     const source = this.lightboxVideo.querySelector('source');
     source.src = mediaItem.src;
-    
+
     // 重新加载视频
     this.lightboxVideo.load();
     this.lightboxVideo.classList.add('active');
-    
+
     // 确保lightbox视频不是静音状态，允许播放音频
     this.lightboxVideo.muted = false;
     this.lightboxVideo.volume = 1; // 确保音量正常
-    
+
     // 视频加载完成后移除加载状态并自动播放
     this.lightboxVideo.onloadeddata = () => {
       this.lightboxMediaContainer.classList.remove('loading');
       // 自动播放视频（有音频）
-      this.lightboxVideo.play().catch(e => {
+      this.lightboxVideo.play().catch((e) => {
         console.log('Video autoplay failed:', e);
       });
     };
-    
+
     this.lightboxVideo.onerror = () => {
       this.lightboxMediaContainer.classList.remove('loading');
       console.error('Failed to load video:', mediaItem.src);
     };
   }
-  
+
   showIframe(mediaItem) {
     // 如果是YouTube视频且包含mute=1参数，改为mute=0以在lightbox中播放声音
     let src = mediaItem.src;
     if (src.includes('youtube.com/embed') && src.includes('mute=1')) {
       src = src.replace('mute=1', 'mute=0');
     }
-    
+
     this.lightboxIframe.src = src;
     this.lightboxIframe.classList.add('active');
-    
+
     // iframe加载完成后移除加载状态
     this.lightboxIframe.onload = () => {
       this.lightboxMediaContainer.classList.remove('loading');
     };
-    
+
     this.lightboxIframe.onerror = () => {
       this.lightboxMediaContainer.classList.remove('loading');
       console.error('Failed to load iframe:', mediaItem.src);
     };
   }
-  
+
   hideAllMedia() {
     this.lightboxImage.classList.remove('active');
     this.lightboxVideo.classList.remove('active');
     this.lightboxIframe.classList.remove('active');
-    
+
     // 重置图片和iframe的src
     this.lightboxImage.src = '';
     this.lightboxIframe.src = '';
-    
+
     // 停止视频但保留src以避免重新加载问题
-      this.lightboxVideo.pause();
+    this.lightboxVideo.pause();
     this.lightboxVideo.muted = true;
-      this.lightboxVideo.currentTime = 0;
+    this.lightboxVideo.currentTime = 0;
     this.lightboxVideo.volume = 0;
   }
-  
+
   updateCounter() {
     this.lightboxCurrent.textContent = this.currentIndex + 1;
     this.lightboxTotal.textContent = this.mediaItems.length;
   }
-  
+
   updateNavigation() {
     // 如果只有一个媒体项目，隐藏导航按钮
     if (this.mediaItems.length <= 1) {
@@ -3075,7 +3227,6 @@ class MediaLightbox {
 // 初始化媒体灯箱
 const mediaLightbox = new MediaLightbox();
 
-
 // About page scroll listener for contact section
 let aboutScrollListener = null;
 let lastScrollY = 0;
@@ -3087,45 +3238,49 @@ function initAboutScrollListener() {
     const portfolioPage = document.getElementById('portfolio-page');
     portfolioPage.removeEventListener('scroll', aboutScrollListener);
   }
-  
+
   // Reset variables
   lastScrollY = 0;
   isContactVisible = false;
-  
+
   // Create new scroll listener
-  aboutScrollListener = function() {
+  aboutScrollListener = function () {
     const aboutSection = document.getElementById('about');
     const contactSection = document.getElementById('contact');
     const portfolioPage = document.getElementById('portfolio-page');
-    
+
     // Only work when about section is visible
     if (!aboutSection.classList.contains('about-active')) {
       return;
     }
-    
+
     const currentScrollY = portfolioPage.scrollTop;
     const containerHeight = portfolioPage.clientHeight;
     const contentHeight = portfolioPage.scrollHeight;
-    
+
     // Check if we're near the bottom (更严格的检测条件)
     const isAtBottom = currentScrollY + containerHeight >= contentHeight - 300;
-    
+
     // Check scroll direction
     const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-    
+
     if (isAtBottom && scrollDirection === 'down' && !isContactVisible) {
       // Show contact when scrolling down to bottom
       contactSection.classList.add('active');
       isContactVisible = true;
-    } else if (scrollDirection === 'up' && isContactVisible && currentScrollY < contentHeight - containerHeight - 400) {
+    } else if (
+      scrollDirection === 'up' &&
+      isContactVisible &&
+      currentScrollY < contentHeight - containerHeight - 400
+    ) {
       // Hide contact when scrolling up from bottom
       contactSection.classList.remove('active');
       isContactVisible = false;
     }
-    
+
     lastScrollY = currentScrollY;
   };
-  
+
   // Add scroll listener to portfolio page container
   const portfolioPage = document.getElementById('portfolio-page');
   portfolioPage.addEventListener('scroll', aboutScrollListener);
@@ -3138,13 +3293,13 @@ function cleanupAboutScrollListener() {
     portfolioPage.removeEventListener('scroll', aboutScrollListener);
     aboutScrollListener = null;
   }
-  
+
   // Hide contact if visible
   const contactSection = document.getElementById('contact');
   if (contactSection) {
     contactSection.classList.remove('active');
   }
-  
+
   isContactVisible = false;
 }
 
@@ -3152,7 +3307,7 @@ function cleanupAboutScrollListener() {
 function initVideoLoadingWithProgress() {
   const loadingScreen = document.getElementById('loading-screen');
   const progressBar = document.querySelector('.loading-progress');
-  
+
   if (!loadingScreen || !progressBar) {
     console.warn('加载屏幕或进度条元素未找到');
     // 如果找不到元素，使用原来的延迟隐藏逻辑
@@ -3167,15 +3322,17 @@ function initVideoLoadingWithProgress() {
     }, 2500);
     return;
   }
-  
+
   // 优先加载Portfolio视频（用户最常访问的页面）
   const portfolioVideos = document.querySelectorAll('.portfolio-video');
-  const worksVideos = document.querySelectorAll('.project-video, .project-card-video');
-  
+  const worksVideos = document.querySelectorAll(
+    '.project-video, .project-card-video',
+  );
+
   const portfolioVideoArray = Array.from(portfolioVideos);
   const worksVideoArray = Array.from(worksVideos);
   const allVideos = [...portfolioVideoArray, ...worksVideoArray];
-  
+
   if (allVideos.length === 0) {
     console.log('未找到需要预加载的视频');
     // 如果没有视频，直接隐藏加载屏幕
@@ -3187,9 +3344,11 @@ function initVideoLoadingWithProgress() {
     }, 1000);
     return;
   }
-  
-  console.log(`开始预加载 ${allVideos.length} 个视频（Portfolio: ${portfolioVideoArray.length}, Works: ${worksVideoArray.length}）...`);
-  
+
+  console.log(
+    `开始预加载 ${allVideos.length} 个视频（Portfolio: ${portfolioVideoArray.length}, Works: ${worksVideoArray.length}）...`,
+  );
+
   let loadedCount = 0;
   let errorCount = 0;
   let portfolioLoadedCount = 0;
@@ -3197,7 +3356,7 @@ function initVideoLoadingWithProgress() {
   const totalVideos = allVideos.length;
   const totalPortfolioVideos = portfolioVideoArray.length;
   let loadingScreenHidden = false;
-  
+
   // 隐藏加载屏幕的函数
   function hideLoadingScreen() {
     if (loadingScreenHidden) return;
@@ -3211,31 +3370,37 @@ function initVideoLoadingWithProgress() {
       }, 500);
     }, 300);
   }
-  
+
   // 更新进度条
   function updateProgress() {
     const progress = ((loadedCount + errorCount) / totalVideos) * 100;
     // 确保进度条在5%-100%之间平滑过渡
     const displayProgress = Math.max(5, Math.min(100, progress));
     progressBar.style.width = `${displayProgress}%`;
-    console.log(`加载进度: ${displayProgress.toFixed(1)}% (${loadedCount + errorCount}/${totalVideos})`);
+    console.log(
+      `加载进度: ${displayProgress.toFixed(1)}% (${
+        loadedCount + errorCount
+      }/${totalVideos})`,
+    );
   }
-  
+
   // 检查是否可以提前隐藏加载屏幕
   function checkCanHideEarly() {
     // 如果Portfolio视频全部加载完成，或者达到70%进度，就隐藏加载屏幕
-    const portfolioProgress = portfolioVideoArray.length > 0 
-      ? (portfolioLoadedCount + portfolioErrorCount) / portfolioVideoArray.length 
-      : 1;
+    const portfolioProgress =
+      portfolioVideoArray.length > 0
+        ? (portfolioLoadedCount + portfolioErrorCount) /
+          portfolioVideoArray.length
+        : 1;
     const overallProgress = (loadedCount + errorCount) / totalVideos;
-    
+
     if (portfolioProgress >= 1 || overallProgress >= 0.7) {
       hideLoadingScreen();
       return true;
     }
     return false;
   }
-  
+
   // 检查是否所有视频都已加载完成
   function checkAllLoaded() {
     if (loadedCount + errorCount >= totalVideos) {
@@ -3245,16 +3410,16 @@ function initVideoLoadingWithProgress() {
       }
     }
   }
-  
+
   // 初始化进度条为5%（表示开始加载）
   progressBar.style.width = '5%';
-  
+
   // 加载单个视频的函数
   function loadVideo(video, index, isPortfolio) {
     setTimeout(() => {
       const videoSource = video.querySelector('source');
       const videoSrc = videoSource ? videoSource.src : video.src;
-      
+
       if (!videoSrc) {
         console.warn(`视频 ${index + 1} 没有有效的源`);
         errorCount++;
@@ -3264,53 +3429,59 @@ function initVideoLoadingWithProgress() {
         checkAllLoaded();
         return;
       }
-      
+
       console.log(`开始加载视频 ${index + 1}/${totalVideos}: ${videoSrc}`);
-      
+
       // 监听可以播放（加载完成）
       const onCanPlayThrough = () => {
         loadedCount++;
         if (isPortfolio) portfolioLoadedCount++;
-        console.log(`视频加载完成: ${videoSrc} (${loadedCount}/${totalVideos})`);
+        console.log(
+          `视频加载完成: ${videoSrc} (${loadedCount}/${totalVideos})`,
+        );
         updateProgress();
-        
+
         // 检查是否可以提前隐藏加载屏幕
         if (!loadingScreenHidden) {
           checkCanHideEarly();
         }
         checkAllLoaded();
-        
+
         // 清理事件监听器
         video.removeEventListener('canplaythrough', onCanPlayThrough);
         video.removeEventListener('error', onError);
       };
-      
+
       // 监听加载错误
       const onError = () => {
         errorCount++;
         if (isPortfolio) portfolioErrorCount++;
-        console.warn(`视频加载失败: ${videoSrc} (错误: ${errorCount}/${totalVideos})`);
+        console.warn(
+          `视频加载失败: ${videoSrc} (错误: ${errorCount}/${totalVideos})`,
+        );
         updateProgress();
-        
+
         // 检查是否可以提前隐藏加载屏幕
         if (!loadingScreenHidden) {
           checkCanHideEarly();
         }
         checkAllLoaded();
-        
+
         // 清理事件监听器
         video.removeEventListener('canplaythrough', onCanPlayThrough);
         video.removeEventListener('error', onError);
       };
-      
+
       // 添加事件监听器
-      video.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
+      video.addEventListener('canplaythrough', onCanPlayThrough, {
+        once: true,
+      });
       video.addEventListener('error', onError, { once: true });
-      
+
       // 设置预加载属性并开始加载
       video.preload = 'auto';
       video.setAttribute('preload', 'auto');
-      
+
       try {
         video.load();
       } catch (e) {
@@ -3323,17 +3494,17 @@ function initVideoLoadingWithProgress() {
       }
     }, index * 150); // 每个视频错开150ms，加快加载速度
   }
-  
+
   // 优先加载Portfolio视频
   portfolioVideoArray.forEach((video, index) => {
     loadVideo(video, index, true);
   });
-  
+
   // 然后加载Works视频（延迟一点，避免阻塞Portfolio视频）
   worksVideoArray.forEach((video, index) => {
     loadVideo(video, portfolioVideoArray.length + index, false);
   });
-  
+
   // 设置最大等待时间：8秒后强制隐藏加载屏幕
   setTimeout(() => {
     if (!loadingScreenHidden) {
@@ -3346,88 +3517,96 @@ function initVideoLoadingWithProgress() {
 // ========== 智能视频预加载系统（保留用于后续预加载） ==========
 function startVideoPreloading() {
   console.log('开始智能预加载视频...');
-  
+
   // 优化：更积极的预加载策略
   const videoPreloadQueue = [
     // Portfolio视频（最优先，立即加载）
     { selector: '.portfolio-video', priority: 1, maxConcurrent: 2, delay: 0 },
     // Works区域前5个视频（次优先）
-    { selector: '.project-video, .project-card-video', priority: 2, maxConcurrent: 3, delay: 1000 }
+    {
+      selector: '.project-video, .project-card-video',
+      priority: 2,
+      maxConcurrent: 3,
+      delay: 1000,
+    },
   ];
-  
+
   let currentPriority = 1;
   let loadingCount = 0;
-  
+
   function preloadNextBatch() {
-    const currentBatch = videoPreloadQueue.find(q => q.priority === currentPriority);
+    const currentBatch = videoPreloadQueue.find(
+      (q) => q.priority === currentPriority,
+    );
     if (!currentBatch) {
       console.log('所有视频预加载完成');
       return;
     }
-    
+
     const videos = document.querySelectorAll(currentBatch.selector);
     const videosToLoad = Array.from(videos)
-      .filter(v => v.readyState === 0)
+      .filter((v) => v.readyState === 0)
       .slice(0, currentPriority === 2 ? 5 : videos.length); // Works只预加载前5个
-    
+
     if (videosToLoad.length === 0) {
       // 当前优先级加载完成，进入下一优先级
       currentPriority++;
       setTimeout(() => preloadNextBatch(), currentBatch.delay);
       return;
     }
-    
+
     // 限制并发加载数
     const batch = videosToLoad.slice(0, currentBatch.maxConcurrent);
     loadingCount = batch.length;
-    
+
     batch.forEach((video, index) => {
       // Portfolio视频立即加载，其他视频错开时间
       const loadDelay = currentPriority === 1 ? index * 200 : index * 300;
-      
+
       setTimeout(() => {
-        console.log(`预加载视频: ${video.src || video.querySelector('source')?.src}`);
-        
+        console.log(
+          `预加载视频: ${video.src || video.querySelector('source')?.src}`,
+        );
+
         // 设置更快的加载策略
         video.preload = 'auto';
-        
+
         const onCanPlay = () => {
           loadingCount--;
           console.log(`视频预加载完成，剩余: ${loadingCount}`);
-          
+
           if (loadingCount === 0) {
             // 当前批次加载完成，继续下一批
             setTimeout(() => preloadNextBatch(), 500);
           }
-          
+
           video.removeEventListener('canplaythrough', onCanPlay);
           video.removeEventListener('error', onError);
         };
-        
+
         const onError = () => {
           loadingCount--;
           console.warn(`视频预加载失败: ${video.src}`);
-          
+
           if (loadingCount === 0) {
             setTimeout(() => preloadNextBatch(), 500);
           }
-          
+
           video.removeEventListener('canplaythrough', onCanPlay);
           video.removeEventListener('error', onError);
         };
-        
+
         video.addEventListener('canplaythrough', onCanPlay, { once: true });
         video.addEventListener('error', onError, { once: true });
-        
+
         // 开始加载视频
         video.load();
       }, loadDelay);
     });
   }
-  
+
   // 主页加载完成1秒后立即开始预加载（更激进的策略）
   setTimeout(() => {
     preloadNextBatch();
   }, 1000);
 }
-
