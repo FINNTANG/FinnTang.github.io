@@ -2189,21 +2189,19 @@ a.about-contact-value:hover::after {
 
 /* Project Detail Spline Text Effect - 作品集页面版本 */
 .project-spline-text {
-    position: absolute !important;
+    position: fixed !important; /* 改为fixed，确保不受其他元素影响 */
     top: 120px !important; /* 增加top值，确保完全在header下方 */
     left: 60% !important;
     transform: translateX(-50%) !important;
     width: 650px !important;
     height: 300px !important;
-    z-index: 1 !important;
+    z-index: 10005 !important; /* 提高z-index，确保在保护层之上但低于Header */
     opacity: 0 !important;
     visibility: hidden !important;
     transition: all 0.6s ease !important;
     pointer-events: auto !important; /* 恢复交互能力 */
     background: transparent !important;
     border-radius: 12px !important;
-    /* 使用clip-path限制可交互区域，确保不遮挡header */
-    clip-path: inset(0px 0px 0px 0px) !important;
 }
 
 /* 当Spline特效可见时，保持交互 */
@@ -2216,24 +2214,6 @@ a.about-contact-value:hover::after {
 /* Spline viewer内部元素保持交互 */
 .project-spline-text spline-viewer {
     pointer-events: auto !important;
-}
-
-/* 在Portfolio页面激活时，添加一个顶部遮罩来阻止Spline特效遮挡Header */
-.portfolio-page::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100px; /* 覆盖Header及其下方区域 */
-    z-index: 10000;
-    pointer-events: auto;
-    background: transparent;
-    display: none;
-}
-
-.portfolio-page[style*="display: block"]::before {
-    display: block;
 }
 
 .project-spline-text spline-viewer {

@@ -10,14 +10,14 @@
   overflow-x: hidden;
 }
 
-/* 添加一个顶部保护区，阻止任何元素遮挡Header */
+/* 添加一个顶部保护区，阻止任何元素遮挡Header - 只在Header区域生效 */
 .portfolio-page::after {
   content: '';
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 100px;
+  height: 80px; /* 只覆盖Header本身的高度 */
   z-index: 10001;
   pointer-events: auto;
   background: transparent;
