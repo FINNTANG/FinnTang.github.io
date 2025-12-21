@@ -502,13 +502,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const splineText = document.getElementById('projectSplineText');
         if (splineText) {
           splineText.style.display = 'block';
-          splineText.style.position = 'absolute';
+          splineText.style.position = 'fixed'; // 改为fixed，与CSS一致
           splineText.style.top = '120px'; // 调整到header下方，确保不遮挡导航栏
           splineText.style.left = '60%';
           splineText.style.transform = 'translateX(-50%)';
           splineText.style.width = '650px';
           splineText.style.height = '300px';
-          splineText.style.zIndex = '1';
+          splineText.style.zIndex = '10005'; // 与CSS保持一致，确保在保护层之上
           splineText.style.opacity = '0';
           splineText.style.visibility = 'visible';
           splineText.style.pointerEvents = 'auto'; // 允许交互
