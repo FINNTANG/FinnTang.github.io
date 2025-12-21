@@ -2190,7 +2190,7 @@ a.about-contact-value:hover::after {
 /* Project Detail Spline Text Effect - 作品集页面版本 */
 .project-spline-text {
     position: absolute !important;
-  top: 100px !important; /* 调整到header下方，避免覆盖导航栏 */
+    top: 100px !important; /* 调整到header下方，避免覆盖导航栏 */
     left: 60% !important;
     transform: translateX(-50%) !important;
     width: 650px !important;
@@ -2202,6 +2202,13 @@ a.about-contact-value:hover::after {
     pointer-events: none !important;
     background: transparent !important;
     border-radius: 12px !important;
+}
+
+/* 确保Spline特效内部元素也无法接收点击事件 */
+.project-spline-text *,
+.project-spline-text spline-viewer,
+.project-spline-text spline-viewer * {
+    pointer-events: none !important;
 }
 
 .project-spline-text.visible {

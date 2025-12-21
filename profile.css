@@ -23,9 +23,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 9999 !important; /* 提高z-index确保在Spline元素之上 */
+  z-index: 10002 !important; /* 提高z-index确保在Spline元素之上 */
   height: 80px;
   pointer-events: auto !important; /* 确保header可以接收点击事件 */
+}
+
+/* 确保header中的所有元素都可以接收点击事件 */
+.header *,
+.header .nav,
+.header .nav-filters,
+.header .filter-btn {
+  pointer-events: auto !important;
 }
 
 .logo {
@@ -106,7 +114,7 @@
   left: 40px !important;
   top: 50vh !important;
   transform: translateY(-50%) !important;
-  z-index: 1001 !important;
+  z-index: 10003 !important; /* 提高z-index确保在所有元素之上 */
   margin: 0 !important;
   padding: 16px 12px !important;
   width: auto !important;
@@ -121,6 +129,13 @@
   border-radius: 12px !important;
   backdrop-filter: blur(10px) !important;
   transition: all 0.3s ease !important;
+}
+
+/* 确保sidebar中的所有元素都可以接收点击事件 */
+.sidebar *,
+.sidebar .sidebar-nav,
+.sidebar .nav-link {
+  pointer-events: auto !important;
 }
 
 .sidebar:hover {
