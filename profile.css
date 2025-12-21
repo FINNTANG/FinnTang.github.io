@@ -28,12 +28,27 @@
   pointer-events: auto !important; /* 确保header可以接收点击事件 */
 }
 
+/* 在header上方添加一个不可见的保护层，阻止Spline特效遮挡 */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -20px; /* 延伸到header下方20px，确保保护区域足够 */
+  z-index: 10001;
+  pointer-events: auto;
+  background: transparent;
+}
+
 /* 确保header中的所有元素都可以接收点击事件 */
 .header *,
 .header .nav,
 .header .nav-filters,
 .header .filter-btn {
   pointer-events: auto !important;
+  position: relative;
+  z-index: 10002;
 }
 
 .logo {
