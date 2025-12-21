@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (splineText) {
           splineText.style.display = 'block';
           splineText.style.position = 'absolute';
-          splineText.style.top = '70px';
+          splineText.style.top = '120px'; // 调整到header下方，确保不遮挡导航栏
           splineText.style.left = '60%';
           splineText.style.transform = 'translateX(-50%)';
           splineText.style.width = '650px';
@@ -511,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function () {
           splineText.style.zIndex = '1';
           splineText.style.opacity = '0';
           splineText.style.visibility = 'visible';
-          splineText.style.pointerEvents = 'none';
+          splineText.style.pointerEvents = 'auto'; // 允许交互
           splineText.style.background = 'transparent';
           splineText.style.transition = 'opacity 0.8s ease';
 
