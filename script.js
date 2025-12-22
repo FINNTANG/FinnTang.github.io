@@ -503,15 +503,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (splineText) {
           splineText.style.display = 'block';
           splineText.style.position = 'fixed'; // 改为fixed，与CSS一致
-          splineText.style.top = '120px'; // 调整到header下方，确保不遮挡导航栏
-          splineText.style.left = '60%';
-          splineText.style.transform = 'translateX(-50%)';
-          splineText.style.width = '650px';
-          splineText.style.height = '300px';
-          splineText.style.zIndex = '10005'; // 与CSS保持一致，确保在保护层之上
+          splineText.style.top = '15px'; // 移到header顶部区域，与导航栏同一高度
+          splineText.style.left = '50%';
+          splineText.style.transform = 'translateX(-50%)'; // 只水平居中，不垂直偏移
+          splineText.style.width = '450px';
+          splineText.style.height = '200px';
+          splineText.style.zIndex = '9999'; // 确保在header之下，不遮挡按钮
           splineText.style.opacity = '0';
           splineText.style.visibility = 'visible';
-          splineText.style.pointerEvents = 'auto'; // 允许交互
+          splineText.style.pointerEvents = 'none'; // 让点击穿透，不影响按钮交互
           splineText.style.background = 'transparent';
           splineText.style.transition = 'opacity 0.8s ease';
 
