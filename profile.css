@@ -23,6 +23,28 @@
   background: transparent;
 }
 
+.animate-wrapper {
+  height: 50px;
+  margin-top: 30px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.animate-wrapper spline-viewer {
+  width: 650px;
+  height: 328px;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+  .animate-wrapper {
+    display: none;
+  }
+}
 /* Header - Sticky */
 .header {
   position: sticky;
@@ -54,6 +76,7 @@
 .logo {
   display: flex;
   flex-direction: column;
+  min-width: 140px;
 }
 
 .logo h1 {
@@ -212,8 +235,6 @@
 .nav-link:hover::before {
   height: 40px;
 }
-
-
 
 /* Main Content - Scrollable */
 .main-content {
