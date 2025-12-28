@@ -2237,7 +2237,7 @@ a.about-contact-value:hover::after {
 
 /* 确保作品集页面的内容有足够的上边距，但不移动FINN TANG */
 .portfolio-page.active .portfolio-grid {
-  margin-top: 100px !important;
+  margin-top: 50px !important;
 }
 
 .spline-container {
@@ -2825,7 +2825,7 @@ body.lightbox-open {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
-  padding: 20px 0 40px;
+  padding: 10px 0 40px;
   max-width: 1400px;
   margin: 0 auto;
 }
