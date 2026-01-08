@@ -412,6 +412,16 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: '2 weeks',
       tools: 'Rhino 8, Keyshot, Photoshop',
     },
+    'The Gate Opener': {
+      title: 'The Gate Opener',
+      category: '[ MANGA / TRADITIONAL ART ]',
+      year: '2024',
+      description:
+        'A one-week manga project created during an exchange program at Kyoto Seika University, using traditional techniques including dip pen inking and screentone.',
+      role: 'Solo project – Manga Artist, Storytelling, Traditional Illustration',
+      duration: '1 week',
+      tools: 'Dip pen, Ink, Screentone paper, Traditional manga techniques',
+    },
   };
 
   // Loading animation - 简单可靠的加载逻辑
@@ -643,6 +653,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'FateRISD: Final Bubble',
       'FamilyBoard',
       'Venom Pulse',
+      'The Gate Opener',
     ];
     const currentIndex = projectTitles.indexOf(currentProjectTitle);
 
@@ -1515,7 +1526,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-medium">
-                            <img src="csp/csp-process-1.jpg" alt="Shmupformer Development Process" class="project-detail-image">
+                            <img src="csp/csp-process-1.jpg" alt="Shmupformer Development Process 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="csp/csp-process-2.jpg" alt="Shmupformer Development Process 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="csp/csp-process-3.jpg" alt="Shmupformer Development Process 3" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1787,7 +1808,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-image-gallery">
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/venompulse-overview.jpg" alt="Venom Pulse Overview" class="project-detail-image">
+                            <img src="Venom_Pulse/GUN.90.jpg" alt="Venom Pulse Overview" class="project-detail-image">
                         </div>
                     </div>
                 </div>
@@ -1825,7 +1846,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                     <div class="project-image-item">
                         <div class="project-image-large">
-                            <img src="Venom_Pulse/GUN.90.jpg" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
+                            <img src="Venom_Pulse/venompulse-overview.jpg" alt="Venom Pulse Final Outcome 2" class="project-detail-image">
                         </div>
                     </div>
                     <div class="project-image-item">
@@ -1847,6 +1868,70 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="project-text-content">
                     <p>A conceptual toy gun that reinterprets futuristic weaponry through a collectible lens, emphasizing stylized geometry and transparent surfaces.</p>
                     <p>The project demonstrates proficiency in 3D product design, material exploration, and aesthetic storytelling through form.</p>
+                </div>
+            `;
+    } else if (projectTitle === 'The Gate Opener') {
+      // The Gate Opener content
+      overviewSection.innerHTML = `
+                <h2 class="project-section-title">Overview</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="manga/overview.jpg" alt="The Gate Opener Overview" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>A one-week manga project created during an exchange program at Kyoto Seika University, Japan. This work pays homage to Tatsuki Fujimoto's Chainsaw Man, exploring themes of sacrifice and darkness through traditional manga techniques.</p>
+                    <p>The story depicts a father who summons a calamity demon by sacrificing his three children — a narrative exploring the price of power and desperation.</p>
+                </div>
+            `;
+
+      processSection.innerHTML = `
+                <h2 class="project-section-title">Development Process</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-medium">
+                            <img src="manga/process.jpg" alt="The Gate Opener Process" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <h3>Traditional Techniques</h3>
+                    <p>Used dip pen and ink for precise line work, following authentic manga production methods.</p>
+                    <h3>Screentone Application</h3>
+                    <p>Applied screentone paper for shading, textures, and atmospheric effects — a hallmark of traditional manga craftsmanship.</p>
+                    <h3>Narrative Composition</h3>
+                    <p>Focused on dynamic panel layouts and visual storytelling to convey tension and emotion within a limited timeframe.</p>
+                </div>
+            `;
+
+      resultsSection.innerHTML = `
+                <h2 class="project-section-title">Final Outcome</h2>
+                <div class="project-image-gallery">
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="manga/final1.jpg" alt="The Gate Opener Final Page 1" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="manga/final2.jpg" alt="The Gate Opener Final Page 2" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="manga/final3.jpg" alt="The Gate Opener Final Page 3" class="project-detail-image">
+                        </div>
+                    </div>
+                    <div class="project-image-item">
+                        <div class="project-image-large">
+                            <img src="manga/final4.jpg" alt="The Gate Opener Final Page 4" class="project-detail-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="project-text-content">
+                    <p>A dark narrative exploring sacrifice and the summoning of a calamity demon, rendered through traditional manga techniques during a one-week intensive project.</p>
                 </div>
             `;
     } else {
