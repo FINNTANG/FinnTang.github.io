@@ -2783,6 +2783,24 @@ html {
   }
 }
 
+/* 大屏幕优化 - 27寸及以上显示器 (2K/4K) */
+@media (min-width: 2560px) {
+  .lightbox-content {
+    max-width: 2200px !important;
+    max-height: 1400px !important;
+  }
+
+  .lightbox-media-container {
+    max-height: calc(100% - 100px);
+  }
+
+  .lightbox-image,
+  .lightbox-video {
+    max-width: 2200px;
+    max-height: 1400px;
+  }
+}
+
 /* 防止body滚动 */
 body.lightbox-open {
   overflow: hidden;
