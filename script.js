@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function () {
       year: '2025',
       description:
         'A science-driven, role-based card game about ocean conservation and human impact designed for beach play.',
-      role: 'Game Design, Role System Design, Card Concept & Visual Design, UX Testing',
+      role: 'Game & System Design, Visual Identity, Online Interface UI/UX, Playtesting',
       duration: '2 months',
       tools:
         'Illustrator, Photoshop, InDesign, Physical Prototyping, Research-based Design Methods',
@@ -918,6 +918,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
+                    <p>Tide Bound is a cooperative strategy board game with a companion web app about coastal resilience. Players take on the roles of city influencers — balancing development, marine protection, and community survival along a shared coastline.</p>
+                    <h3>Collaborative Team</h3>
+                    <p>Developed in collaboration with Jin Gu.</p>
                     <div class="project-external-link-container">
                         <div class="project-link-label">Try the Online System</div>
                         <a href="https://ocean-board-game.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-cta-link">
@@ -1107,6 +1110,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="project-text-content">
                     <p>NASA HERC WHEEL is a fully handcrafted carbon fiber wheel designed for the NASA Human Exploration Rover Challenge. The project focuses on achieving lightweight construction and structural integrity through innovative design engineering and carbon fiber manufacturing techniques.</p>
+                    <h3>Collaborative Team</h3>
+                    <p>Developed in collaboration with Tiancheng Feng.</p>
                     <h3>About the Wheel</h3>
                     <p>The wheel features a multi-component design manufactured using 3D printed molds for carbon fiber lay-ups. Components are assembled using strong adhesive resins, allowing precise control over geometry and material distribution. Strategic material placement and surface curvature enhance strength without adding bulk.</p>
                 </div>
@@ -1410,6 +1415,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
+                    <p>Tide Bound is a tabletop card game designed for beach play that encourages engagement with marine ecology and environmental decision-making.</p>
+                    <h3>Collaborative Team</h3>
+                    <p>Developed in collaboration with Jin Gu.</p>
                     <div class="project-external-link-container">
                         <div class="project-link-label">Try the Online System</div>
                         <a href="https://ocean-board-game.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-cta-link">
@@ -1420,7 +1428,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             </svg>
                         </a>
                     </div>
-                    <p>Tide Bound is a tabletop card game designed for beach play that encourages engagement with marine ecology and environmental decision-making.</p>
                 </div>
             `;
 
