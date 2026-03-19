@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function () {
       category: '[ AI / INTERACTIVE ]',
       year: '2025',
       description:
-        'A cyberpunk-inspired AI-powered digital pet game that "eats" your reality through object recognition.',
+        'A multi-personality AI companion that adapts to your emotional state through microexpression analysis, creating a personalised interactive virtual pet experience.',
       role: 'Game Designer & Full-Stack Developer',
       duration: '5 Weeks',
       tools: 'React, Three.js, AI, WebGL, Django, LangChain, REST API',
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
       category: '[ GAME DESIGN / EDUCATION ]',
       year: '2025',
       description:
-        'A science-driven, role-based card game about ocean conservation and human impact designed for beach play.',
+        'A science-driven, role-based card game that blends education and play, helping young players explore ocean conservation and human environmental impact through engaging, scenario-based gameplay.',
       role: 'Game & System Design, Visual Identity, Online Interface UI/UX, Playtesting',
       duration: '2 months',
       tools:
@@ -1415,7 +1415,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 </div>
                 <div class="project-text-content">
-                    <p>Tide Bound is a tabletop card game designed for beach play that encourages engagement with marine ecology and environmental decision-making.</p>
+                    <p>Tide Bound is a tabletop card game that blends education and play, helping young players discover marine ecology and the consequences of human impact on the ocean through fun, role-based scenarios.</p>
                     <h3>Collaborative Team</h3>
                     <p>Developed in collaboration with Jin Gu.</p>
                     <div class="project-external-link-container">
@@ -1451,7 +1451,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <h3>Event Cards</h3>
                     <p>Created dual-sided event cards reflecting real-world environmental challenges.</p>
                     <h3>Physical Prototyping</h3>
-                    <p>Built waterproof, wind-resistant card prototypes for beach play.</p>
+                    <p>Built waterproof, wind-resistant card prototypes for hands-on educational play.</p>
                 </div>
             `;
 
