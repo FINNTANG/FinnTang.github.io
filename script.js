@@ -591,10 +591,16 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         });
       }
+
+      requestAnimationFrame(() => {
+        syncVisibleCardVideos();
+      });
     });
   }
 
   function showHome() {
+    unmountAllCardVideos();
+
     // 隐藏sidebar
     const sidebar = document.querySelector('.sidebar');
     if (sidebar) {
@@ -708,6 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!project) return;
 
     console.log('=== Starting showProjectDetail ===');
+    unmountAllCardVideos();
 
     // 预先更新内容，避免在显示时才更新导致的卡顿
     updateProjectSections(projectTitle);
@@ -2002,10 +2009,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Re-run image loading and interaction setup
     const projectImages = document.querySelectorAll('.project-detail-image');
     const projectImageItems = document.querySelectorAll('.project-image-item');
-    const projectVideos = document.querySelectorAll(
-      '.project-detail-video, .project-card-video, .portfolio-video',
-    );
-    const projectIframes = document.querySelectorAll('.project-detail-iframe');
 
     // Apply image interactions (reuse existing code)
     projectImages.forEach((image, index) => {
@@ -2138,6 +2141,115 @@ document.addEventListener('DOMContentLoaded', function () {
   const otherworksSection = document.getElementById('otherworks');
   const aboutSection = document.getElementById('about');
   const contactSection = document.getElementById('contact');
+  const cardVideoSelector =
+    '.portfolio-video[data-lazy-video="card"], .project-video[data-lazy-video="card"], .project-card-video[data-lazy-video="card"]';
+  const cardVideos = Array.from(document.querySelectorAll(cardVideoSelector));
+  const cardVideoViewportOffset = 150;
+
+  function isSectionDisplayed(section) {
+    return !!section && window.getComputedStyle(section).display !== 'none';
+  }
+
+  function isCardVideoSectionActive(video) {
+    if (portfolioPage.style.display === 'none') {
+      return false;
+    }
+
+    const section = video.closest('section');
+    if (!section) {
+      return false;
+    }
+
+    if (section.id === 'portfolio') {
+      return isSectionDisplayed(portfolioSection);
+    }
+
+    if (section.id === 'otherworks') {
+      return isSectionDisplayed(otherworksSection);
+    }
+
+    return false;
+  }
+
+  function isCardVideoNearViewport(video) {
+    const rect = video.getBoundingClientRect();
+    const viewportHeight =
+      window.innerHeight || document.documentElement.clientHeight;
+    const viewportWidth =
+      window.innerWidth || document.documentElement.clientWidth;
+
+    return (
+      rect.bottom >= -cardVideoViewportOffset &&
+      rect.top <= viewportHeight + cardVideoViewportOffset &&
+      rect.right >= -cardVideoViewportOffset &&
+      rect.left <= viewportWidth + cardVideoViewportOffset
+    );
+  }
+
+  function mountCardVideo(video) {
+    const source = video.querySelector('source');
+    const dataSrc = source?.dataset.src;
+
+    if (!source || !dataSrc || video.dataset.videoMounted === 'true') {
+      return;
+    }
+
+    source.src = dataSrc;
+    video.dataset.videoMounted = 'true';
+    video.load();
+  }
+
+  function unmountCardVideo(video) {
+    const source = video.querySelector('source');
+
+    if (!source || video.dataset.videoMounted !== 'true') {
+      return;
+    }
+
+    video.pause();
+    try {
+      video.currentTime = 0;
+    } catch (error) {
+      console.warn('Resetting card video playback state failed:', error);
+    }
+    source.removeAttribute('src');
+    video.dataset.videoMounted = 'false';
+    video.load();
+  }
+
+  function playCardVideo(video) {
+    if (!isCardVideoSectionActive(video)) {
+      return;
+    }
+
+    mountCardVideo(video);
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  }
+
+  function syncCardVideo(video, isVisible = isCardVideoNearViewport(video)) {
+    if (isVisible && isCardVideoSectionActive(video)) {
+      playCardVideo(video);
+      return;
+    }
+
+    unmountCardVideo(video);
+  }
+
+  function syncVisibleCardVideos() {
+    cardVideos.forEach((video) => {
+      syncCardVideo(video);
+    });
+  }
+
+  function unmountAllCardVideos() {
+    cardVideos.forEach((video) => {
+      unmountCardVideo(video);
+    });
+  }
 
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', function () {
@@ -2169,21 +2281,9 @@ document.addEventListener('DOMContentLoaded', function () {
           card.classList.add('visible');
         });
 
-        // 强制重新播放所有 Portfolio 视频
-        setTimeout(() => {
-          const portfolioVideos = document.querySelectorAll('.portfolio-video');
-          portfolioVideos.forEach((video, index) => {
-            setTimeout(() => {
-              if (video.paused) {
-                video.play().catch((e) => {
-                  console.log(`Portfolio 视频 ${index} 重新播放失败:`, e);
-                  // 重试一次
-                  setTimeout(() => video.play().catch(() => {}), 300);
-                });
-              }
-            }, index * 150);
-          });
-        }, 300);
+        requestAnimationFrame(() => {
+          syncVisibleCardVideos();
+        });
       } else if (filter === 'otherworks') {
         portfolioSection.style.display = 'none';
         otherworksSection.style.display = 'grid';
@@ -2230,11 +2330,16 @@ document.addEventListener('DOMContentLoaded', function () {
             card.classList.add('visible');
           });
         }
+
+        requestAnimationFrame(() => {
+          syncVisibleCardVideos();
+        });
       } else if (filter === 'about') {
         portfolioSection.style.display = 'none';
         otherworksSection.style.display = 'none';
         aboutSection.style.display = 'block';
         aboutSection.classList.add('about-active');
+        unmountAllCardVideos();
 
         // 重置滚动位置到顶部
         const portfolioPage = document.getElementById('portfolio-page');
@@ -2281,6 +2386,9 @@ document.addEventListener('DOMContentLoaded', function () {
           document
             .querySelector('[data-filter="portfolio"]')
             .classList.add('active');
+          requestAnimationFrame(() => {
+            syncVisibleCardVideos();
+          });
         } else if (target === '#otherworks') {
           // Show other works section, hide others
           portfolioSection.style.display = 'none';
@@ -2334,6 +2442,10 @@ document.addEventListener('DOMContentLoaded', function () {
               card.classList.add('visible');
             });
           }
+
+          requestAnimationFrame(() => {
+            syncVisibleCardVideos();
+          });
         } else {
           // Smooth scroll to section if it exists
           const targetElement = document.querySelector(target);
@@ -2535,228 +2647,75 @@ document.addEventListener('DOMContentLoaded', function () {
     );
   }
 
-  // ========== Portfolio 视频强制播放系统 ==========
-  // 确保 Portfolio 页面的视频始终能正常播放
-  function ensurePortfolioVideosPlay() {
-    const portfolioVideos = document.querySelectorAll('.portfolio-video');
-
-    portfolioVideos.forEach((video, index) => {
-      // 添加多重保障机制
-      let playAttempts = 0;
-      const maxAttempts = 5;
-
-      function attemptPlay() {
-        if (playAttempts >= maxAttempts) {
-          console.warn(`视频 ${index} 播放失败，已尝试 ${maxAttempts} 次`);
-          return;
-        }
-
-        playAttempts++;
-
-        // 确保视频已加载
-        if (video.readyState < 2) {
-          video.load();
-          video.addEventListener(
-            'loadeddata',
-            () => {
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch((e) => {
-                  console.log(
-                    `Portfolio 视频 ${index} 播放重试 ${playAttempts}:`,
-                    e,
-                  );
-                  setTimeout(() => attemptPlay(), 500);
-                });
-              }
-            },
-            { once: true },
-          );
-        } else {
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                console.log(`Portfolio 视频 ${index} 播放成功`);
-              })
-              .catch((e) => {
-                console.log(
-                  `Portfolio 视频 ${index} 播放重试 ${playAttempts}:`,
-                  e,
-                );
-                setTimeout(() => attemptPlay(), 500);
-              });
-          }
-        }
-      }
-
-      // 立即尝试播放
-      setTimeout(() => attemptPlay(), index * 200);
-
-      // 监听 Portfolio 页面显示事件
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      filterBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          if (btn.dataset.filter === 'portfolio') {
-            setTimeout(() => {
-              if (video.paused) {
-                attemptPlay();
-              }
-            }, 500);
-          }
-        });
-      });
-
-      // 用户交互后重试（某些浏览器需要用户交互才能自动播放）
-      const playOnInteraction = () => {
-        if (video.paused) {
-          video.play().catch((e) => console.log('交互后播放失败:', e));
-        }
-        document.removeEventListener('click', playOnInteraction);
-        document.removeEventListener('scroll', playOnInteraction);
-      };
-
-      document.addEventListener('click', playOnInteraction, {
-        once: true,
-        passive: true,
-      });
-      document.addEventListener('scroll', playOnInteraction, {
-        once: true,
-        passive: true,
-      });
-    });
-  }
-
-  // 在 Portfolio 页面激活时立即执行
+  // 在 Portfolio 页面激活后，同步首屏可见卡片的视频状态。
   const portfolioSectionForVideos = document.getElementById('portfolio');
   if (portfolioSectionForVideos) {
-    // 页面加载后立即执行
-    setTimeout(() => ensurePortfolioVideosPlay(), 300);
+    setTimeout(() => syncVisibleCardVideos(), 300);
 
-    // 监听页面显示（从其他标签页返回时）
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        ensurePortfolioVideosPlay();
+      if (document.hidden) {
+        unmountAllCardVideos();
+        return;
       }
+
+      syncVisibleCardVideos();
     });
   }
 
-  // ========== 智能视频懒加载系统 ==========
-  // 使用Intersection Observer管理视频播放
+  // Card videos are mounted only when they are visible in the active section.
   const videoLazyLoadObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        const video = entry.target;
-
-        if (entry.isIntersecting) {
-          // 视频进入可见区域
-          if (video.readyState === 0) {
-            // 视频还未加载，立即加载
-            console.log('即时加载视频:', video.src);
-            video.load();
-          }
-
-          // 对于 Portfolio 视频，更激进的播放策略
-          const isPortfolioVideo = video.classList.contains('portfolio-video');
-
-          // 尝试播放
-          if (video.paused) {
-            const attemptPlayWithRetry = (retries = 3) => {
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise
-                  .then(() => {
-                    console.log(
-                      `视频播放成功: ${
-                        isPortfolioVideo ? 'Portfolio' : 'Works'
-                      }`,
-                    );
-                  })
-                  .catch((e) => {
-                    console.log(`视频播放失败 (剩余重试: ${retries}):`, e);
-                    if (retries > 0) {
-                      setTimeout(() => attemptPlayWithRetry(retries - 1), 300);
-                    }
-                  });
-              }
-            };
-
-            // Portfolio 视频立即播放，其他视频稍微延迟
-            if (isPortfolioVideo) {
-              attemptPlayWithRetry(5); // Portfolio 视频重试更多次
-            } else {
-              setTimeout(() => attemptPlayWithRetry(2), 100);
-            }
-          }
-        } else {
-          // 视频离开可见区域
-          // Portfolio 视频不暂停，保持播放
-          if (!video.classList.contains('portfolio-video') && !video.paused) {
-            video.pause();
-          }
-        }
+        syncCardVideo(entry.target, entry.isIntersecting);
       });
     },
     {
-      threshold: 0.1, // Portfolio 卡片只要 10% 可见就触发
-      rootMargin: '150px', // 提前 150px 开始准备
+      threshold: 0.1,
+      rootMargin: '150px',
     },
   );
 
   // 对所有项目卡片视频应用懒加载
-  const allVideos = document.querySelectorAll(
-    '.portfolio-video, .project-video, .project-card-video',
-  );
+  const allVideos = cardVideos;
 
   allVideos.forEach((video) => {
     videoLazyLoadObserver.observe(video);
   });
 
-  // Enhanced video loading and error handling
-  const projectVideos = document.querySelectorAll(
-    '.project-video, .project-detail-video, .portfolio-video, .project-card-video',
-  );
+  // Project detail videos keep their own playback lifecycle and fallback UI.
+  const detailVideos = document.querySelectorAll('.project-detail-video');
 
-  projectVideos.forEach((video) => {
+  detailVideos.forEach((video) => {
     let isPlaying = false;
     let loadedMetadata = false;
 
-    // 确保视频容器有正确的宽高比
     video.addEventListener('loadedmetadata', function () {
-      if (loadedMetadata) return; // 防止重复执行
+      if (loadedMetadata) return;
       loadedMetadata = true;
 
-      if (this.classList.contains('project-detail-video')) {
-        const aspectRatio = this.videoWidth / this.videoHeight;
-        const container = this.parentElement;
+      const aspectRatio = this.videoWidth / this.videoHeight;
+      const container = this.parentElement;
 
-        // 根据视频宽高比动态调整容器高度
-        if (aspectRatio > 2) {
-          container.style.height = '400px';
-        } else if (aspectRatio > 1.6) {
-          container.style.height = '500px';
-        } else if (aspectRatio > 1.2) {
-          container.style.height = '600px';
-        } else {
-          container.style.height = '700px';
-        }
-
-        // 确保视频完全可见
-        this.style.objectFit = 'contain';
-        this.style.background = '#000';
+      if (aspectRatio > 2) {
+        container.style.height = '400px';
+      } else if (aspectRatio > 1.6) {
+        container.style.height = '500px';
+      } else if (aspectRatio > 1.2) {
+        container.style.height = '600px';
+      } else {
+        container.style.height = '700px';
       }
+
+      this.style.objectFit = 'contain';
+      this.style.background = '#000';
     });
 
-    // 优化视频加载处理
     video.addEventListener('loadeddata', function () {
-      if (this.classList.contains('project-detail-video')) {
-        const placeholders = this.parentElement.querySelectorAll(
-          '.project-image-placeholder',
-        );
-        placeholders.forEach((p) => p.remove());
-      }
+      const placeholders = this.parentElement.querySelectorAll(
+        '.project-image-placeholder',
+      );
+      placeholders.forEach((p) => p.remove());
 
-      // 只在未播放时尝试播放
       if (!isPlaying) {
         this.play()
           .then(() => {
@@ -2764,63 +2723,23 @@ document.addEventListener('DOMContentLoaded', function () {
           })
           .catch((e) => {
             console.log('Video autoplay failed:', e);
-            if (this.classList.contains('project-detail-video')) {
-              this.style.display = 'none';
-              const placeholder = document.createElement('div');
-              placeholder.className = 'project-image-placeholder';
-              placeholder.innerHTML =
-                '<span>REALITYEATER Game Interface</span>';
-              this.parentElement.appendChild(placeholder);
-            }
+            this.style.display = 'none';
+            const placeholder = document.createElement('div');
+            placeholder.className = 'project-image-placeholder';
+            placeholder.innerHTML = '<span>REALITYEATER Game Interface</span>';
+            this.parentElement.appendChild(placeholder);
           });
       }
     });
 
-    // 简化错误处理
     video.addEventListener('error', function () {
       console.log('Video failed to load');
-      if (this.classList.contains('project-detail-video')) {
-        this.style.display = 'none';
-        const placeholder = document.createElement('div');
-        placeholder.className = 'project-image-placeholder';
-        placeholder.innerHTML = '<span>REALITYEATER Game Interface</span>';
-        this.parentElement.appendChild(placeholder);
-      }
+      this.style.display = 'none';
+      const placeholder = document.createElement('div');
+      placeholder.className = 'project-image-placeholder';
+      placeholder.innerHTML = '<span>REALITYEATER Game Interface</span>';
+      this.parentElement.appendChild(placeholder);
     });
-
-    // 优化项目卡片视频交互 - 性能优化版
-    const projectCard = video.closest('.project-card');
-    if (projectCard) {
-      projectCard.addEventListener(
-        'mouseenter',
-        function () {
-          // 只在视频未播放时尝试播放
-          if (!isPlaying && video.paused) {
-            // 使用 requestIdleCallback 在浏览器空闲时播放视频
-            if ('requestIdleCallback' in window) {
-              requestIdleCallback(() => {
-                video
-                  .play()
-                  .then(() => {
-                    isPlaying = true;
-                  })
-                  .catch((e) => console.log('Video play failed:', e));
-              });
-            } else {
-              video
-                .play()
-                .then(() => {
-                  isPlaying = true;
-                })
-                .catch((e) => console.log('Video play failed:', e));
-            }
-          }
-        },
-        { passive: true },
-      );
-
-      // 移除mouseleave的暂停逻辑，让视频持续播放
-    }
   });
 
   // Enhanced image loading and error handling with smooth interactions
@@ -3455,310 +3374,3 @@ function cleanupAboutScrollListener() {
   isContactVisible = false;
 }
 
-// ========== 视频加载与进度条关联系统（优化版） ==========
-function initVideoLoadingWithProgress() {
-  const loadingScreen = document.getElementById('loading-screen');
-  const progressBar = document.querySelector('.loading-progress');
-
-  if (!loadingScreen || !progressBar) {
-    console.warn('加载屏幕或进度条元素未找到');
-    // 如果找不到元素，使用原来的延迟隐藏逻辑
-    setTimeout(() => {
-      if (loadingScreen) {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-          startVideoPreloading();
-        }, 500);
-      }
-    }, 2500);
-    return;
-  }
-
-  // 优先加载Portfolio视频（用户最常访问的页面）
-  const portfolioVideos = document.querySelectorAll('.portfolio-video');
-  const worksVideos = document.querySelectorAll(
-    '.project-video, .project-card-video',
-  );
-
-  const portfolioVideoArray = Array.from(portfolioVideos);
-  const worksVideoArray = Array.from(worksVideos);
-  const allVideos = [...portfolioVideoArray, ...worksVideoArray];
-
-  if (allVideos.length === 0) {
-    console.log('未找到需要预加载的视频');
-    // 如果没有视频，直接隐藏加载屏幕
-    setTimeout(() => {
-      loadingScreen.classList.add('hidden');
-      setTimeout(() => {
-        loadingScreen.style.display = 'none';
-      }, 500);
-    }, 1000);
-    return;
-  }
-
-  console.log(
-    `开始预加载 ${allVideos.length} 个视频（Portfolio: ${portfolioVideoArray.length}, Works: ${worksVideoArray.length}）...`,
-  );
-
-  let loadedCount = 0;
-  let errorCount = 0;
-  let portfolioLoadedCount = 0;
-  let portfolioErrorCount = 0;
-  const totalVideos = allVideos.length;
-  const totalPortfolioVideos = portfolioVideoArray.length;
-  let loadingScreenHidden = false;
-
-  // 隐藏加载屏幕的函数
-  function hideLoadingScreen() {
-    if (loadingScreenHidden) return;
-    loadingScreenHidden = true;
-    console.log('隐藏加载屏幕，后台继续加载剩余视频');
-    progressBar.style.width = '100%';
-    setTimeout(() => {
-      loadingScreen.classList.add('hidden');
-      setTimeout(() => {
-        loadingScreen.style.display = 'none';
-      }, 500);
-    }, 300);
-  }
-
-  // 更新进度条
-  function updateProgress() {
-    const progress = ((loadedCount + errorCount) / totalVideos) * 100;
-    // 确保进度条在5%-100%之间平滑过渡
-    const displayProgress = Math.max(5, Math.min(100, progress));
-    progressBar.style.width = `${displayProgress}%`;
-    console.log(
-      `加载进度: ${displayProgress.toFixed(1)}% (${
-        loadedCount + errorCount
-      }/${totalVideos})`,
-    );
-  }
-
-  // 检查是否可以提前隐藏加载屏幕
-  function checkCanHideEarly() {
-    // 如果Portfolio视频全部加载完成，或者达到70%进度，就隐藏加载屏幕
-    const portfolioProgress =
-      portfolioVideoArray.length > 0
-        ? (portfolioLoadedCount + portfolioErrorCount) /
-          portfolioVideoArray.length
-        : 1;
-    const overallProgress = (loadedCount + errorCount) / totalVideos;
-
-    if (portfolioProgress >= 1 || overallProgress >= 0.7) {
-      hideLoadingScreen();
-      return true;
-    }
-    return false;
-  }
-
-  // 检查是否所有视频都已加载完成
-  function checkAllLoaded() {
-    if (loadedCount + errorCount >= totalVideos) {
-      console.log('所有视频加载完成');
-      if (!loadingScreenHidden) {
-        hideLoadingScreen();
-      }
-    }
-  }
-
-  // 初始化进度条为5%（表示开始加载）
-  progressBar.style.width = '5%';
-
-  // 加载单个视频的函数
-  function loadVideo(video, index, isPortfolio) {
-    setTimeout(() => {
-      const videoSource = video.querySelector('source');
-      const videoSrc = videoSource ? videoSource.src : video.src;
-
-      if (!videoSrc) {
-        console.warn(`视频 ${index + 1} 没有有效的源`);
-        errorCount++;
-        if (isPortfolio) portfolioErrorCount++;
-        updateProgress();
-        checkCanHideEarly();
-        checkAllLoaded();
-        return;
-      }
-
-      console.log(`开始加载视频 ${index + 1}/${totalVideos}: ${videoSrc}`);
-
-      // 监听可以播放（加载完成）
-      const onCanPlayThrough = () => {
-        loadedCount++;
-        if (isPortfolio) portfolioLoadedCount++;
-        console.log(
-          `视频加载完成: ${videoSrc} (${loadedCount}/${totalVideos})`,
-        );
-        updateProgress();
-
-        // 检查是否可以提前隐藏加载屏幕
-        if (!loadingScreenHidden) {
-          checkCanHideEarly();
-        }
-        checkAllLoaded();
-
-        // 清理事件监听器
-        video.removeEventListener('canplaythrough', onCanPlayThrough);
-        video.removeEventListener('error', onError);
-      };
-
-      // 监听加载错误
-      const onError = () => {
-        errorCount++;
-        if (isPortfolio) portfolioErrorCount++;
-        console.warn(
-          `视频加载失败: ${videoSrc} (错误: ${errorCount}/${totalVideos})`,
-        );
-        updateProgress();
-
-        // 检查是否可以提前隐藏加载屏幕
-        if (!loadingScreenHidden) {
-          checkCanHideEarly();
-        }
-        checkAllLoaded();
-
-        // 清理事件监听器
-        video.removeEventListener('canplaythrough', onCanPlayThrough);
-        video.removeEventListener('error', onError);
-      };
-
-      // 添加事件监听器
-      video.addEventListener('canplaythrough', onCanPlayThrough, {
-        once: true,
-      });
-      video.addEventListener('error', onError, { once: true });
-
-      // 设置预加载属性并开始加载
-      video.preload = 'auto';
-      video.setAttribute('preload', 'auto');
-
-      try {
-        video.load();
-      } catch (e) {
-        console.warn(`加载视频时出错: ${videoSrc}`, e);
-        errorCount++;
-        if (isPortfolio) portfolioErrorCount++;
-        updateProgress();
-        checkCanHideEarly();
-        checkAllLoaded();
-      }
-    }, index * 150); // 每个视频错开150ms，加快加载速度
-  }
-
-  // 优先加载Portfolio视频
-  portfolioVideoArray.forEach((video, index) => {
-    loadVideo(video, index, true);
-  });
-
-  // 然后加载Works视频（延迟一点，避免阻塞Portfolio视频）
-  worksVideoArray.forEach((video, index) => {
-    loadVideo(video, portfolioVideoArray.length + index, false);
-  });
-
-  // 设置最大等待时间：8秒后强制隐藏加载屏幕
-  setTimeout(() => {
-    if (!loadingScreenHidden) {
-      console.log('达到最大等待时间，隐藏加载屏幕');
-      hideLoadingScreen();
-    }
-  }, 8000);
-}
-
-// ========== 智能视频预加载系统（保留用于后续预加载） ==========
-function startVideoPreloading() {
-  console.log('开始智能预加载视频...');
-
-  // 优化：更积极的预加载策略
-  const videoPreloadQueue = [
-    // Portfolio视频（最优先，立即加载）
-    { selector: '.portfolio-video', priority: 1, maxConcurrent: 2, delay: 0 },
-    // Works区域前5个视频（次优先）
-    {
-      selector: '.project-video, .project-card-video',
-      priority: 2,
-      maxConcurrent: 3,
-      delay: 1000,
-    },
-  ];
-
-  let currentPriority = 1;
-  let loadingCount = 0;
-
-  function preloadNextBatch() {
-    const currentBatch = videoPreloadQueue.find(
-      (q) => q.priority === currentPriority,
-    );
-    if (!currentBatch) {
-      console.log('所有视频预加载完成');
-      return;
-    }
-
-    const videos = document.querySelectorAll(currentBatch.selector);
-    const videosToLoad = Array.from(videos)
-      .filter((v) => v.readyState === 0)
-      .slice(0, currentPriority === 2 ? 5 : videos.length); // Works只预加载前5个
-
-    if (videosToLoad.length === 0) {
-      // 当前优先级加载完成，进入下一优先级
-      currentPriority++;
-      setTimeout(() => preloadNextBatch(), currentBatch.delay);
-      return;
-    }
-
-    // 限制并发加载数
-    const batch = videosToLoad.slice(0, currentBatch.maxConcurrent);
-    loadingCount = batch.length;
-
-    batch.forEach((video, index) => {
-      // Portfolio视频立即加载，其他视频错开时间
-      const loadDelay = currentPriority === 1 ? index * 200 : index * 300;
-
-      setTimeout(() => {
-        console.log(
-          `预加载视频: ${video.src || video.querySelector('source')?.src}`,
-        );
-
-        // 设置更快的加载策略
-        video.preload = 'auto';
-
-        const onCanPlay = () => {
-          loadingCount--;
-          console.log(`视频预加载完成，剩余: ${loadingCount}`);
-
-          if (loadingCount === 0) {
-            // 当前批次加载完成，继续下一批
-            setTimeout(() => preloadNextBatch(), 500);
-          }
-
-          video.removeEventListener('canplaythrough', onCanPlay);
-          video.removeEventListener('error', onError);
-        };
-
-        const onError = () => {
-          loadingCount--;
-          console.warn(`视频预加载失败: ${video.src}`);
-
-          if (loadingCount === 0) {
-            setTimeout(() => preloadNextBatch(), 500);
-          }
-
-          video.removeEventListener('canplaythrough', onCanPlay);
-          video.removeEventListener('error', onError);
-        };
-
-        video.addEventListener('canplaythrough', onCanPlay, { once: true });
-        video.addEventListener('error', onError, { once: true });
-
-        // 开始加载视频
-        video.load();
-      }, loadDelay);
-    });
-  }
-
-  // 主页加载完成1秒后立即开始预加载（更激进的策略）
-  setTimeout(() => {
-    preloadNextBatch();
-  }, 1000);
-}
