@@ -2142,7 +2142,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const aboutSection = document.getElementById('about');
   const contactSection = document.getElementById('contact');
   const cardVideoSelector =
-    '.portfolio-video[data-lazy-video="card"], .project-video[data-lazy-video="card"], .project-card-video[data-lazy-video="card"]';
+    '.portfolio-video, .project-video, .project-card-video';
   const cardVideos = Array.from(document.querySelectorAll(cardVideoSelector));
   const cardVideoViewportOffset = 150;
 
@@ -2187,34 +2187,27 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function mountCardVideo(video) {
-    const source = video.querySelector('source');
-    const dataSrc = source?.dataset.src;
-
-    if (!source || !dataSrc || video.dataset.videoMounted === 'true') {
+    if (video.dataset.videoMounted === 'true') {
       return;
     }
 
-    source.src = dataSrc;
     video.dataset.videoMounted = 'true';
-    video.load();
   }
 
   function unmountCardVideo(video) {
-    const source = video.querySelector('source');
-
-    if (!source || video.dataset.videoMounted !== 'true') {
+    if (video.dataset.videoMounted !== 'true') {
+      pauseCardVideo(video);
       return;
     }
 
-    video.pause();
-    try {
-      video.currentTime = 0;
-    } catch (error) {
-      console.warn('Resetting card video playback state failed:', error);
-    }
-    source.removeAttribute('src');
+    pauseCardVideo(video);
     video.dataset.videoMounted = 'false';
-    video.load();
+  }
+
+  function pauseCardVideo(video) {
+    if (!video.paused) {
+      video.pause();
+    }
   }
 
   function playCardVideo(video) {
@@ -2231,12 +2224,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function syncCardVideo(video, isVisible = isCardVideoNearViewport(video)) {
-    if (isVisible && isCardVideoSectionActive(video)) {
+    if (!isCardVideoSectionActive(video)) {
+      unmountCardVideo(video);
+      return;
+    }
+
+    if (isVisible) {
       playCardVideo(video);
       return;
     }
 
-    unmountCardVideo(video);
+    pauseCardVideo(video);
   }
 
   function syncVisibleCardVideos() {
@@ -2248,6 +2246,12 @@ document.addEventListener('DOMContentLoaded', function () {
   function unmountAllCardVideos() {
     cardVideos.forEach((video) => {
       unmountCardVideo(video);
+    });
+  }
+
+  function pauseAllCardVideos() {
+    cardVideos.forEach((video) => {
+      pauseCardVideo(video);
     });
   }
 
@@ -2654,7 +2658,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        unmountAllCardVideos();
+        pauseAllCardVideos();
         return;
       }
 
